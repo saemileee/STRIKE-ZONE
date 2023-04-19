@@ -7,7 +7,7 @@ const userController = {
 
       res.json(allUsers);
     } catch (err) {
-      next(err);
+      res.end(err.message);
     }
   },
 
@@ -19,13 +19,13 @@ const userController = {
 
       res.json(user);
     } catch (err) {
-      next(err);
+      res.end(err.message);
     }
   },
 
   async addUser(req, res, next) {
     try {
-      const { postCode, roughAddress, detailAddress, ...user } = req.body;
+      const { postCode, roughAddress, detailAddress, ...restUserInfo } = req.body;
 
       const address = {
           postCode: postCode,
@@ -33,13 +33,13 @@ const userController = {
           detailAddress: detailAddress,
         };
 
-      const userInfo = { address, ...user };
+      const userInfo = { address, ...restUserInfo };
 
       const newUser = await userService.addUser(userInfo);
 
       res.json(newUser);
     } catch (err) {
-      next(err);
+      res.end(err.message);
     }
   },
 
@@ -52,7 +52,7 @@ const userController = {
 
       res.json(updatedUser);
     } catch (err) {
-      next(err);
+      res.end(err.message);
     }
   },
 
@@ -64,7 +64,7 @@ const userController = {
 
       res.json(deletedUser);
     } catch (err) {
-      next(err);
+      res.end(err.message);
     }
   },
 };

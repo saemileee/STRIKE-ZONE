@@ -11,39 +11,51 @@ const userService = {
   async getUser(email) {
     const user = await userDAO.findByEmail(email);
 
-    return user;
+    if (user) return user;
+
+    throw new Error('해당 유저가 존재하지 않습니다.');
   },
 
   async addUser(userInfo) {
-    const { email, password, ...user } = userInfo;
+    const { email, password, ...restUserInfo } = userInfo;
 
-    const isDuplicated = await userDAO.findByEmail(email);
+    const user = await userDAO.findByEmail(email);
 
-    if (isDuplicated) {
-      throw new Error('이미 존재하는 email입니다.');
+    if (!user) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      let newUser = { email, password: hashedPassword, ...restUserInfo };
+
+      newUser = await userDAO.create(newUser);
+
+      return newUser; 
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    let newUser = { email, password: hashedPassword, ...user };
-
-    newUser = await userDAO.create(newUser);
-
-    return newUser;
+    throw new Error('이미 존재하는 email입니다.');
   },
 
   async setUser(email, toUpdate) {
-    let updatedUser = await userDAO.findByEmail(email);
+    const user = await userDAO.findByEmail(email);
 
-    updatedUser = await userDAO.update(email, toUpdate);
+    if (user) {
+      const updatedUser = await userDAO.update(email, toUpdate);
 
-    return updatedUser;
+      return updatedUser;
+    }
+
+    throw new Error('해당 유저가 존재하지 않습니다.');
   },
 
   async deleteUser(email) {
-    const deletedUser = await userDAO.deleteByEmail(email);
+    const user = await userDAO.findByEmail(email);
 
-    return deletedUser;
+    if (user) {
+      const deletedUser = await userDAO.deleteByEmail(email);
+
+      return deletedUser;
+    }
+
+    throw new Error('해당 유저가 존재하지 않습니다.');
   },
 };
 
