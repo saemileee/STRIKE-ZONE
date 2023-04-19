@@ -1,0 +1,16 @@
+.user-info {
+  max-width: 1136px;
+  margin: 100px auto;
+  padding: 30px 30px 70px 30px;
+  width: 700px;
+  height: auto;
+  border: solid 1px #b4b4b4;
+  border-radius: 10px;
+  position: relative;
+}
+.invalid {
+  border: solid 2px rgb(255, 0, 0);
+}
+label {
+  text-align: left;
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../../css/reset.css" />
+    <link rel="stylesheet" href="SignUp.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <section class="user-info">
+      <form class="sign-up-form">
+        <h4 class="title is-4">기본정보</h4>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">이메일</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input
+                  id="email"
+                  class="input user-email"
+                  type="email"
+                  placeholder="이메일을 입력해 주세요."
+                  required
+                  autocomplete="off"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">비밀번호</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input
+                  id="password"
+                  class="input user-password"
+                  type="password"
+                  placeholder="비밀번호를 입력해 주세요."
+                  required
+                  autocomplete="off"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">비밀번호 확인</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input
+                  id="passwordVerify"
+                  class="input user-password"
+                  type="password"
+                  placeholder="비밀번호를 확인해 주세요."
+                  required
+                  autocomplete="off"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">이름</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input
+                  id="userName"
+                  class="input user-name"
+                  type="text"
+                  placeholder="이름을 입력해 주세요."
+                  required
+                  autocomplete="off"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">휴대전화</label>
+          </div>
+          <div class="field-body">
+            <p class="control">
+              <span class="select">
+                <select class="user-phone-number-pro">
+                  <option>010</option>
+                  <option>011</option>
+                  <option>016</option>
+                  <option>017</option>
+                  <option>018</option>
+                  <option>019</option>
+                </select>
+              </span>
+            </p>
+            <p class="control is-expanded">
+              <input
+                id="userPhoneNumber"
+                class="input user-phone-number-back"
+                type="tel"
+                placeholder="나머지 번호를 입력해주세요."
+                maxlength="9"
+                required
+                autocomplete="off"
+              />
+            </p>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">주소</label>
+          </div>
+          <div class="field-body">
+            <p class="control">
+              <span id="findZipcode" class="button address">우편번호 찾기</span>
+            </p>
+            <div class="field">
+              <p class="control is-expanded">
+                <input
+                  id="zipcode"
+                  class="input address address-zonecode"
+                  type="text"
+                  placeholder="우편번호"
+                  readonly
+                  required
+                  autocomplete="off"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label"></label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input
+                  id="firstAddress"
+                  class="input address address-base"
+                  type="text"
+                  placeholder="주소"
+                  required
+                  autocomplete="off"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label"></label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control is-expanded">
+                <input
+                  id="secondAddress"
+                  class="input address address-detail"
+                  type="text"
+                  placeholder="상세주소를 입력해 주세요."
+                  required
+                  autocomplete="off"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button type="submit" class="button is-link" id="signUp">
+            회원가입
+          </button>
+        </div>
+      </form>
+    </section>
+    <script type="module" src="SignUp.js"></script>
+    <script type="module" src="../../utils.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  </body>
+</html>
