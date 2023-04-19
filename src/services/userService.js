@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { userDAO } from '../data-access';
 
 const userService = {
@@ -7,8 +8,26 @@ const userService = {
     return allUsers;
   },
 
+  async getUser(email) {
+    const user = await userDAO.findByEmail(email);
+
+    return user;
+  },
+
   async addUser(userInfo) {
-    const newUser = await userDAO.create(userInfo);
+    const { email, password, ...user } = userInfo;
+
+    const isDuplicated = await userDAO.findByEmail(email);
+
+    if (isDuplicated) {
+      throw new Error('이미 존재하는 email입니다.');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    let newUser = { email, password: hashedPassword, ...user };
+
+    newUser = await userDAO.create(newUser);
 
     return newUser;
   },

@@ -11,6 +11,18 @@ const userController = {
     }
   },
 
+  async getUser(req, res, next) {
+    try {
+      const { email } = req.params;
+
+      const user = await userService.getUser(email);
+
+      res.json(user);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   async addUser(req, res, next) {
     try {
       const user = req.body;
