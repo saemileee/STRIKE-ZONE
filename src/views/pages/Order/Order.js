@@ -1,4 +1,4 @@
-import { $, $createElement } from './utils.js';
+import { $, $createElement } from './utils';
 
 function findAndFillAddress(target) {
   document.querySelectorAll(`.${target}-address`).forEach((input) => {
