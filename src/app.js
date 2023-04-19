@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
 import { v1Router } from './router';
+import { viewsRouter } from './router/viewRouter';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 
 mongoose.set('strictQuery', false);
 
+app.use('/', viewsRouter);
 app.use('/api/v1', v1Router);
 
 mongoose.connect(MONGO_URL);
