@@ -32,16 +32,16 @@ const userService = {
     return newUser;
   },
 
-  async setUser(userId, toUpdate) {
-    let updatedUser = await userDAO.findById(userId);
+  async setUser(email, toUpdate) {
+    let updatedUser = await userDAO.findByEmail(email);
 
-    updatedUser = await userDAO.update(userId, toUpdate);
+    updatedUser = await userDAO.update(email, toUpdate);
 
     return updatedUser;
   },
 
-  async deleteUser(userId) {
-    const deletedUser = await userDAO.deleteById(userId);
+  async deleteUser(email) {
+    const deletedUser = await userDAO.deleteByEmail(email);
 
     return deletedUser;
   },

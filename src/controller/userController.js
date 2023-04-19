@@ -25,9 +25,17 @@ const userController = {
 
   async addUser(req, res, next) {
     try {
-      const user = req.body;
+      const { postCode, roughAddress, detailAddress, ...user } = req.body;
 
-      const newUser = await userService.addUser(user);
+      const address = {
+          postCode: postCode,
+          roughAddress: roughAddress,
+          detailAddress: detailAddress,
+        };
+
+      const userInfo = { address, ...user };
+
+      const newUser = await userService.addUser(userInfo);
 
       res.json(newUser);
     } catch (err) {
@@ -37,9 +45,10 @@ const userController = {
 
   async setUser(req, res, next) {
     try {
-      const { userId, ...toUpdate } = req.body;
+      const { email } = req.params;
+      const toUpdate = req.body;
 
-      const updatedUser = await userService.setUser(userId, toUpdate);
+      const updatedUser = await userService.setUser(email, toUpdate);
 
       res.json(updatedUser);
     } catch (err) {
@@ -49,9 +58,9 @@ const userController = {
 
   async deleteUser(req, res, next) {
     try {
-      const { userId } = req.body;
+      const { email } = req.params;
 
-      const deletedUser = await userService.deleteUser(userId);
+      const deletedUser = await userService.deleteUser(email);
 
       res.json(deletedUser);
     } catch (err) {
