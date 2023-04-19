@@ -1,0 +1,30 @@
+.login-wrapper {
+  margin: 100px auto;
+  padding: 30px;
+  width: 500px;
+  height: 260px;
+  border: solid 1px rgba(184, 184, 184, 0.979);
+  border-radius: 10px;
+}
+.login-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.login-input {
+  width: 300px;
+}
+#loginId {
+  margin-bottom: 10px;
+}
+#login {
+  margin-left: 20px;
+  width: 150px;
+  height: 90px;
+}
+#signUp {
+  width: 135px;
+}
+#findPassword {
+  width: 135px;
+}
