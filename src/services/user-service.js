@@ -1,37 +1,31 @@
-import UserModel from '../db/index.js';
+import userDAO from '../data-access/index';
 
-class UserService {
-  constructor(UserModel) {
-    this.userModel = UserModel;
-  }
-
+const userService = {
   async getAllUsers() {
-    const allUsers = await this.userModel.findAll();
+    const allUsers = await userDAO.findAll();
 
     return allUsers;
-  }
+  },
 
   async addUser(userInfo) {
-    const newUser = await this.userModel.create(userInfo);
+    const newUser = await userDAO.create(userInfo);
 
     return newUser;
-  }
+  },
 
   async setUser(userId, toUpdate) {
-    let updatedUser = await this.userModel.findById(userId);
+    let updatedUser = await userDAO.findById(userId);
 
-    updatedUser = await this.userModel.update(userId, toUpdate);
+    updatedUser = await userDAO.update(userId, toUpdate);
 
     return updatedUser;
-  }
+  },
 
   async deleteUser(userId) {
-    const deletedUser = await this.userModel.deleteById(userId);
+    const deletedUser = await userDAO.deleteById(userId);
 
     return deletedUser;
   }
-}
-
-const userService = new UserService(UserModel);
+};
 
 export default userService;

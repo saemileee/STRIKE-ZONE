@@ -25,6 +25,10 @@ const UserSchema = new Schema({
     type: String,
     required: false,
   },
+}
+,{
+  collection: 'users',
+  timestamps: true,
 });
 
 export default UserSchema;
