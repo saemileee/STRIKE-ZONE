@@ -5,6 +5,8 @@ import dotenv from 'dotenv';
 
 import userRouter from './router/user-router';
 
+import productRouter from './routers/product-router';
+
 dotenv.config();
 
 const { MONGO_URL } = process.env;
@@ -22,12 +24,13 @@ app.use(express.urlencoded({ extended: false }));
 
 mongoose.set('strictQuery', false);
 
+app.use('/api', productRouter);
+app.use('/user', userRouter);
+
 mongoose.connect(MONGO_URL);
 
 mongoose.connection.on('connected', () => {
   console.log('MongoDB Connected');
 });
-
-app.use('/user', userRouter);
 
 export default app;
