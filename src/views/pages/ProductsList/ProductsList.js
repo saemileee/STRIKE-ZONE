@@ -3,6 +3,7 @@ import DUMMY_DATA from './dummy.js';
 const addHeader = (target) => {
   const urlParams = new URL(location.href).searchParams;
   const currentCategory = urlParams.get('category');
+  if (!currentCategory) return;
   target.insertAdjacentHTML(
     'afterbegin',
     `
