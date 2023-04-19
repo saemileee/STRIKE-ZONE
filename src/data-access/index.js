@@ -1,3 +1,7 @@
-import userDAO from "./userDAO";
+import { userDAO } from './userDAO';
+import { productDAO } from './productDAO';
 
-export default userDAO;
+export {
+  userDAO,
+  productDAO,
+};

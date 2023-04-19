@@ -1,11 +1,11 @@
-import userService from '../services/index';
+import { userService } from '../services';
 
 const userController = {
   async getAllUsers(req, res, next) {
     try {
       const allUsers = await userService.getAllUsers();
 
-    res.json(allUsers);
+      res.json(allUsers);
     } catch (err) {
       next(err);
     }
@@ -45,7 +45,7 @@ const userController = {
     } catch (err) {
       next(err);
     }
-  }
+  },
 };
 
-export default userController;
+export { userController };

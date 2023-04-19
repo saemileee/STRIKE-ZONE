@@ -1,4 +1,4 @@
-import productService from '../services/product-service';
+import { productService } from '../services';
 
 /**
  * controller 함수(a.k.a. request handler)들을 모아놓은 객체
@@ -97,4 +97,4 @@ const productController = {
 
 };
 
-export default productController;
+export { productController };

@@ -3,9 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 
-import userRouter from './router/user-router';
-
-import productRouter from './routers/product-router';
+import { v1Router } from './router';
 
 dotenv.config();
 
@@ -24,8 +22,7 @@ app.use(express.urlencoded({ extended: false }));
 
 mongoose.set('strictQuery', false);
 
-app.use('/api', productRouter);
-app.use('/user', userRouter);
+app.use('/api/v1', v1Router);
 
 mongoose.connect(MONGO_URL);
 

@@ -1,7 +1,4 @@
-import { model } from 'mongoose';
-import ProductSchema from '../shcemas/product-schema';
-
-const Product = model('products', ProductSchema);
+import { Product } from './model';
 
 const productDAO = {
   async createProduct(productInfo) {
@@ -34,4 +31,4 @@ const productDAO = {
   },
 };
 
-export default productDAO;
+export { productDAO };

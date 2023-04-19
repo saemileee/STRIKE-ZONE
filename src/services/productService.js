@@ -1,4 +1,4 @@
-import productDAO from '../data-access/models/productDAO';
+import { productDAO } from '../data-access';
 
 const productService = {
   // 상품 목록 조회
@@ -29,4 +29,4 @@ const productService = {
   },
 };
 
-export default productService;
+export { productService };

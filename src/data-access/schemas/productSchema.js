@@ -42,4 +42,4 @@ const ProductSchema = new Schema(
   },
 );
 
-export default ProductSchema;
+export { ProductSchema };

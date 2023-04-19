@@ -1,4 +1,4 @@
-import User from "./models/user-model";
+import { User } from './model';
 
 const userDAO = {
   async findByEmail(email) {
@@ -38,7 +38,7 @@ const userDAO = {
     const result = await User.deleteOne({ _id: userId });
 
     return result;
-  }
+  },
 };
 
-export default userDAO;
+export { userDAO };

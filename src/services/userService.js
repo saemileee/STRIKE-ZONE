@@ -1,4 +1,4 @@
-import userDAO from '../data-access/index';
+import { userDAO } from '../data-access';
 
 const userService = {
   async getAllUsers() {
@@ -25,7 +25,9 @@ const userService = {
     const deletedUser = await userDAO.deleteById(userId);
 
     return deletedUser;
-  }
+  },
 };
 
-export default userService;
+export {
+  userService,
+};

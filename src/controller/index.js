@@ -1,3 +1,7 @@
-import userController from "./user-controller";
+import { userController } from './userController';
+import { productController } from './productController';
 
-export default userController;
+export {
+  userController,
+  productController,
+};
