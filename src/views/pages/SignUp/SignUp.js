@@ -1,4 +1,4 @@
-import * as utils from '../../utils.js';
+import * as utils from '/js/utils.js';
 
 const signUpForm = utils.$('.sign-up-form');
 const newUserEmail = utils.$('#email');
@@ -7,16 +7,27 @@ const newUserPasswordVerify = utils.$('#passwordVerify');
 const newUserPhoneNumber = utils.$('#userPhoneNumber');
 const findAddress = document.querySelectorAll('.address');
 
-const newMemberInfo = document.querySelectorAll('input');
+const newUserInfo = document.querySelectorAll('input');
 
 const onSignUpSubmit = (e) => {
   e.preventDefault();
-  const newMember = {};
-  newMemberInfo.forEach((node) => {
+  const newUser = {};
+  const cheerTeam = [];
+  newUserInfo.forEach((node) => {
     const infoId = node.id;
-    newMember[infoId] = node.value;
+    if (node.id === 'userPhoneNumber') {
+      const firstNumber = utils.$('#selectFirstNumber');
+      newUser[infoId] = `${
+        firstNumber.options[firstNumber.selectedIndex].text
+      }-${node.value}`;
+    } else if (node.type === 'checkbox' && node.checked) {
+      cheerTeam.push(node.value);
+    } else {
+      newUser[infoId] = node.value;
+    }
   });
-  console.log(newMember);
+  newUser.cheerTeam = cheerTeam;
+  console.log(newUser);
 };
 
 const isValid = (e) => {
@@ -52,7 +63,7 @@ const autoHyphen = () => {
 const searchZipcode = () => {
   new daum.Postcode({
     oncomplete: function (data) {
-      var roadAddr = data.roadAddress;
+      const roadAddr = data.roadAddress;
       document.getElementById('zipcode').value = data.zonecode;
       document.getElementById('firstAddress').value = roadAddr;
     },
