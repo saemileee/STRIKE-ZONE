@@ -11,9 +11,11 @@ const userService = {
   async getUser(email) {
     const user = await userDAO.findByEmail(email);
 
-    if (user) return user;
+    if (!user) {
+      throw new Error('해당 유저가 존재하지 않습니다.');
+    }
 
-    throw new Error('해당 유저가 존재하지 않습니다.');
+    return user;
   },
 
   async addUser(userInfo) {
@@ -37,25 +39,31 @@ const userService = {
   async setUser(email, toUpdate) {
     const user = await userDAO.findByEmail(email);
 
-    if (user) {
-      const updatedUser = await userDAO.update(email, toUpdate);
-
-      return updatedUser;
+    if (!user) {
+      throw new Error('해당 유저가 존재하지 않습니다.');
     }
 
-    throw new Error('해당 유저가 존재하지 않습니다.');
+    const { password } = toUpdate;
+
+    const newHashedPassword = await bcrypt.hash(password, 10);
+
+    toUpdate.password = newHashedPassword;
+
+    const updatedUser = await userDAO.update(email, toUpdate);
+
+    return updatedUser;
   },
 
   async deleteUser(email) {
     const user = await userDAO.findByEmail(email);
 
-    if (user) {
-      const deletedUser = await userDAO.deleteByEmail(email);
-
-      return deletedUser;
+    if (!user) {
+      throw new Error('해당 유저가 존재하지 않습니다.');
     }
 
-    throw new Error('해당 유저가 존재하지 않습니다.');
+    const deletedResult = await userDAO.deleteByEmail(email);
+
+    return deletedResult;
   },
 };
 

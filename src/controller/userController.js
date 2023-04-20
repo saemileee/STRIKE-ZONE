@@ -25,13 +25,14 @@ const userController = {
 
   async addUser(req, res, next) {
     try {
-      const { postCode, roughAddress, detailAddress, ...restUserInfo } = req.body;
+      const { postCode, roughAddress, detailAddress, ...restUserInfo } =
+        req.body;
 
       const address = {
-          postCode: postCode,
-          roughAddress: roughAddress,
-          detailAddress: detailAddress,
-        };
+        postCode,
+        roughAddress,
+        detailAddress,
+      };
 
       const userInfo = { address, ...restUserInfo };
 
@@ -46,7 +47,16 @@ const userController = {
   async setUser(req, res, next) {
     try {
       const { email } = req.params;
-      const toUpdate = req.body;
+      const { postCode, roughAddress, detailAddress, ...restUpdateInfo } =
+        req.body;
+
+      const address = {
+        postCode,
+        roughAddress,
+        detailAddress,
+      };
+
+      const toUpdate = { address, ...restUpdateInfo };
 
       const updatedUser = await userService.setUser(email, toUpdate);
 
