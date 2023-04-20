@@ -4,24 +4,28 @@ const bannerContentElement = document.querySelector('.banner-content');
 const DUMMY_DATA = [
   {
     mainText: `NO LIMITS<br/>AMAZING LANDERS`,
+    subText: 'SSG 랜더스',
     teamPageURL: '#',
     mainImage: '/assets/img/main/banner/ssg-landers.png',
     backgroundText: `SSG LANDERS`,
   },
   {
     mainText: `We go up,<br/>Win the championship`,
+    subText: '키움 히어로즈',
     teamPageURL: '#',
     mainImage: '/assets/img/main/banner/kiwoom.png',
     backgroundText: `KIWOOM HEROES`,
   },
   {
     mainText: `압도하라 Always<br/>KIA TIGERS`,
+    subText: '기아 타이거즈',
     teamPageURL: '#',
     mainImage: '/assets/img/main/banner/kia.png',
     backgroundText: `KIA TIGERS`,
   },
   {
     mainText: `Win or Wow`,
+    subText: '삼성 라이온즈',
     teamPageURL: '#',
     mainImage: '/assets/img/main/banner/samsung.png',
     backgroundText: `SAMSUNG LIONS`,
@@ -40,12 +44,12 @@ nextArrowButtonElement.className = 'next-button';
 let currentBannerIndex = 0;
 
 function renderBannerContents() {
-  const { mainText, teamPageURL, mainImage, backgroundText } =
+  const { mainText, subText, teamPageURL, mainImage, backgroundText } =
     DUMMY_DATA[currentBannerIndex];
 
   const bannerContentLeftElement = document.createElement('div');
   bannerContentLeftElement.className = 'banner-content-left';
-  bannerContentLeftElement.innerHTML = `<span class="main-text">${mainText}</span>`;
+  bannerContentLeftElement.innerHTML = `<span class="sub-text">${subText}</span><span class="main-text">${mainText}</span>`;
 
   const CTAButtonElement = document.createElement('button');
   CTAButtonElement.className = 'CTA-button';
