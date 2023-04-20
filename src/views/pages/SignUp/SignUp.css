@@ -18,6 +18,9 @@ label {
 #cheerTeam > label {
   width: 25%;
 }
-.checkbox {
+.teams {
   border: solid 1px #b4b4b4;
+}
+.teams > input[type='checkbox'] {
+  display: none;
 }

@@ -26,11 +26,12 @@
                 <input
                   id="email"
                   class="input user-email"
-                  type="email"
+                  type="text"
                   placeholder="이메일을 입력해 주세요."
                   required
                   autocomplete="off"
                 />
+                <p class="email-warning" style="display: none;">이메일 형식이 올바르지 않습니다.</p>
               </p>
             </div>
           </div>
@@ -50,6 +51,7 @@
                   required
                   autocomplete="off"
                 />
+                <p class="password-warning" style="display: none;">영문, 숫자, 특수문자를 포함한 8 ~ 16자의 비밀번호를 입력하세요</p>
               </p>
             </div>
           </div>
@@ -69,6 +71,7 @@
                   required
                   autocomplete="off"
                 />
+                <p class="password-verify-warning" style="display: none;">비밀번호가 일치하지 않습니다.</p>
               </p>
             </div>
           </div>
@@ -81,7 +84,7 @@
             <div class="field">
               <p class="control is-expanded">
                 <input
-                  id="userName"
+                  id="koreanName"
                   class="input user-name"
                   type="text"
                   placeholder="이름을 입력해 주세요."
@@ -99,7 +102,7 @@
           <div class="field-body">
             <p class="control">
               <span class="select">
-                <select class="user-phone-number-pro" id="selectFirstNumber">
+                <select class="user-phone-number-pro" id="firstPhoneNumber">
                   <option>010</option>
                   <option>011</option>
                   <option>016</option>
@@ -111,7 +114,7 @@
             </p>
             <p class="control is-expanded">
               <input
-                id="userPhoneNumber"
+                id="phoneNumber"
                 class="input user-phone-number-back"
                 type="tel"
                 placeholder="나머지 번호를 입력해주세요."
@@ -133,7 +136,7 @@
             <div class="field">
               <p class="control is-expanded">
                 <input
-                  id="zipcode"
+                  id="postCode"
                   class="input address address-zonecode"
                   type="text"
                   placeholder="우편번호"
@@ -154,7 +157,7 @@
             <div class="field">
               <p class="control is-expanded">
                 <input
-                  id="firstAddress"
+                  id="roughAddress"
                   class="input address address-base"
                   type="text"
                   placeholder="주소"
@@ -175,7 +178,7 @@
             <div class="field">
               <p class="control is-expanded">
                 <input
-                  id="secondAddress"
+                  id="detailAddress"
                   class="input address address-detail"
                   type="text"
                   placeholder="상세주소를 입력해 주세요."
@@ -192,44 +195,44 @@
           </div>
           <div class="field-body">
             <div class="field" id="cheerTeam">
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="SSG 랜더스" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="SSG랜더스" />
                 SSG 랜더스
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="키움 히어로즈" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="키움히어로즈" />
                 키움 히어로즈
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="LG 트윈스" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="LG트윈스" />
                 LG 트윈스
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="KT wiz" />
-                KT wiz
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="KT위즈" />
+                KT 위즈
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="KIA 타이거즈" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="KIA타이거즈" />
                 KIA 타이거즈
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="NC 다이노스" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="NC다이노스" />
                 NC 다이노스
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="삼성 라이온즈" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="삼성라이온즈" />
                 삼성 라이온즈
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="롯데 자이언츠" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="롯데자이언츠" />
                 롯데 자이언츠
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="두산 베어스" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="두산베어스" />
                 두산 베어스
               </label>
-              <label class="checkbox tag is-medium">
-                <input type="checkbox" value="한화 이글스" />
+              <label class="teams tag is-medium">
+                <input type="checkbox" class="team" value="한화이글스" />
                 한화 이글스
               </label>
             </div>
