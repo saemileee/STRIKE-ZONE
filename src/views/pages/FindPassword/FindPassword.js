@@ -1,4 +1,4 @@
-import * as utils from '../../utils.js';
+import * as utils from '/js/utils.js';
 
 const findPasswordForm = utils.$('.find-password-form');
 
