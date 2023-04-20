@@ -1,4 +1,9 @@
-import DUMMY_DATA from './dummy.js';
+// eslint-disable-next-line
+import DUMMY_DATA from '/js/constants/dummy.js';
+// eslint-disable-next-line
+import { addItemCart, getCartListSelected, getAllProduct } from '/js/api/cartAPI.js';
+
+console.log(getAllProduct());
 
 const addHeader = (target) => {
   const urlParams = new URL(location.href).searchParams;
@@ -47,7 +52,7 @@ const addProduct = (target, { productID, name, team, img, price, rate, newest })
   const $cartBtn = $product.querySelector('.product-cart-button');
   $cartBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    alert('장바구니 추가');
+    addItemCart(productID);
   });
 
   target.append($product);
