@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { userRouter } from './userRouter';
+import { authRouter } from './authRouter';
 import { productRouter } from './productRouter';
 
 // 버전 1용 라우터.
@@ -12,6 +13,7 @@ import { productRouter } from './productRouter';
 const v1Router = express.Router();
 
 v1Router.use('/users', userRouter);
+v1Router.use('/auth', authRouter);
 v1Router.use('/products', productRouter);
 
 export {

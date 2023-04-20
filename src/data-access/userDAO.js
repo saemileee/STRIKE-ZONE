@@ -25,17 +25,16 @@ const userDAO = {
     return users;
   },
 
-  async update(userId, update) {
-    const filter = { _id: userId };
+  async update(email, update) {
     const option = { returnOriginal: false };
 
-    const updatedUser = await User.findOneAndUpdate(filter, update, option);
+    const updatedUser = await User.findOneAndUpdate({ email }, update, option);
 
     return updatedUser;
   },
 
-  async deleteById(userId) {
-    const result = await User.deleteOne({ _id: userId });
+  async deleteByEmail(email) {
+    const result = await User.deleteOne({ email });
 
     return result;
   },
