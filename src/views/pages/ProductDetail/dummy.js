@@ -7,14 +7,14 @@ const DUMMY_DATA = {
   rate: 40,
   newest: true,
   detailImages: [
-    '/img/product-3600-1.jpeg',
-    '/img/product-3600-2.jpeg',
-    '/img/product-3600-1.jpeg',
-    '/img/product-3600-2.jpeg',
-    '/img/product-3600-1.jpeg',
-    '/img/product-3600-2.jpeg',
+    '/assets/img/product/product-3600-1.jpeg',
+    '/assets/img/product/product-3600-2.jpeg',
+    '/assets/img/product/product-3600-1.jpeg',
+    '/assets/img/product/product-3600-2.jpeg',
+    '/assets/img/product/product-3600-1.jpeg',
+    '/assets/img/product/product-3600-2.jpeg',
   ],
-  descriptionImage: '/img/product-description.jpeg',
+  descriptionImage: '/assets/img/detail/product-description.jpeg',
   descriptionShortText: '사용연령: 만 14세 이상',
 };
 
