@@ -7,15 +7,17 @@ header .header-container {
   max-width: 1136px;
   margin: 0 auto;
   display: flex;
+  align-items: center;
+  height: 80px;
 }
 
 header .header-container h1 {
-  font-size: 28px;
-  line-height: 1.8rem;
+  font-size: 20px;
+  line-height: 1.2rem;
   font-weight: 800;
   color: aliceblue;
   padding: 4px;
-  flex-basis: 15%;
+  flex-basis: 13%;
 }
 
 header .header-container ul {
@@ -24,9 +26,11 @@ header .header-container ul {
 }
 
 header .header-container ul li {
-  margin-right: 16px;
+  padding: 10px;
+  margin-right: 25px;
   color: rgb(255, 255, 255);
   cursor: pointer;
+  font-weight: 700;
 }
 
 header .header-container .right-side-container {
@@ -35,8 +39,42 @@ header .header-container .right-side-container {
 }
 
 header .header-container .right-side-container button {
-  margin-right: 8px;
+  position: relative;
+  margin-right: 18px;
   border: none;
   background-color: transparent;
   color: aliceblue;
+  cursor: pointer;
+}
+
+header .header-container .right-side-container .cart {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+  color: black;
+  cursor: pointer;
+  text-align: center;
+}
+
+header .header-container .right-side-container .cart-amount {
+  position: absolute;
+  left: -5px;
+  bottom: -5px;
+  z-index: 999;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  /* border: 1px solid rgb(236, 253, 81); */
+  text-align: center;
+  background-color: rgb(255, 104, 3);
+  color: rgb(0, 0, 0);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.2rem;
+}
+
+header .header-container .right-side-container .my-page {
+  padding: 8px 16px 8px 16px;
 }

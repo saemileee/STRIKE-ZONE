@@ -1,5 +1,5 @@
 const DUMMY_USER_DATA = {
-  userId: 'elice@elice.com',
+  // userId: 'elice@elice.com',
 };
 const CART_AMOUNT = 2;
 
@@ -11,7 +11,7 @@ headerContainer.innerHTML = `<h1>MARKET<br/>NAME</h1>
 
 const cartElement = document.createElement('button');
 cartElement.className = 'cart';
-cartElement.innerHTML = `<i class="fa fa-shopping-cart"></i><span class = "cart-amount">${CART_AMOUNT}</span>`;
+cartElement.innerHTML = `<i class="fa fa-shopping-cart" style="font-size:18px"></i><span class = "cart-amount">${CART_AMOUNT}</span>`;
 
 const loginElement = document.createElement('button');
 loginElement.className = 'login';
