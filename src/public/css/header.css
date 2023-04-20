@@ -1,0 +1,42 @@
+header {
+  width: 100%;
+  background-color: black;
+}
+
+header .header-container {
+  max-width: 1136px;
+  margin: 0 auto;
+  display: flex;
+}
+
+header .header-container h1 {
+  font-size: 28px;
+  line-height: 1.8rem;
+  font-weight: 800;
+  color: aliceblue;
+  padding: 4px;
+  flex-basis: 15%;
+}
+
+header .header-container ul {
+  display: flex;
+  flex-basis: 65%;
+}
+
+header .header-container ul li {
+  margin-right: 16px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+header .header-container .right-side-container {
+  flex-basis: 25%;
+  text-align: right;
+}
+
+header .header-container .right-side-container button {
+  margin-right: 8px;
+  border: none;
+  background-color: transparent;
+  color: aliceblue;
+}
