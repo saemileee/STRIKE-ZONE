@@ -1,7 +1,7 @@
-import { $, $createElement } from './utils';
+import { $ } from '/js/utils.js';
 
 function findAndFillAddress(target) {
-  document.querySelectorAll(`.${target}-address`).forEach((input) => {
+  document.querySelectorAll(`.${target}-address`).forEach(input => {
     input.addEventListener('click', () => {
       new daum.Postcode({
         oncomplete(data) {
@@ -59,7 +59,11 @@ $checkOutButton.addEventListener('click', () => {
   const userEmail = $('.user-email').value;
   const userPhoneNumberPro = $('.user-phone-number-pro').value;
   const userPhoneNumberBack = $('.user-phone-number-back').value;
-  const userData = { userName, userEmail, userPhoneNumber: `${userPhoneNumberPro}${userPhoneNumberBack}` };
+  const userData = {
+    userName,
+    userEmail,
+    userPhoneNumber: `${userPhoneNumberPro}${userPhoneNumberBack}`,
+  };
 
   const receiver = $('.receiver').value;
   const receiverPhoneNumberPro = $('.receiver-phone-number-pro').value;
@@ -68,13 +72,17 @@ $checkOutButton.addEventListener('click', () => {
   const receiverAddressBase = $('.receiver-address-base').value;
   const receiverAddressDetail = $('.receiver-address-detail').value;
   const deliveryData = {
-    receiver, receiverPhoneNumber: `${receiverPhoneNumberPro}${receiverPhoneNumberBack}`, receiverAddressZonecode, receiverAddressBase, receiverAddressDetail,
+    receiver,
+    receiverPhoneNumber: `${receiverPhoneNumberPro}${receiverPhoneNumberBack}`,
+    receiverAddressZonecode,
+    receiverAddressBase,
+    receiverAddressDetail,
   };
 
   const $paymentMethods = document.getElementsByName('payment-method');
   let paymentMethod = $paymentMethods[0];
   for (const element of $paymentMethods) {
-    paymentMethod.checked ? paymentMethod = element.className : null;
+    paymentMethod.checked ? (paymentMethod = element.className) : null;
   }
 
   console.log(userData, deliveryData, paymentMethod);
