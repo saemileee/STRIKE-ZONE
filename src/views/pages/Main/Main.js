@@ -62,28 +62,21 @@ function renderBannerContents() {
 
   const backgroundTextElement = document.createElement('div');
   backgroundTextElement.className = 'background-text';
-  const backgroundTextTopElements = backgroundText
-    .split(' ')[0]
-    .split('')
-    .map(
-      (character, index) =>
-        `<span style="animation-duration:${
-          0.5 + index / 10
-        }s">${character}</span>`
-    )
-    .join('');
 
-  const backgroundTextBottomElements = backgroundText
-    .split(' ')[1]
-    .split('')
-    .map(
-      (character, index) =>
-        `<span style="animation-duration:${
-          0.5 + index / 10
-        }s">${character}</span>`
-    )
-    .join('');
-  backgroundTextElement.innerHTML = `${backgroundTextTopElements}<br /> ${backgroundTextBottomElements}`;
+  function backgroundTextElements(textIndex) {
+    return backgroundText
+      .split(' ')
+      [textIndex].split('')
+      .map((character, index) => {
+        const TEXT_ANIMATION_DURATION = 0.5 + index / 10;
+        return `<span style="animation-duration:${TEXT_ANIMATION_DURATION}s">${character}</span>`;
+      })
+      .join('');
+  }
+
+  backgroundTextElement.innerHTML = `${backgroundTextElements(
+    0
+  )}<br /> ${backgroundTextElements(1)}`;
 
   bannerContentElement.innerHTML = '';
   bannerContentElement.append(
@@ -92,6 +85,7 @@ function renderBannerContents() {
     backgroundTextElement
   );
 }
+renderBannerContents();
 
 function prevArrowButtonClickHandler() {
   if (currentBannerIndex === 0) {
@@ -111,12 +105,24 @@ function nextArrowButtonClickHandler() {
   renderBannerContents();
 }
 
-renderBannerContents();
+const SLIDE_AUTO_PLAY_TIME = 5000;
+let slideAutoPlayTimer = setInterval(
+  () => nextArrowButtonClickHandler(),
+  SLIDE_AUTO_PLAY_TIME
+);
+
+mainBannerElement.addEventListener('mouseover', () => {
+  clearInterval(slideAutoPlayTimer);
+});
+
+mainBannerElement.addEventListener('mouseout', () => {
+  slideAutoPlayTimer = setInterval(() => {
+    nextArrowButtonClickHandler(); // 다음 슬라이드를 보여주는 함수
+  }, SLIDE_AUTO_PLAY_TIME);
+});
 
 prevArrowButtonElement.addEventListener('click', prevArrowButtonClickHandler);
 nextArrowButtonElement.addEventListener('click', nextArrowButtonClickHandler);
 
 arrowButtonsElement.append(prevArrowButtonElement, nextArrowButtonElement);
 mainBannerElement.append(arrowButtonsElement);
-
-setInterval(() => nextArrowButtonClickHandler(), 6000);
