@@ -47,6 +47,16 @@ html {
   }
 }
 
+.main-banner .sub-text {
+  width: fit-content;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  animation-name: appears;
+  animation-duration: 0.8s;
+  animation-timing-function: ease;
+}
+
 .main-banner .main-text {
   width: fit-content;
   margin-bottom: 24px;
