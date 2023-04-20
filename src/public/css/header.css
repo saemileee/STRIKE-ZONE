@@ -1,5 +1,11 @@
 header {
   width: 100%;
+}
+
+header .header-wrapper {
+  position: relative;
+  z-index: 99999;
+  width: 100%;
   background-color: black;
 }
 
@@ -26,11 +32,15 @@ header .header-container ul {
 }
 
 header .header-container ul li {
-  padding: 10px;
-  margin-right: 25px;
+  padding: 10px 20px 10px 20px;
   color: rgb(255, 255, 255);
   cursor: pointer;
   font-weight: 700;
+  text-align: center;
+}
+
+header .header-container ul li:hover {
+  color: rgb(179, 255, 14);
 }
 
 header .header-container .right-side-container {
@@ -68,7 +78,7 @@ header .header-container .right-side-container .cart-amount {
   border-radius: 50%;
   /* border: 1px solid rgb(236, 253, 81); */
   text-align: center;
-  background-color: rgb(255, 104, 3);
+  background-color: rgb(255, 95, 3);
   color: rgb(0, 0, 0);
   font-size: 12px;
   font-weight: 700;
@@ -77,4 +87,84 @@ header .header-container .right-side-container .cart-amount {
 
 header .header-container .right-side-container .my-page {
   padding: 8px 16px 8px 16px;
+}
+
+header .category-container {
+  width: 100%;
+  position: absolute;
+  z-index: 999;
+  height: inherit;
+}
+
+header .category-container {
+  background-color: black;
+}
+
+header .category-container .teams-container {
+  max-width: 1136px;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 24px;
+}
+
+header .category-container .teams-container ul {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 24px;
+}
+
+header .category-container .teams-container ul li {
+  width: 90px;
+  padding: 4px 4px 0 4px;
+  border: 1px solid white;
+  border-radius: 8px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.206);
+  cursor: pointer;
+}
+
+header .category-container .teams-container ul li:hover {
+  border: 1px solid rgb(179, 255, 14);
+  background-color: rgba(179, 255, 14, 0.206);
+}
+
+header .category-container .teams-container ul li p {
+  margin-bottom: 12px;
+  text-align: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+header .category-container .products-container {
+  max-width: 1136px;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 24px;
+  background-color: black;
+}
+
+header .category-container .products-container ul {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  padding-bottom: 28px;
+}
+
+header .category-container .products-container ul li {
+  text-align: left;
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+}
+
+header .category-container .products-container ul li:hover {
+  color: rgb(179, 255, 14);
+}
+
+header .category-container .products-container ul li p {
+  margin-right: 36px;
 }
