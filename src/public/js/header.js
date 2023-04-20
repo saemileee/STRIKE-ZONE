@@ -49,7 +49,7 @@ headerWrapper.className = 'header-wrapper';
 
 const headerContainer = document.createElement('div');
 headerContainer.className = 'header-container';
-headerContainer.innerHTML = `<h1>MARKET<br/>NAME</h1>`;
+headerContainer.innerHTML = `<h1><a href="/main">MARKET<br/>NAME</a></h1>`;
 
 const categoryUlElement = document.createElement('ul');
 
@@ -162,11 +162,19 @@ productCategoryLiElement.addEventListener('mouseover', () => {
 
 const hideTeamsContainer = () => {
   teamsContainerElement.style.display = 'none';
+  teamCategoryLiElement.removeAttribute('style');
 };
 
+teamsContainerElement.addEventListener('mouseover', () => {
+  teamCategoryLiElement.style.color = 'rgb(179, 255, 14)';
+});
 teamsContainerElement.addEventListener('mouseleave', hideTeamsContainer);
 
 const hideProductsContainer = () => {
   productsContainerElement.style.display = 'none';
+  productCategoryLiElement.removeAttribute('style');
 };
+productsContainerElement.addEventListener('mouseover', () => {
+  productCategoryLiElement.style.color = 'rgb(179, 255, 14)';
+});
 productsContainerElement.addEventListener('mouseleave', hideProductsContainer);
