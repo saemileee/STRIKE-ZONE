@@ -1,10 +1,10 @@
-import * as utils from '/js/utils.js';
+import { $ } from '/js/utils.js';
 
-const signUpForm = utils.$('.sign-up-form');
-const newUserEmail = utils.$('#email');
-const newUserPassword = utils.$('#password');
-const newUserPasswordVerify = utils.$('#passwordVerify');
-const newUserPhoneNumber = utils.$('#phoneNumber');
+const signUpForm = $('.sign-up-form');
+const newUserEmail = $('#email');
+const newUserPassword = $('#password');
+const newUserPasswordVerify = $('#passwordVerify');
+const newUserPhoneNumber = $('#phoneNumber');
 const findAddress = document.querySelectorAll('.address');
 const teams = document.getElementsByName('team');
 
@@ -21,17 +21,17 @@ function checkValidation(target) {
 function isValid(event) {
   if (!checkValidation(event.target)) {
     event.target.classList.add('is-danger');
-    const warning = utils.$(`.${event.target.id}-warning`);
+    const warning = $(`.${event.target.id}-warning`);
     warning.style.display = '';
   } else {
     event.target.classList.remove('is-danger');
-    const warning = utils.$(`.${event.target.id}-warning`);
+    const warning = $(`.${event.target.id}-warning`);
     warning.style.display = 'none';
   }
 }
 
 function passwordVerify() {
-  const warning = utils.$('.password-verify-warning');
+  const warning = $('.password-verify-warning');
   if (
     newUserPassword.value !== newUserPasswordVerify.value ||
     newUserPasswordVerify.value === ''
@@ -68,7 +68,7 @@ function autoHyphen() {
 }
 
 function getPhoneNumber() {
-  const firstNumber = utils.$('#firstPhoneNumber');
+  const firstNumber = $('#firstPhoneNumber');
   return `${firstNumber.options[firstNumber.selectedIndex].text}-${
     newUserPhoneNumber.value
   }`;
@@ -95,8 +95,22 @@ function selectTeam() {
 }
 
 function getCheerTeam() {
+  const teamID = {
+    롯데자이언츠: '6440ec92b1154c52aee0c4a7',
+    KIA타이거즈: '6440ee20be78f271d6821815',
+    삼성라이온즈: '6440ee2ebe78f271d6821817',
+    LG트윈스: '6440ee33be78f271d6821819',
+    두산베어스: '6440ee37be78f271d682181b',
+    키움히어로즈: '6440ee3cbe78f271d682181d',
+    SSG랜더스: '6440ee43be78f271d682181f',
+    KT위즈: '6440ee48be78f271d6821821',
+    한화이글스: '6440ee4dbe78f271d6821823',
+    NC다이노스: '6440ee51be78f271d6821825',
+  };
   for (let i = 0; i < teams.length; i++) {
-    if (teams[i].checked) return teams[i].value;
+    if (teams[i].checked) {
+      return teamID[teams[i].value];
+    }
   }
 }
 
@@ -115,7 +129,7 @@ function onSignUpSubmit(e) {
       'cheerTeam',
     ];
     for (let i = 0; i < userInfoKey.length; i++) {
-      const userInfo = utils.$(`#${userInfoKey[i]}`);
+      const userInfo = $(`#${userInfoKey[i]}`);
       if (userInfoKey[i] === 'phoneNumber') {
         newUser[userInfoKey[i]] = getPhoneNumber();
       } else if (userInfoKey[i] === 'cheerTeam') {

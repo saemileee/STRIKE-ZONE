@@ -1,3 +1,7 @@
+.user-data .welcome-comment {
+  font-size: 32px;
+  font-weight: 700;
+}
 .user-info {
   max-width: 1136px;
   margin: 100px auto;
