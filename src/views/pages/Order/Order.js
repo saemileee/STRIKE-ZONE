@@ -1,7 +1,8 @@
+// eslint-disable-next-line
 import { $ } from '/js/utils.js';
 
 function findAndFillAddress(target) {
-  document.querySelectorAll(`.${target}-address`).forEach(input => {
+  document.querySelectorAll(`.${target}-address`).forEach((input) => {
     input.addEventListener('click', () => {
       new daum.Postcode({
         oncomplete(data) {
@@ -20,9 +21,7 @@ findAndFillAddress('receiver');
 function autoHyphen(target) {
   const targetElement = $(target);
   targetElement.addEventListener('input', () => {
-    targetElement.value = targetElement.value
-      .replace(/[^0-9]/g, '')
-      .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
+    targetElement.value = targetElement.value.replace(/[^0-9]/g, '').replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
   });
 }
 
