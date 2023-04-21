@@ -36,14 +36,23 @@ categoryUlElement.append(teamCategoryLiElement, productCategoryLiElement);
 const cartElement = document.createElement('button');
 cartElement.className = 'cart';
 cartElement.innerHTML = `<i class="fa fa-shopping-cart" style="font-size:18px"></i><span class = "cart-amount">${CART_AMOUNT}</span>`;
+cartElement.addEventListener('click', () => {
+  window.location.href = '/cart';
+});
 
 const loginElement = document.createElement('button');
 loginElement.className = 'login';
 loginElement.innerHTML = '로그인';
+loginElement.addEventListener('click', () => {
+  window.location.href = '/login';
+});
 
 const signUpElement = document.createElement('button');
 signUpElement.className = 'signup';
 signUpElement.innerHTML = '회원가입';
+signUpElement.addEventListener('click', () => {
+  window.location.href = '/signup';
+});
 
 const myPageElement = document.createElement('button');
 myPageElement.className = 'my-page';
@@ -107,10 +116,7 @@ fetch('//10.10.6.36:8092/api/v1/teams')
       teamsUlElement.append(teamElement);
     })
   );
-// DUMMY_TEAM_CATEGORY_DATA.forEach(team => {
-//   const teamElement = createTeamElement(team);
-//   teamsUlElement.append(teamElement);
-// });
+
 teamsContainerElement.append(teamsUlElement);
 
 const productsContainerElement = document.createElement('div');
