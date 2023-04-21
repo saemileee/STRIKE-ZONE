@@ -3,11 +3,11 @@ import { teamService } from '../services';
 const teamController = {
   async addTeam(request, response, next) {
     const {
-      teamId, teamName, description, emblemPath,
+      teamId, teamName, teamDescription, emblemPath,
     } = request.body;
 
     const teamInfo = {
-      teamId, teamName, description, emblemPath,
+      teamId, teamName, teamDescription, emblemPath,
     };
 
     try {

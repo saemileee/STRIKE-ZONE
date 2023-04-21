@@ -10,7 +10,7 @@ const TeamSchema = new Schema(
       type: String,
       required: true,
     },
-    description: {
+    teamDescription: {
       type: String,
     },
     emblemPath: {
