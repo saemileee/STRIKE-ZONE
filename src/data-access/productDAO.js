@@ -1,4 +1,4 @@
-import { Product, Category } from './model';
+import { Product } from './model';
 
 const productDAO = {
   // 전체 상품 조회

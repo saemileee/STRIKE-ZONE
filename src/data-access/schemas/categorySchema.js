@@ -15,6 +15,14 @@ const CategorySchema = new Schema(
       type: String,
       required: true,
     },
+    teamName: {
+      type: String,
+      required: true,
+    },
+    teamDescription: {
+      type: String,
+      required: true,
+    },
     categoryId,
     categoryName: {
       type: String,
