@@ -41,6 +41,7 @@ const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '응원용품', url: '#' },
   { name: '야구용품', url: '#' },
 ];
+
 const CART_AMOUNT = 2;
 
 const headerElement = document.createElement('header');
@@ -95,21 +96,22 @@ headerWrapper.append(headerContainer);
 headerContainer.append(categoryUlElement, rightSideElementsContainer);
 document.body.prepend(headerElement);
 
-const createTeamElement = (team) => {
+const createTeamElement = team => {
+  console.log(team);
   const teamLiElement = document.createElement('li');
   teamLiElement.innerHTML = `
     <div>
-      <img src="${team.logo}">
+      <img src="${team.emblemPath}">
     </div>
-    <p>${team.name}</p>
+    <p>${team.teamName}</p>
   `;
   teamLiElement.addEventListener('click', () => {
-    window.location.href = team.url;
+    window.location.href = `/products?team=${team.teamId}&category=all`;
   });
   return teamLiElement;
 };
 
-const createProductElement = (category) => {
+const createProductElement = category => {
   const productLiElement = document.createElement('li');
   productLiElement.innerHTML = `
       <p>${category.name}</p>
@@ -126,22 +128,34 @@ categoryContainerElement.classList.add('category-container');
 const teamsContainerElement = document.createElement('div');
 teamsContainerElement.classList.add('teams-container');
 const teamsUlElement = document.createElement('ul');
-DUMMY_TEAM_CATEGORY_DATA.forEach((team) => {
-  const teamElement = createTeamElement(team);
-  teamsUlElement.append(teamElement);
-});
+
+fetch('//10.10.6.36:8092/api/v1/teams')
+  .then(response => response.json())
+  .then(data =>
+    data.forEach(team => {
+      const teamElement = createTeamElement(team);
+      teamsUlElement.append(teamElement);
+    })
+  );
+// DUMMY_TEAM_CATEGORY_DATA.forEach(team => {
+//   const teamElement = createTeamElement(team);
+//   teamsUlElement.append(teamElement);
+// });
 teamsContainerElement.append(teamsUlElement);
 
 const productsContainerElement = document.createElement('div');
 productsContainerElement.classList.add('products-container');
 const productsUlElement = document.createElement('ul');
-DUMMY_PRODUCT_CATEGORY_DATA.forEach((category) => {
+DUMMY_PRODUCT_CATEGORY_DATA.forEach(category => {
   const productElement = createProductElement(category);
   productsUlElement.append(productElement);
 });
 productsContainerElement.append(productsUlElement);
 
-categoryContainerElement.append(teamsContainerElement, productsContainerElement);
+categoryContainerElement.append(
+  teamsContainerElement,
+  productsContainerElement
+);
 headerElement.append(categoryContainerElement);
 
 teamsContainerElement.style.display = 'none';
