@@ -7,7 +7,7 @@ const orderDAO = {
     // 가장 마지막에 등록된 주문을 검색해서 해당 orderId 에서 +1 을 한 값을
     // 새로 저장할 주문의 orderId 로 사용한다.
     const lastOrder = await Order.find({}).sort({ createdAt: -1 }).limit(1);
-    const lastOrderId = lastOrder ? lastProduct[0].productId : 0;
+    const lastOrderId = lastOrder.length === 0 ? 0 : lastOrder[0].orderId;
     const nextOrderId = lastOrderId + 1;
     await Order.create({ ...orderInfo, orderId: nextOrderId });
   },

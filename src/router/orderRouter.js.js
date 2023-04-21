@@ -11,7 +11,7 @@ orderRouter.post('/orders', orderController.createOrder);
 orderRouter.get('/orders', orderController.getAllOrders);
 
 // 특정 유저의 주문 목록 조회
-orderRouter.get('/users/:email/orders', orderController.getOrdersByUserId);
+orderRouter.get('/users/:ordererEmail/orders', orderController.getOrdersByUserId);
 
 // 특정 orderId 의 주문 정보 조회
 orderRouter.get('/orders/:orderId', orderController.getOrderByOrderId);
