@@ -1,33 +1,31 @@
-import { Product } from './model';
+import { Product, Category } from './model';
 
 const productDAO = {
-  async createProduct(productInfo) {
-    const createNewProduct = await Product.create(productInfo);
-    return createNewProduct;
-  },
-
   // 전체 상품 조회
-  async findAll() {
+  async findAllProducts() {
     const products = await Product.find({});
     return products;
   },
 
-  // 특정 상품 조회
-  async findByProductId(productId) {
-    const product = await Product.find({ productId });
+  // 특정 카테고리의 상품 목록 조회
+  async findProductsByCategoryId(categoryId) {
+    const products = await Product.find({ categoryId });
+
+    return products;
+  },
+
+  // 상품 상세 조회 (productId)
+  async findProductByProductId(productId) {
+    const product = await Product.findOne({ productId });
+
     return product;
   },
 
-  // 상품 정보 수정
-  async updateByProductId(productId, updateInfo) {
-    const option = { returnOriginal: false };
-    const updatedProduct = await Product.findOneAndUpdate({ productId }, updateInfo, option);
-    return updatedProduct;
-  },
+  // 상품 추가 (관리자)
+  async createProduct(categoryId, productInfo) {
+    const createNewProduct = await Product.create({ categoryId, ...productInfo });
 
-  async deleteByProductId(productId) {
-    const deletedProduct = await Product.findOneAndDelete({ productId });
-    return deletedProduct;
+    return createNewProduct;
   },
 };
 

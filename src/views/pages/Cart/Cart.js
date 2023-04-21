@@ -1,6 +1,7 @@
 /* eslint-disable */
 import {
   getCartList,
+  getCartListSelected,
   addItemCart,
   decreaseItemOfCart,
   deleteItemOfCart,
@@ -40,7 +41,7 @@ const CartItem = (target, { productID, name, total, img, amount, selected }) => 
       <div class="cart-product">
         <div class="cart-product-data">
           <img src=${img} alt="">
-          <h1 class="cart-product-name">${name}</h1>
+          <a href="/products/${productID}" class="cart-product-name">${name}</a>
           <div class="cart-product-order">
             <div class="cart-product-amount">
               <span class="amount-minus">-</span>
@@ -98,8 +99,17 @@ const CartPrice = (shipPrice, allProductsPrice) => {
       <p>최종 금액</p>
       <em class="total-price">${total}원</em>
     </div>
-    <button class="button is-primary order-button" onclick="location.href='/order'">주문하기</button>
+    <button class="button is-primary order-button">주문하기</button>
   `;
+  const $orderButton = $cartPrice.querySelector('.order-button');
+
+  $orderButton.addEventListener('click', (event) => {
+    if (!getCartListSelected) {
+      alert('최소 한 가지 이상의 항목을 선택해주세요!');
+      return;
+    }
+    location.href = '/order';
+  });
   $price.append($cartPrice);
 };
 

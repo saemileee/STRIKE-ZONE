@@ -1,5 +1,4 @@
 import { authService } from "../services";
-// import jwt from 'jsonwebtoken';
 
 const authController = {
   async userLogin(req, res, next) {
@@ -8,11 +7,13 @@ const authController = {
 
       const userToken = await authService.getUserToken(email, password);
 
-      // const decodedEmail = jwt.verify(userToken, process.env.SECRET_KEY).email;
+      if (!userToken) {
+        throw new Error('토큰 발급에 실패하였습니다.');
+      }
 
-      // console.log(decodedEmail);
+      const result = JSON.stringify({ token: userToken });
 
-      res.json(userToken);
+      res.json(result);
     } catch (err) {
       res.end(err.message);
     }
@@ -24,7 +25,13 @@ const authController = {
 
       const user = await authService.checkPasswordCorrect(email, password);
 
-      res.json(user);
+      if (!user) {
+        throw new Error('비밀번호가 일치하지 않습니다.');
+      }
+
+      const result = JSON.stringify({ result: 'success' });
+
+      res.json(result);
     } catch (err) {
       res.end(err.message);
     }
