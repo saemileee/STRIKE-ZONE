@@ -38,7 +38,13 @@ const userController = {
 
       const newUser = await userService.addUser(userInfo);
 
-      res.json(newUser);
+      if (!newUser) {
+        throw new Error('유저 등록에 실패하였습니다.');
+      }
+
+      const result = JSON.stringify({ result: 'success' });
+
+      res.json(result);
     } catch (err) {
       res.end(err.message);
     }
@@ -60,7 +66,13 @@ const userController = {
 
       const updatedUser = await userService.setUser(email, toUpdate);
 
-      res.json(updatedUser);
+      if (!updatedUser) {
+        throw new Error('유저 수정에 실패하였습니다.');
+      }
+
+      const result = JSON.stringify({ result: 'success' });
+
+      res.json(result);
     } catch (err) {
       res.end(err.message);
     }
@@ -70,9 +82,15 @@ const userController = {
     try {
       const { email } = req.params;
 
-      const deletedUser = await userService.deleteUser(email);
+      const { deletedCount } = await userService.deleteUser(email);
 
-      res.json(deletedUser);
+      if (deletedCount === 0) {
+        throw new Error('유저 삭제에 실패하였습니다.');
+      }
+
+      const result = JSON.stringify({ result: 'success' });
+
+      res.json(result);
     } catch (err) {
       res.end(err.message);
     }
