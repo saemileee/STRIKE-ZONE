@@ -14,8 +14,8 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 1000px;
-  height: 800px;
+  width: 60vw;
+  height: 70vh;
   border-radius: 20px;
   background-color: #fff;
   box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
