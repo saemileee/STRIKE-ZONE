@@ -2,10 +2,16 @@ import { teamService } from '../services';
 
 const teamController = {
   async addTeam(request, response, next) {
-    const { title, description, emblemPath } = request.body;
+    const {
+      teamId, teamName, description, emblemPath,
+    } = request.body;
+
+    const teamInfo = {
+      teamId, teamName, description, emblemPath,
+    };
 
     try {
-      await teamService.addTeam({ title, description, emblemPath });
+      await teamService.addTeam(teamInfo);
 
       response
         .status(201)

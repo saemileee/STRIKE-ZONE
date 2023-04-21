@@ -6,7 +6,7 @@ const TeamSchema = new Schema(
       type: String,
       required: true,
     },
-    title: {
+    teamName: {
       type: String,
       required: true,
     },
