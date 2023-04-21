@@ -2,7 +2,6 @@ import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import path from 'path';
 
 import { v1Router } from './router';
 import { viewsRouter } from './router/viewRouter';
@@ -24,7 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 
 mongoose.set('strictQuery', false);
 
-app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static('public'));
 
 app.use('/', viewsRouter);
 app.use('/api/v1', v1Router);

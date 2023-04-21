@@ -8,9 +8,19 @@
   border-radius: 10px;
   position: relative;
 }
-.invalid {
-  border: solid 2px rgb(255, 0, 0);
-}
 label {
   text-align: left;
+}
+#cheerTeam {
+  display: flex;
+  flex-flow: wrap;
+}
+#cheerTeam > label {
+  width: 25%;
+}
+.teams {
+  border: solid 1px #b4b4b4;
+}
+.teams > input[type='checkbox'] {
+  display: none;
 }
