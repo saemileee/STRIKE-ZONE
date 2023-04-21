@@ -2,7 +2,14 @@
 import { $, $createElement } from '/js/utils.js';
 
 function getUser() {
-  fetch('/api/v1/users/:email')
+  const { token } = JSON.parse(localStorage.getItem('user'));
+
+  fetch('/api/v1/users', {
+    method: 'GET',
+    headers: {
+      token,
+    },
+  })
     .then((response) => response.json())
     .then((data) => console.log(data));
 }

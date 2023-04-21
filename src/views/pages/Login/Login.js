@@ -20,7 +20,6 @@ const onLoginSubmit = (e) => {
   })
     .then((response) => response.json())
     .then((token) => {
-      console.log(token);
       localStorage.setItem('user', token);
     });
 };
