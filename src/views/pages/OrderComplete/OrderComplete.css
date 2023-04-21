@@ -1,39 +1,35 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css";
-body {
-  height: 100vh;
-  background-color: rgb(241, 241, 241);
-}
 
 .order-list-wrapper {
-  width: 50rem;
   padding: 24px 36px 24px 36px;
   background-color: rgb(255, 255, 255);
   margin-bottom: 12px;
   margin: 0 auto 12px auto;
 }
 
-label {
-  text-align: left;
-}
-
-div.field-body > input[type="text"] {
-  width: 100%;
-}
-
-select {
-  margin-right: 8px;
-}
-
-.order-list-container .order-data {
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
 .order-list-container .order-list {
   margin-top: 20px;
 }
 
-.order-list-container .order-item {
+.order-list-container .order-data {
+  margin-bottom: 10px;
+}
+
+.order-list-container .order-data p {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.order-list-container .order-data p {
+  font-weight: 500;
+}
+
+.order-list-container .order-data em {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.order-item {
   display: flex;
   padding: 12px;
   border: 1px solid rgb(232, 232, 232);
@@ -41,8 +37,7 @@ select {
   margin-bottom: 20px;
 }
 
-
-.order-list-container .order-item .image-container {
+.order-item .image-container {
   width: 100px;
   height: 100px;
   margin-right: 18px;
@@ -50,7 +45,7 @@ select {
   border-radius: 4px;
   overflow: hidden;
 }
-.order-list-container .order-item .product-information {
+.order-item .product-information {
   display: flex;
   flex-direction: column;
 }
@@ -62,6 +57,7 @@ select {
 
 .order-list-container .price-box p {
   font-size: 18px;
+  margin-bottom: 4px;
 }
 
 .order-list-container .price-box em {
@@ -69,17 +65,14 @@ select {
   font-weight: 700;
 }
 
-.order-user-data {
-  width: 50rem;
-  padding: 24px 36px 24px 36px;
-  background-color: rgb(255, 255, 255);
-  margin: 0 auto 12px auto;
+.order-list-container .price-box.total-price {
+  margin-bottom: 30px;
 }
 
 .user-data-box div {
   display: flex;
   font-size: 16px;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .user-data-box div p {
