@@ -3,9 +3,9 @@ import { Schema } from 'mongoose';
 const OrderSchema = new Schema({
   orderId: { type: Number, required: true },
 
-  productId: { type: String, required: true },
+  productId: { type: Number, required: true },
   productName: { type: String, required: true },
-  quantity: { type: String, required: true },
+  quantity: { type: Number, required: true },
   price: { type: Number, required: true },
   deliveryCharge: { type: Number, required: true },
   totalPayment: { type: Number, required: true },
