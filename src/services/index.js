@@ -3,6 +3,7 @@ import { authService } from './authService';
 import { productService } from './productService';
 import { teamService } from './teamService';
 import { categoryService } from './categoryService';
+import { orderService } from './orderService';
 
 export {
   userService,
@@ -10,4 +11,5 @@ export {
   productService,
   teamService,
   categoryService,
+  orderService,
 };

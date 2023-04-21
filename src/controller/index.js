@@ -3,6 +3,7 @@ import { authController } from './authController';
 import { productController } from './productController';
 import { teamController } from './teamController';
 import { categoryController } from './categoryController';
+import { orderController } from './orderController';
 
 export {
   userController,
@@ -10,4 +11,5 @@ export {
   productController,
   teamController,
   categoryController,
+  orderController,
 };
