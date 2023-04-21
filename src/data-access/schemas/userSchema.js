@@ -19,11 +19,22 @@ const UserSchema = new Schema(
       required: true,
     },
     address: {
-      type: String,
-      required: true,
+      postCode: {
+        type: Number,
+        required: true,
+      },
+      roughAddress: {
+        type: String,
+        required: true,
+      },
+      detailAddress: {
+        type: String,
+        required: true,
+      },
     },
     cheerTeam: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: 'teams',
       required: false,
     },
   },
