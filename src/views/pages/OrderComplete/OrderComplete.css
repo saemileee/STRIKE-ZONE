@@ -1,0 +1,88 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css";
+body {
+  height: 100vh;
+  background-color: rgb(241, 241, 241);
+}
+
+.order-list-wrapper {
+  width: 50rem;
+  padding: 24px 36px 24px 36px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 12px;
+  margin: 0 auto 12px auto;
+}
+
+label {
+  text-align: left;
+}
+
+div.field-body > input[type="text"] {
+  width: 100%;
+}
+
+select {
+  margin-right: 8px;
+}
+
+.order-list-container .order-data {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.order-list-container .order-list {
+  margin-top: 20px;
+}
+
+.order-list-container .order-item {
+  display: flex;
+  padding: 12px;
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+
+.order-list-container .order-item .image-container {
+  width: 100px;
+  height: 100px;
+  margin-right: 18px;
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.order-list-container .order-item .product-information {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-list-container .price-box {
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.order-list-container .price-box p {
+  font-size: 18px;
+}
+
+.order-list-container .price-box em {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.order-user-data {
+  width: 50rem;
+  padding: 24px 36px 24px 36px;
+  background-color: rgb(255, 255, 255);
+  margin: 0 auto 12px auto;
+}
+
+.user-data-box div {
+  display: flex;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.user-data-box div p {
+  width: 100px;
+  margin-right: 20px;
+}
