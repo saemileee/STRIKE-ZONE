@@ -42,7 +42,9 @@ export function getCartListSelected() {
 
 export function getOrderPrice(ship) {
   const cartList = getCartListSelected();
-  const totalPricesByServer = cartList.map(({ id, amount }) => getItemById(id).price * amount);
+  const totalPricesByServer = cartList.map(
+    ({ id, amount }) => getItemById(id).price * amount
+  );
   const totalPrice = totalPricesByServer.reduce((acc, cur) => acc + cur, 0);
 
   if (ship) return totalPrice + ship;
@@ -51,7 +53,7 @@ export function getOrderPrice(ship) {
 
 /* order 페이지 사용 영역 */
 
-export function addItemCart(id) {
+export function addItemCart(id, requestAmount = 1) {
   const cartList = getCartFromLocal();
   const { img, name, team, price } = getItemById(id);
   if (cartList[id]) {
@@ -59,7 +61,7 @@ export function addItemCart(id) {
     cartList[id] = {
       ...cartList[id],
       price,
-      amount: amount + 1,
+      amount: amount + Number(requestAmount),
       total: price * (amount + 1),
     };
   } else {
@@ -67,7 +69,7 @@ export function addItemCart(id) {
       name,
       team,
       img,
-      amount: 1,
+      amount: Number(requestAmount),
       price,
       total: price,
       selected: true,

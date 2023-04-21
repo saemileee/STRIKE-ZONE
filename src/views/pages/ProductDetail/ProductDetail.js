@@ -1,4 +1,5 @@
 import DUMMY_DATA from './dummy.js';
+import { addItemCart } from '/js/api/cartAPI.js';
 
 function $createElement(elementType, className) {
   const $element = document.createElement(elementType);
@@ -21,6 +22,8 @@ const {
   descriptionImage,
   descriptionShortText,
 } = DUMMY_DATA;
+
+const productID = '734541';
 
 const $productBasicInformationContainer = $createElement(
   'div',
@@ -121,6 +124,16 @@ $totalAmountContainer.append($totalAmountLabel, $totalAmountValue);
 
 const $cartButton = $createElement('button', 'cart-button button');
 $cartButton.innerHTML = '장바구니';
+$cartButton.addEventListener('click', () => {
+  addItemCart(productID, $productCountInput.value);
+  if (
+    confirm(
+      '해당 상품이 장바구니에 추가되었습니다. 바로 장바구니를 확인하시겠습니까?'
+    ) === true
+  ) {
+    window.location.href = '/cart';
+  }
+});
 
 const $orderButton = $createElement('button', 'order-button button is-info');
 $orderButton.innerHTML = '바로구매';
