@@ -22,20 +22,8 @@
   <body>
     <section class="order-wrapper">
       <h3 class="title is-3">주문/결제</h3>
-      <script type="module" src="./order.js"></script>
       <section class="order-list-container">
         <h4 class="title is-4">주문상품</h4>
-        <div id="order-list">
-          <div class="image-container">
-            <img src="/assets/img/product/product-3600-1.jpeg" />
-          </div>
-          <div class="product-information">
-            <span class="order-product-team">팀명</span>
-            <span class="order-product-title">상품명</span
-            ><span class="order-product-total-amount">6,900원</span
-            ><span class="order-product-count">1개</span>
-          </div>
-        </div>
       </section>
       <section>
         <h4 class="title is-4">주문자</h4>
@@ -161,29 +149,11 @@
           </div>
         </div>
       </section>
-      <script type="module" src="./order.js"></script>
       <section class="delivery-information-container">
         <h4 class="title is-4">배송지</h4>
         <button class="button is-small is-info fill-delivery-information">
           위와 동일하게 채우기
         </button>
-        <!-- <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">배송지명</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input shipping-address-name"
-                  type="text"
-                  placeholder="배송지명을 입력해 주세요."
-                  required
-                />
-              </p>
-            </div>
-          </div>
-        </div> -->
         <div class="field is-horizontal">
           <div class="field-label is-normal">
             <label class="label">받는 사람</label>
@@ -305,7 +275,10 @@
       </section>
       <section>
         <h4 class="title is-4">결제금액</h4>
-        <div><span>총 상품 금액</span><span class="price">11,300원</span></div>
+        <div>
+          <span>총 상품 금액</span
+          ><span class="price total-product-amount">11,300원</span>
+        </div>
         <div><span>배송비</span><span class="price">2,300원</span></div>
         <hr />
         <div><span>최종 결제금액</span><span class="price">2,300원</span></div>
@@ -330,7 +303,7 @@
     </section>
   </body>
   <script src="/js/header.js" type="module"></script>
-  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js""></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="./Order.js" type="module"></script>
   <script src="/js/footer.js" type="module"></script>
 </html>
