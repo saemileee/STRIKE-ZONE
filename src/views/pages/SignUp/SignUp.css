@@ -21,6 +21,6 @@ label {
 .teams {
   border: solid 1px #b4b4b4;
 }
-.teams > input[type='checkbox'] {
+.teams > input[type='radio'] {
   display: none;
 }
