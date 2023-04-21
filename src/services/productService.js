@@ -13,6 +13,12 @@ const productService = {
     return products;
   },
 
+  // 특정 카테고리(ex. 유니폼)에 속한 모든 팀의 상품 목록 조회
+  async getProductsByCategoryName(categoryName) {
+    const products = await productDAO.findProductsByCategoryName(categoryName);
+    return products;
+  },
+
   // 상품 상세 조회 (productId)
   async getProductByProductId(productId) {
     const product = await productDAO.findProductByProductId(productId);

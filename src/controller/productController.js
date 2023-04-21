@@ -13,12 +13,25 @@ const productController = {
     }
   },
 
-  // 특정 카테고리의 상품 목록 조회
+  // 특정 팀의 카테고리의 상품 목록 조회
   async getProductsByCategoryId(request, response, next) {
     try {
       const { categoryId } = request.params;
 
       const products = await productService.getProductsByCategoryId(categoryId);
+
+      response.status(201).json(products);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // 특정 카테고리(ex. 유니폼)에 해당하는 모든 팀의 상품 목록 조회
+  async getProductsByCategoryName(request, response, next) {
+    try {
+      const { categoryName } = request.params;
+
+      const products = await productService.getProductsByCategoryName(categoryName);
 
       response.status(201).json(products);
     } catch (error) {

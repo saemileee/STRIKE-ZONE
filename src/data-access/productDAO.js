@@ -1,16 +1,22 @@
 import { Product, Category } from './model';
 
 const productDAO = {
-  // 전체 상품 조회
+  // 팀, 카테고리 상관없이 전체 상품 조회
   async findAllProducts() {
     const products = await Product.find({});
     return products;
   },
 
-  // 특정 카테고리의 상품 목록 조회
+  // 특정 팀의 카테고리에 속한 상품 목록 조회
   async findProductsByCategoryId(categoryId) {
     const products = await Product.find({ categoryId });
 
+    return products;
+  },
+
+  // 특정 카테고리(ex. 유니폼)에 속한 모든 팀의 상품 목록 조회
+  async findProductsByCategoryName(categoryName) {
+    const products = await Product.find({ categoryName });
     return products;
   },
 
