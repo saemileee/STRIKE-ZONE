@@ -6,7 +6,7 @@ const newUserPassword = utils.$('#password');
 const newUserPasswordVerify = utils.$('#passwordVerify');
 const newUserPhoneNumber = utils.$('#phoneNumber');
 const findAddress = document.querySelectorAll('.address');
-const teams = document.querySelectorAll('.team');
+const teams = document.getElementsByName('team');
 
 function checkValidation(target) {
   const regex = {
@@ -84,18 +84,20 @@ function searchZipcode() {
   }).open();
 }
 
-function selecteTeam(event) {
-  event.target.classList.toggle('selected');
-  event.target.parentNode.classList.toggle('is-info');
+function selectTeam() {
+  for (let i = 0; i < teams.length; i++) {
+    if (teams[i].checked) {
+      teams[i].parentNode.classList.add('is-info');
+    } else {
+      teams[i].parentNode.classList.remove('is-info');
+    }
+  }
 }
 
 function getCheerTeam() {
-  const selectedTeam = document.querySelectorAll('.selected');
-  const cheerTeam = [];
-  selectedTeam.forEach((node) => {
-    cheerTeam.push(node.value);
-  });
-  return cheerTeam.join(' ');
+  for (let i = 0; i < teams.length; i++) {
+    if (teams[i].checked) return teams[i].value;
+  }
 }
 
 function onSignUpSubmit(e) {
@@ -110,17 +112,19 @@ function onSignUpSubmit(e) {
       'postCode',
       'roughAddress',
       'detailAddress',
+      'cheerTeam',
     ];
     for (let i = 0; i < userInfoKey.length; i++) {
       const userInfo = utils.$(`#${userInfoKey[i]}`);
       if (userInfoKey[i] === 'phoneNumber') {
         newUser[userInfoKey[i]] = getPhoneNumber();
+      } else if (userInfoKey[i] === 'cheerTeam') {
+        newUser[userInfoKey[i]] = getCheerTeam();
       } else {
         newUser[userInfoKey[i]] = userInfo.value;
       }
     }
-    newUser['cheerTeam'] = getCheerTeam();
-    
+
     fetch('/api/v1/users', {
       method: 'POST',
       headers: {
@@ -141,5 +145,5 @@ for (let i = 0; i < 3; i++) {
   findAddress[i].addEventListener('click', searchZipcode);
 }
 for (let i = 0; i < teams.length; i++) {
-  teams[i].addEventListener('click', selecteTeam);
+  teams[i].addEventListener('click', selectTeam);
 }

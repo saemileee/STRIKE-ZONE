@@ -49,15 +49,15 @@ headerWrapper.className = 'header-wrapper';
 
 const headerContainer = document.createElement('div');
 headerContainer.className = 'header-container';
-headerContainer.innerHTML = `<h1><a href="/main">MARKET<br/>NAME</a></h1>`;
+headerContainer.innerHTML = '<h1><a href="/">MARKET<br/>NAME</a></h1>';
 
 const categoryUlElement = document.createElement('ul');
 
 const teamCategoryLiElement = document.createElement('li');
-teamCategoryLiElement.innerHTML = `TEAMS`;
+teamCategoryLiElement.innerHTML = 'TEAMS';
 
 const productCategoryLiElement = document.createElement('li');
-productCategoryLiElement.innerHTML = `PRODUCTS`;
+productCategoryLiElement.innerHTML = 'PRODUCTS';
 
 categoryUlElement.append(teamCategoryLiElement, productCategoryLiElement);
 
@@ -95,7 +95,7 @@ headerWrapper.append(headerContainer);
 headerContainer.append(categoryUlElement, rightSideElementsContainer);
 document.body.prepend(headerElement);
 
-const createTeamElement = team => {
+const createTeamElement = (team) => {
   const teamLiElement = document.createElement('li');
   teamLiElement.innerHTML = `
     <div>
@@ -109,7 +109,7 @@ const createTeamElement = team => {
   return teamLiElement;
 };
 
-const createProductElement = category => {
+const createProductElement = (category) => {
   const productLiElement = document.createElement('li');
   productLiElement.innerHTML = `
       <p>${category.name}</p>
@@ -126,7 +126,7 @@ categoryContainerElement.classList.add('category-container');
 const teamsContainerElement = document.createElement('div');
 teamsContainerElement.classList.add('teams-container');
 const teamsUlElement = document.createElement('ul');
-DUMMY_TEAM_CATEGORY_DATA.forEach(team => {
+DUMMY_TEAM_CATEGORY_DATA.forEach((team) => {
   const teamElement = createTeamElement(team);
   teamsUlElement.append(teamElement);
 });
@@ -135,16 +135,13 @@ teamsContainerElement.append(teamsUlElement);
 const productsContainerElement = document.createElement('div');
 productsContainerElement.classList.add('products-container');
 const productsUlElement = document.createElement('ul');
-DUMMY_PRODUCT_CATEGORY_DATA.forEach(category => {
+DUMMY_PRODUCT_CATEGORY_DATA.forEach((category) => {
   const productElement = createProductElement(category);
   productsUlElement.append(productElement);
 });
 productsContainerElement.append(productsUlElement);
 
-categoryContainerElement.append(
-  teamsContainerElement,
-  productsContainerElement
-);
+categoryContainerElement.append(teamsContainerElement, productsContainerElement);
 headerElement.append(categoryContainerElement);
 
 teamsContainerElement.style.display = 'none';
