@@ -1,9 +1,9 @@
-import * as utils from '/js/utils.js';
+import { $ } from '/js/utils.js';
 
-const loginForm = utils.$('.login-form');
+const loginForm = $('.login-form');
 
-const loginId = utils.$('#loginId');
-const loginPassword = utils.$('#loginPassword');
+const loginId = $('#loginId');
+const loginPassword = $('#loginPassword');
 
 const onLoginSubmit = (e) => {
   e.preventDefault();
@@ -17,7 +17,9 @@ const onLoginSubmit = (e) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(userInfo),
-  }).then((response) => console.log(response.json()));
+  })
+    .then((response) => response.json())
+    .then((token) => console.log(token));
 };
 
 loginForm.addEventListener('submit', onLoginSubmit);

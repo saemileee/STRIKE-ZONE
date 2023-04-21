@@ -1,11 +1,11 @@
-import * as utils from '/js/utils.js';
+import { $ } from '/js/utils.js';
 
-const findPasswordForm = utils.$('.find-password-form');
+const findPasswordForm = $('.find-password-form');
 
 const onfindPasswordSubmit = (e) => {
   e.preventDefault();
-  const findId = utils.$('#findId').value;
-  const findName = utils.$('#findName').value;
+  const findId = $('#findId').value;
+  const findName = $('#findName').value;
   console.log(findId, findName);
 };
 
