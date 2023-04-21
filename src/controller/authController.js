@@ -15,7 +15,7 @@ const authController = {
 
       res.json(result);
     } catch (err) {
-      res.end(err.message);
+      next(err);
     }
   },
 
@@ -33,7 +33,7 @@ const authController = {
 
       res.json(result);
     } catch (err) {
-      res.end(err.message);
+      next(err.message);
     }
   },
 };

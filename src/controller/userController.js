@@ -7,7 +7,7 @@ const userController = {
 
       res.json(allUsers);
     } catch (err) {
-      res.end(err.message);
+      next(err);
     }
   },
 
@@ -19,7 +19,7 @@ const userController = {
 
       res.json(user);
     } catch (err) {
-      res.end(err.message);
+      next(err);
     }
   },
 
@@ -46,7 +46,7 @@ const userController = {
 
       res.json(result);
     } catch (err) {
-      res.end(err.message);
+      next(err);
     }
   },
 
@@ -74,7 +74,7 @@ const userController = {
 
       res.json(result);
     } catch (err) {
-      res.end(err.message);
+      next(err);
     }
   },
 
@@ -92,7 +92,7 @@ const userController = {
 
       res.json(result);
     } catch (err) {
-      res.end(err.message);
+      next(err);
     }
   },
 };

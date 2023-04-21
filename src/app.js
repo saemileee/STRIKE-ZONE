@@ -6,6 +6,7 @@ import path from 'path';
 
 import { v1Router } from './router';
 import { viewsRouter } from './router/viewRouter';
+import { errorHandler } from './middleware';
 
 dotenv.config();
 
@@ -28,6 +29,8 @@ app.use('/', express.static('public'));
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/', viewsRouter);
 app.use('/api/v1', v1Router);
+
+app.use(errorHandler);
 
 mongoose.connect(MONGO_URL);
 
