@@ -15,7 +15,7 @@ const v1Router = express.Router();
 
 v1Router.use('/users', userRouter);
 v1Router.use('/auth', authRouter);
-v1Router.use('/products', productRouter);
+v1Router.use('/', productRouter);
 v1Router.use('/teams', teamRouter);
 
 export {

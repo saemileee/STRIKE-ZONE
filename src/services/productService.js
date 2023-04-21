@@ -1,31 +1,27 @@
 import { productDAO } from '../data-access';
 
 const productService = {
-  // 상품 목록 조회
-  async getProducts() {
-    const products = await productDAO.findAll();
+  // 전체 상품 목록 조회
+  async getAllProducts() {
+    const products = await productDAO.findAllProducts();
     return products;
   },
 
-  // 단일 상품 조회
-  async getProduct(productId) {
-    const product = await productDAO.findByProductId(productId);
+  // 특정 팀의 카테고리에 해당하는 상품 목록 조회
+  async getProductsByCategoryId(categoryId) {
+    const products = await productDAO.findProductsByCategoryId(categoryId);
+    return products;
+  },
+
+  // 상품 상세 조회 (productId)
+  async getProductByProductId(productId) {
+    const product = await productDAO.findProductByProductId(productId);
     return product;
   },
 
   // 상품 추가하기 (관리자)
-  async addProduct(productInfo) {
-    await productDAO.createProduct(productInfo);
-  },
-
-  // 상품 정보 수정하기 (관리자)
-  async updateProductById(productId, updateInfo) {
-    await productDAO.updateByProductId(productId, updateInfo);
-  },
-
-  // 상품 정보 삭제하기 (관리자)
-  async deleteProductById(productId) {
-    await productDAO.deleteByProductId(productId);
+  async postProduct(categoryId, productInfo) {
+    await productDAO.createProduct(categoryId, productInfo);
   },
 };
 
