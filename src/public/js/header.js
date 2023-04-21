@@ -1,3 +1,5 @@
+const { response } = require('express');
+
 const DUMMY_USER_DATA = {
   // userId: 'elice@elice.com',d
 };
@@ -49,7 +51,7 @@ headerWrapper.className = 'header-wrapper';
 
 const headerContainer = document.createElement('div');
 headerContainer.className = 'header-container';
-headerContainer.innerHTML = `<h1><a href="/main">MARKET<br/>NAME</a></h1>`;
+headerContainer.innerHTML = `<h1><a href="/">MARKET<br/>NAME</a></h1>`;
 
 const categoryUlElement = document.createElement('ul');
 
