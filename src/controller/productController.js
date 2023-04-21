@@ -43,11 +43,11 @@ const productController = {
   async postProduct(request, response, next) {
     const { categoryId } = request.params;
     const {
-      productId, name, quantity, price, rate, shortDescription, detailDescription, img,
+      name, quantity, price, rate, shortDescription, detailDescription, img,
     } = request.body;
 
     const productInfo = {
-      productId, name, quantity, price, rate, shortDescription, detailDescription, img,
+      name, quantity, price, rate, shortDescription, detailDescription, img,
     };
 
     try {
