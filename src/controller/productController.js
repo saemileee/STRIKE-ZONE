@@ -43,13 +43,15 @@ const productController = {
   async postProduct(request, response, next) {
     const { categoryId } = request.params;
     const {
-      name, quantity, price, rate, shortDescription, detailDescription, img,
+      productId, name, quantity, price, rate, shortDescription, detailDescription, img,
     } = request.body;
 
+    const productInfo = {
+      productId, name, quantity, price, rate, shortDescription, detailDescription, img,
+    };
+
     try {
-      await productService.postProduct(categoryId, {
-        name, quantity, price, rate, shortDescription, detailDescription, img,
-      });
+      await productService.postProduct(categoryId, productInfo);
 
       response
         .status(201)
