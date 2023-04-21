@@ -19,7 +19,10 @@ const onLoginSubmit = (e) => {
     body: JSON.stringify(userInfo),
   })
     .then((response) => response.json())
-    .then((token) => console.log(token));
+    .then((token) => {
+      console.log(token);
+      localStorage.setItem('user', token);
+    });
 };
 
 loginForm.addEventListener('submit', onLoginSubmit);

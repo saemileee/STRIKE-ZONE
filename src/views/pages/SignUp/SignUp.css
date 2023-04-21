@@ -24,3 +24,8 @@ label {
 .teams > input[type='radio'] {
   display: none;
 }
+.email-warning,
+.password-warning,
+.password-verify-warning {
+  margin-top: 10px;
+}

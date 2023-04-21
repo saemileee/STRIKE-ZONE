@@ -1,13 +1,18 @@
 // eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
-// eslint-disable-next-line
-import * as utils from '/js/utils.js';
+
+function getUser() {
+  fetch('/api/v1/users/:email')
+    .then((response) => response.json())
+    .then((data) => console.log(data));
+}
+getUser();
 
 const $userData = $('.user-data');
 
-const $form = $createElement('form', 'sign-up-form');
+const $form = $createElement('form', 'update-form');
 $form.innerHTML = `
-  <form class="sign-up-form">
+  <form class="update-form">
   <h4 class="title is-4">회원 정보 수정</h4>
   <div class="field is-horizontal">
     <div class="field-label is-normal">
@@ -232,7 +237,7 @@ $form.innerHTML = `
     </div>
   </div>
   <div class="buttons">
-    <button type="submit" class="button is-info" id="signUp">
+    <button type="submit" class="button is-info" id="update">
       수정하기
     </button>
   </div>
@@ -241,17 +246,18 @@ $form.innerHTML = `
 
 $userData.append($form);
 
-const signUpForm = utils.$('.sign-up-form');
-const newUserEmail = utils.$('#email');
-const newUserPassword = utils.$('#password');
-const newUserPasswordVerify = utils.$('#passwordVerify');
-const newUserPhoneNumber = utils.$('#phoneNumber');
+const updateForm = $('.update-form');
+const newUserEmail = $('#email');
+const newUserPassword = $('#password');
+const newUserPasswordVerify = $('#passwordVerify');
+const newUserPhoneNumber = $('#phoneNumber');
 const findAddress = document.querySelectorAll('.address');
 const teams = document.getElementsByName('team');
 
 function checkValidation(target) {
   const regex = {
-    email: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+    email:
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
     password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
   };
   if (!target.value.match(regex[target.id])) return false;
@@ -261,18 +267,21 @@ function checkValidation(target) {
 function isValid(event) {
   if (!checkValidation(event.target)) {
     event.target.classList.add('is-danger');
-    const warning = utils.$(`.${event.target.id}-warning`);
+    const warning = $(`.${event.target.id}-warning`);
     warning.style.display = '';
   } else {
     event.target.classList.remove('is-danger');
-    const warning = utils.$(`.${event.target.id}-warning`);
+    const warning = $(`.${event.target.id}-warning`);
     warning.style.display = 'none';
   }
 }
 
 function passwordVerify() {
-  const warning = utils.$('.password-verify-warning');
-  if (newUserPassword.value !== newUserPasswordVerify.value || newUserPasswordVerify.value === '') {
+  const warning = $('.password-verify-warning');
+  if (
+    newUserPassword.value !== newUserPasswordVerify.value ||
+    newUserPasswordVerify.value === ''
+  ) {
     newUserPasswordVerify.classList.add('is-danger');
     warning.style.display = '';
     return false;
@@ -299,12 +308,16 @@ function userInfoComplete() {
 }
 
 function autoHyphen() {
-  newUserPhoneNumber.value = newUserPhoneNumber.value.replace(/[^0-9]/g, '').replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
+  newUserPhoneNumber.value = newUserPhoneNumber.value
+    .replace(/[^0-9]/g, '')
+    .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
 }
 
 function getPhoneNumber() {
-  const firstNumber = utils.$('#firstPhoneNumber');
-  return `${firstNumber.options[firstNumber.selectedIndex].text}-${newUserPhoneNumber.value}`;
+  const firstNumber = $('#firstPhoneNumber');
+  return `${firstNumber.options[firstNumber.selectedIndex].text}-${
+    newUserPhoneNumber.value
+  }`;
 }
 
 function searchZipcode() {
@@ -333,13 +346,22 @@ function getCheerTeam() {
   }
 }
 
-function onSignUpSubmit(e) {
+function onUpdateSubmit(e) {
   e.preventDefault();
   if (userInfoComplete()) {
     const newUser = {};
-    const userInfoKey = ['email', 'password', 'koreanName', 'phoneNumber', 'postCode', 'roughAddress', 'detailAddress', 'cheerTeam'];
+    const userInfoKey = [
+      'email',
+      'password',
+      'koreanName',
+      'phoneNumber',
+      'postCode',
+      'roughAddress',
+      'detailAddress',
+      'cheerTeam',
+    ];
     for (let i = 0; i < userInfoKey.length; i++) {
-      const userInfo = utils.$(`#${userInfoKey[i]}`);
+      const userInfo = $(`#${userInfoKey[i]}`);
       if (userInfoKey[i] === 'phoneNumber') {
         newUser[userInfoKey[i]] = getPhoneNumber();
       } else if (userInfoKey[i] === 'cheerTeam') {
@@ -359,7 +381,7 @@ function onSignUpSubmit(e) {
   }
 }
 
-signUpForm.addEventListener('submit', onSignUpSubmit);
+updateForm.addEventListener('submit', onUpdateSubmit);
 newUserEmail.addEventListener('blur', isValid);
 newUserPassword.addEventListener('blur', isValid);
 newUserPassword.addEventListener('blur', passwordVerify);
