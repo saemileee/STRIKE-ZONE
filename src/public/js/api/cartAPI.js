@@ -26,13 +26,6 @@ export function getCartList() {
   return arrayCart;
 }
 
-/* order 페이지 사용 영역 */
-
-export function getAllProduct(ship) {
-  const cartList = getCartListSelected();
-  return cartList.length;
-}
-
 export function getCartListSelected() {
   const cartList = getCartList();
   const selectedCartList = cartList.filter(({ selected }) => selected);
@@ -40,18 +33,19 @@ export function getCartListSelected() {
   return selectedCartList;
 }
 
+export function getAllProduct() {
+  const cartList = getCartListSelected();
+  return cartList.length;
+}
+
 export function getOrderPrice(ship) {
   const cartList = getCartListSelected();
-  const totalPricesByServer = cartList.map(
-    ({ id, amount }) => getItemById(id).price * amount
-  );
+  const totalPricesByServer = cartList.map(({ id, amount }) => getItemById(id).price * amount);
   const totalPrice = totalPricesByServer.reduce((acc, cur) => acc + cur, 0);
 
   if (ship) return totalPrice + ship;
   return totalPrice;
 }
-
-/* order 페이지 사용 영역 */
 
 export function addItemCart(id, requestAmount = 1) {
   const cartList = getCartFromLocal();
@@ -69,8 +63,8 @@ export function addItemCart(id, requestAmount = 1) {
       name,
       team,
       img,
-      amount: Number(requestAmount),
       price,
+      amount: Number(requestAmount),
       total: price,
       selected: true,
     };
@@ -111,16 +105,22 @@ export function toggleItemOfCart(id) {
 
 export function toggleAllItemOfCart(boolean) {
   const cartList = getCartFromLocal();
-  for (const key in cartList) {
-    cartList[key].selected = boolean;
-  }
+  const cartListKeys = Object.keys(cartList);
+
+  cartListKeys.forEach((key) => {
+    cartList[key].selected = !boolean;
+  });
   setCartToLocal(cartList);
 }
 
-export function getIsAllSelceted(boolean) {
+export function getIsAllSelceted() {
   const cartList = getCartFromLocal();
-  for (const key in cartList) {
-    if (!cartList[key].selected) return false;
-  }
-  return true;
+  const cartListKeys = Object.keys(cartList);
+
+  return cartListKeys.every((key) => {
+    if (!cartList[key].selected) {
+      return false;
+    }
+    return true;
+  });
 }
