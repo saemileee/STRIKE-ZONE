@@ -1,38 +1,9 @@
+import { getAllProduct } from '/js/api/cartAPI.js';
+
 const DUMMY_USER_DATA = {
   // userId: 'elice@elice.com',d
 };
-const DUMMY_TEAM_CATEGORY_DATA = [
-  { name: 'SSG랜더스', logo: '/assets/img/category/team/SSG.png', url: '#' },
-  {
-    name: '키움히어로즈',
-    logo: '/assets/img/category/team/KIWOOM.png',
-    url: '#',
-  },
-  { name: 'LG트윈스', logo: '/assets/img/category/team/LG.png', url: '#' },
-  { name: 'KT위즈', logo: '/assets/img/category/team/KT.png', url: '#' },
-  { name: 'KIA타이거즈', logo: '/assets/img/category/team/KIA.png', url: '#' },
-  { name: 'NC다이노스', logo: '/assets/img/category/team/NC.png', url: '#' },
-  {
-    name: '삼성라이온즈',
-    logo: '/assets/img/category/team/SAMSUNG.png',
-    url: '#',
-  },
-  {
-    name: '롯데자이언츠',
-    logo: '/assets/img/category/team/LOTTE.png',
-    url: '#',
-  },
-  {
-    name: '두산베어스',
-    logo: '/assets/img/category/team/DOOSAN.png',
-    url: '#',
-  },
-  {
-    name: '한화이글스',
-    logo: '/assets/img/category/team/HANHWA.png',
-    url: '#',
-  },
-];
+
 const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '유니폼', url: '#' },
   { name: '모자', url: '#' },
@@ -42,7 +13,7 @@ const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '야구용품', url: '#' },
 ];
 
-const CART_AMOUNT = 2;
+const CART_AMOUNT = getAllProduct();
 
 const headerElement = document.createElement('header');
 const headerWrapper = document.createElement('div');
@@ -97,7 +68,6 @@ headerContainer.append(categoryUlElement, rightSideElementsContainer);
 document.body.prepend(headerElement);
 
 const createTeamElement = team => {
-  console.log(team);
   const teamLiElement = document.createElement('li');
   teamLiElement.innerHTML = `
     <div>
