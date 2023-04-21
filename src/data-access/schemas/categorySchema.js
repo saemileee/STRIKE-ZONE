@@ -22,7 +22,7 @@ const CategorySchema = new Schema(
       type: String,
       required: true,
     },
-    description: {
+    categoryDescription: {
       type: String,
     },
   },
