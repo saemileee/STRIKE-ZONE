@@ -11,7 +11,23 @@ const productId = {
 
 const ProductSchema = new Schema(
   {
+    teamId: {
+      type: String,
+      required: true,
+    },
+    teamName: {
+      type: String,
+      required: true,
+    },
+    teamDescription: {
+      type: String,
+      required: true,
+    },
     categoryId: {
+      type: String,
+      required: true,
+    },
+    categoryName: {
       type: String,
       required: true,
     },
@@ -38,7 +54,7 @@ const ProductSchema = new Schema(
       type: String,
     },
     img: {
-      type: String,
+      type: Array,
     },
   },
   {

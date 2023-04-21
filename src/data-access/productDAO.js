@@ -1,4 +1,4 @@
-import { Product } from './model';
+import { Product, Category } from './model';
 
 const productDAO = {
   // 전체 상품 조회
@@ -23,7 +23,15 @@ const productDAO = {
 
   // 상품 추가 (관리자)
   async createProduct(categoryId, productInfo) {
-    const createNewProduct = await Product.create({ categoryId, ...productInfo });
+    const category = await Category.findOne({ categoryId });
+
+    const {
+      teamId, teamName, teamDescription, categoryName,
+    } = category;
+
+    const createNewProduct = await Product.create({
+      teamId, teamName, teamDescription, categoryId, categoryName, ...productInfo,
+    });
 
     return createNewProduct;
   },
