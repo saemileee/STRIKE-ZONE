@@ -14,10 +14,6 @@ function $createImage(src) {
 }
 
 function renderProductImages(productImages) {
-  const $productBasicInformationContainer = $createElement(
-    'div',
-    'product-basic-information-container'
-  );
   const $productImageViewContainer = document.querySelector(
     '.product-image-view'
   );
@@ -111,7 +107,8 @@ async function fetchData(url) {
 }
 
 async function getProductData() {
-  const productData = await fetchData('/api/v1/products/1');
+  const selectedProductId = await window.location.pathname.split('/')[2];
+  const productData = await fetchData(`/api/v1/products/${selectedProductId}`);
   const {
     productId,
     teamName,
