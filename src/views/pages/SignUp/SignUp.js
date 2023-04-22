@@ -64,7 +64,7 @@ function userInfoComplete() {
 function autoHyphen() {
   newUserPhoneNumber.value = newUserPhoneNumber.value
     .replace(/[^0-9]/g, '')
-    .replace(/^(\d{3,4})(\d{4})$/, `$1-$2`);
+    .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
 }
 
 function getPhoneNumber() {
