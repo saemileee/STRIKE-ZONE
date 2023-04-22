@@ -33,11 +33,10 @@ const OrderSchema = new Schema({
     default: '무통장 입금',
     required: true,
   },
-  requirement: { type: String, default: '' },
+  requirement: { type: String, default: '없음' },
   status: {
     type: String,
     enum: ['결제 전', '상품 준비중', '배송 준비중', '배송 중', '배송 완료'],
-    default: '결제 전',
     requird: true,
   },
   products: [OrderedProductSchema],

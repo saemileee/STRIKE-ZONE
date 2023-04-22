@@ -1,5 +1,9 @@
 import { Order, Product, Shipping } from './model';
 
+const DEFAULT_PAYMENT_METHOD = '무통장 입금';
+const STATUS_BY_DEFAULT_PAYMENT_METHOD = '결제 전';
+const STATUS_BY_PAYMENT_METHOD = '상품 준비중';
+
 const orderDAO = {
 
   async createOrder(orderInfo) {
@@ -13,9 +17,8 @@ const orderDAO = {
     // orderId 계산하기
     const orderId = await this.createOrderId();
 
-    // 결제 수단 확인 : 만약 '무통장 입금'이 아니라면 status 를 '상품 준비중'으로 저장한다.
-    const { paymentMethod } = orderInfo;
-    const status = paymentMethod === '무통장 입금' ? '결제 전' : '상품 준비중';
+    // 결제 방식에 따라 주문 정보를 결정하기
+    const status = this.setOrderStatusByPaymentMethod(orderInfo.paymentMethod);
 
     // 주문 등록하기
     await Order.create({
@@ -46,6 +49,17 @@ const orderDAO = {
     const order = await Order.findOne({ orderId });
 
     return order;
+  },
+
+  setOrderStatusByPaymentMethod(paymentMethod) {
+    let status = STATUS_BY_PAYMENT_METHOD;
+
+    // TODO: 프론트단에서 미리 결제 수단이 undefined 로 넘어오지 않도록 처리하는 게 더 좋을 것 같다.
+    if (paymentMethod === undefined || paymentMethod === DEFAULT_PAYMENT_METHOD) {
+      status = STATUS_BY_DEFAULT_PAYMENT_METHOD;
+    }
+
+    return status;
   },
 
   async createOrderId() {
