@@ -1,17 +1,21 @@
-import { Order, Product } from './model';
+import { Order, Product, Shipping } from './model';
 
 const orderDAO = {
 
   async createOrder(orderInfo) {
     // 총 상품 금액과 총 주문 금액 계산하기
-    const { productsPayment, totalPayment } = this.calculatePayments(orderInfo);
+    const {
+      productsPayment,
+      deliveryCharge,
+      totalPayment,
+    } = await this.calculatePayments(orderInfo);
 
     // orderId 계산하기
     const orderId = await this.createOrderId();
 
     // 주문 등록하기
     await Order.create({
-      ...orderInfo, orderId, productsPayment, totalPayment,
+      ...orderInfo, orderId, productsPayment, totalPayment, deliveryCharge,
     });
 
     // 주문을 저장 후, [해당 productId의 상품 수량]에서 [주문 수량]만큼 차감해야 한다.
@@ -49,17 +53,21 @@ const orderDAO = {
     return nextOrderId;
   },
 
-  calculatePayments(orderInfo) {
+  async calculatePayments(orderInfo) {
     const initialValue = 0;
-    const { products, deliveryCharge } = orderInfo;
+    const { products } = orderInfo;
 
     const productsPayment = products.reduce(
       (accumulator, product) => accumulator + (product.quantity * product.price),
       initialValue,
     );
 
+    // 기본 배송비 조회
+    const { deliveryCharge } = await Shipping.findOne({ shippingId: 'default' });
+
     const totalPayment = productsPayment + deliveryCharge;
-    return { productsPayment, totalPayment };
+
+    return { productsPayment, deliveryCharge, totalPayment };
   },
 
   async updateProductQuantityByOrder(orderInfo) {
