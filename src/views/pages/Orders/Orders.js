@@ -57,10 +57,6 @@ const OrderItem = (
 };
 
 const render = async () => {
-  const urlParams = new URL(location.href).searchParams;
-  const SORTEDBY = urlParams.get('sorted');
-  console.log(SORTEDBY);
-
   const DUMMY = [
     {
       _id: '64436ebf865e23b8f38616b2',
@@ -151,7 +147,7 @@ const render = async () => {
 
   const $userData = $('.user-data');
   $userData.innerHTML = `
-    <h3 class="title is-3">주문 내역</h3>
+    <h3 class="title is-3">주문 목록</h3>
     <hr>
     <ul class="order-list">
     </ul>
