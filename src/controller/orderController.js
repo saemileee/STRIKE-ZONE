@@ -52,6 +52,20 @@ const orderController = {
     }
   },
 
+  // 특정 orderId 에 해당하는 배송지 정보 수정하기
+  async updateRecipientByOrderId(req, res, next) {
+    try {
+      const { orderId } = req.params;
+      const recipientInfo = req.body;
+
+      await orderService.updateRecipientByOrderId(orderId, recipientInfo);
+
+      res.status(200).json({ result: 'order recipient updated successfully' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   // 특정 orderId 에 해당하는 주문 정보 삭제하기
   async deleteOrderByOrderId(req, res, next) {
     try {
@@ -59,7 +73,7 @@ const orderController = {
 
       await orderService.deleteOrderByOrderId(orderId);
 
-      res.status(200).json({ result: 'successfully deleted' });
+      res.status(200).json({ result: 'order deleted successfully' });
     } catch (error) {
       next(error);
     }

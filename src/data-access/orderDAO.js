@@ -51,6 +51,11 @@ const orderDAO = {
     return order;
   },
 
+  // 특정 주문의 배송지 정보 수정
+  async updateRecipientByOrderId(orderId, recipientInfo) {
+    await Order.updateOne({ orderId }, { recipient: { ...recipientInfo } });
+  },
+
   async deleteOrderByOrderId(orderId) {
     await Order.deleteOne({ orderId });
   },
