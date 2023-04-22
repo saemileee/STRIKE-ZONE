@@ -2,7 +2,7 @@
   margin: 100px auto;
   padding: 30px;
   width: 500px;
-  height: 260px;
+  height: auto;
   border: solid 1px rgba(184, 184, 184, 0.979);
   border-radius: 10px;
 }
@@ -13,6 +13,11 @@
 }
 .login-input {
   width: 300px;
+}
+.login-warning {
+  margin: 10px;
+  color: red;
+  font-weight: bold;
 }
 #loginId {
   margin-bottom: 10px;
