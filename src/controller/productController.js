@@ -7,7 +7,7 @@ const productController = {
     try {
       const products = await productService.getAllProducts();
 
-      response.status(201).json(products);
+      response.status(200).json(products);
     } catch (error) {
       next(error);
     }
@@ -20,7 +20,7 @@ const productController = {
 
       const products = await productService.getProductsByCategoryId(categoryId);
 
-      response.status(201).json(products);
+      response.status(200).json(products);
     } catch (error) {
       next(error);
     }
@@ -33,7 +33,7 @@ const productController = {
 
       const products = await productService.getProductsByCategoryName(categoryName);
 
-      response.status(201).json(products);
+      response.status(200).json(products);
     } catch (error) {
       next(error);
     }
@@ -46,7 +46,7 @@ const productController = {
 
       const product = await productService.getProductByProductId(productId);
 
-      response.status(201).json(product);
+      response.status(200).json(product);
     } catch (error) {
       next(error);
     }

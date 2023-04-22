@@ -9,7 +9,7 @@ const orderController = {
 
       await orderService.createOrder(orderInfo);
 
-      response.status(200).json({ result: 'success' });
+      response.status(201).json({ result: 'success' });
     } catch (error) {
       next(error);
     }

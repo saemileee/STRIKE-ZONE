@@ -26,7 +26,7 @@ const teamController = {
       const teams = await teamService.getTeams();
 
       response
-        .status(201)
+        .status(200)
         .json(teams);
     } catch (error) {
       next(error);
@@ -40,7 +40,7 @@ const teamController = {
       const team = await teamService.getTeamById(teamId);
 
       response
-        .status(201)
+        .status(200)
         .json(team);
     } catch (error) {
       next(error);
@@ -54,7 +54,7 @@ const teamController = {
       const team = await teamService.getTeamByTitle(title);
 
       response
-        .status(201)
+        .status(200)
         .json(team);
     } catch (error) {
       next(error);

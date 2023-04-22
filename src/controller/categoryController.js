@@ -27,7 +27,7 @@ const categoryController = {
 
       const categories = await categoryService.getCategoriesByTeamId(teamId);
 
-      response.status(201).json(categories);
+      response.status(200).json(categories);
     } catch (error) {
       next(error);
     }
