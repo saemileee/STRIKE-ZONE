@@ -147,7 +147,11 @@ function onSignUpSubmit(e) {
       body: JSON.stringify(newUser),
     })
       .then((response) => response.json())
-      .then((user) => console.log(user))
+      .then(() => {
+        confirm('회원가입에 성공하였습니다.\n로그인 하시겠습니까?')
+          ? (window.location.href = '/login')
+          : (window.location.href = '/');
+      })
       .catch(() => {
         alert('이미 존재하는 이메일입니다.');
       });
