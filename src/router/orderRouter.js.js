@@ -16,4 +16,7 @@ orderRouter.get('/users/:ordererEmail/orders', orderController.getOrdersByUserId
 // 특정 orderId 의 주문 정보 조회
 orderRouter.get('/orders/:orderId', orderController.getOrderByOrderId);
 
+// 특정 orderId 의 주문 취소
+orderRouter.delete('/orders/:orderId', orderController.deleteOrderByOrderId);
+
 export { orderRouter };

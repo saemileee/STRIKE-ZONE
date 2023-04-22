@@ -51,6 +51,10 @@ const orderDAO = {
     return order;
   },
 
+  async deleteOrderByOrderId(orderId) {
+    await Order.deleteOne({ orderId });
+  },
+
   setOrderStatusByPaymentMethod(paymentMethod) {
     let status = STATUS_BY_PAYMENT_METHOD;
 

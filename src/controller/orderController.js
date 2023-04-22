@@ -1,3 +1,4 @@
+import { response } from 'express';
 import { orderService } from '../services';
 
 const orderController = {
@@ -47,6 +48,19 @@ const orderController = {
       const order = await orderService.getOrderByOrderId(orderId);
 
       response.status(200).json(order);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // 특정 orderId 에 해당하는 주문 정보 삭제하기
+  async deleteOrderByOrderId(req, res, next) {
+    try {
+      const { orderId } = req.params;
+
+      await orderService.deleteOrderByOrderId(orderId);
+
+      res.status(200).json({ result: 'successfully deleted' });
     } catch (error) {
       next(error);
     }
