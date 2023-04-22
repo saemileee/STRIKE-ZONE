@@ -1,97 +1,17 @@
-import { $ } from '/js/utils.js';
-import { getCartListSelected, getOrderPrice } from '/js/api/cartAPI.js';
-
-async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-}
+import { $, selectAllCheckbox, autoHyphen } from '/js/utils.js';
+import { getCartListSelected } from '/js/api/cartAPI.js';
+import { fetchData, postData } from '/js/api/api.js';
 
 const cartListSelected = getCartListSelected();
-const orderPrice = getOrderPrice();
-const orderListContainer = document.querySelector('.order-list-container');
 
-async function getData() {
-  const { deliveryCharge } = await fetchData('/api/v1/shippings/default');
-  let products = [];
-  let totalAmount = 0;
-
-  for (let cartList of cartListSelected) {
-    const { id: productId, amount: quantity } = cartList;
-    const { discountedPrice, name, teamName, price, rate, img } =
-      await fetchData(`/api/v1/products/${productId}`);
-
-    const totalProductAmount = discountedPrice * quantity;
-    totalAmount += totalProductAmount;
-
-    renderOrderList(
-      teamName,
-      name,
-      quantity,
-      rate,
-      price,
-      discountedPrice,
-      totalProductAmount,
-      img
-    );
-
-    products.push({
-      productId,
-      productName: name,
-      quantity,
-      price: discountedPrice,
-      img: img[0],
-    });
-  }
-
-  const deliveryChargeAmount = await deliveryCharge;
-  const totalPaymentAmount = totalAmount + deliveryChargeAmount;
-  updateCheckoutButton(totalPaymentAmount);
-  renderReceipt(totalAmount, deliveryChargeAmount, totalPaymentAmount);
-
-  return products;
-}
-
-async function updateCheckoutButton(amount) {
+//결제 버튼 업데이트
+function updateCheckoutButton(amount) {
   const checkoutButton = document.querySelector('.check-out-button');
   checkoutButton.value = `${amount.toLocaleString()}원 결제하기`;
+  checkoutButton.addEventListener('click', postOrderData);
 }
 
-getData();
-
-function renderOrderList(
-  team,
-  name,
-  quantity,
-  rate,
-  price,
-  discountedPrice,
-  totalProductAmount,
-  images
-) {
-  const orderProduct = document.createElement('div');
-  const img = images[0];
-  orderProduct.className = 'order-product';
-  orderProduct.innerHTML = `<div class="image-container">
-     <img src="${img}" />
-  </div>
-  <div class="product-information">
-    <span class="order-product-team">${team}</span>
-    <span class="order-product-title">${name}</span
-    ><span class="order-product-rate">${rate}%</span
-    ><span class="order-product-price">${price.toLocaleString()}원</span
-    ><span class="order-product-discounted-price">${discountedPrice.toLocaleString()}원</span
-    ><span class="order-product-count">${quantity}개</span>
-    <span class="order-product-total-amount">${totalProductAmount.toLocaleString()}원</span
-    >
-  </div>`;
-  orderListContainer.append(orderProduct);
-}
-
+//결제정보 렌더링
 function renderReceipt(totalProductAmount, deliveryCharge, totalPaymentAmount) {
   const totalProductAmountElement = document.querySelector(
     '.total-product-amount'
@@ -104,6 +24,101 @@ function renderReceipt(totalProductAmount, deliveryCharge, totalPaymentAmount) {
   const totalPaymentAmountElement = document.querySelector('.total-pay-amount');
   totalPaymentAmountElement.innerHTML = `${totalPaymentAmount.toLocaleString()}원`;
 }
+
+async function getData() {
+  const { deliveryCharge } = await fetchData('/shippings/default');
+  let products = [];
+  let totalAmount = 0;
+
+  for (let cartList of cartListSelected) {
+    const { id: productId, amount: quantity } = cartList;
+    const { discountedPrice, name, teamName, price, rate, img } =
+      await fetchData(`/products/${productId}`);
+
+    const totalProductAmount = discountedPrice * quantity;
+    totalAmount += totalProductAmount;
+
+    products.push({
+      productId,
+      productName: name,
+      quantity,
+      price: discountedPrice,
+      img: img[0],
+      team: teamName,
+      originalPrice: price,
+      rate,
+      totalProductAmount,
+    });
+  }
+
+  const deliveryChargeAmount = await deliveryCharge;
+  const totalPaymentAmount = totalAmount + deliveryChargeAmount;
+  updateCheckoutButton(totalPaymentAmount);
+  renderReceipt(totalAmount, deliveryChargeAmount, totalPaymentAmount);
+
+  return products;
+}
+
+//주문 리스트 렌더링
+function renderOrderList(
+  team,
+  name,
+  quantity,
+  rate,
+  price,
+  discountedPrice,
+  totalProductAmount,
+  img
+) {
+  const orderProduct = document.createElement('div');
+  orderProduct.className = 'order-product';
+  orderProduct.innerHTML = `<div class="image-container">
+     <img src="${img}" />
+  </div>
+  <div class="product-information">
+    <div>
+    <span class="order-product-team">${team}</span>
+    <span class="order-product-title">${name}</span
+    ></div>
+    <div><span class="order-product-rate">${rate}%</span
+    ><span class="order-product-price">${price.toLocaleString()}원</span
+    ></div><div><span class="order-product-discounted-price">${discountedPrice.toLocaleString()}원 | </span
+    ><span class="order-product-count">${quantity}개</span></div>
+    <span class="order-product-total-amount">${totalProductAmount.toLocaleString()}원</span
+    >
+  </div>`;
+
+  if (rate === 0) {
+    document.querySelector('');
+  }
+  const orderListContainer = document.querySelector('.order-list-container');
+  orderListContainer.append(orderProduct);
+}
+function displayOrderList(products) {
+  products.forEach(product => {
+    const {
+      team,
+      productName: name,
+      quantity,
+      rate,
+      originalPrice: price,
+      price: discountedPrice,
+      totalProductAmount,
+      img,
+    } = product;
+    renderOrderList(
+      team,
+      name,
+      quantity,
+      rate,
+      price,
+      discountedPrice,
+      totalProductAmount,
+      img
+    );
+  });
+}
+displayOrderList(await getData());
 
 //주소찾기 기능 연결
 function findAndFillAddress(target) {
@@ -144,19 +159,11 @@ function isValid(event) {
 }
 $('.user-email').addEventListener('blur', isValid);
 
-//전화번호 하이픈 추가
-function autoHyphen(target) {
-  const targetElement = $(target);
-  targetElement.addEventListener('input', () => {
-    targetElement.value = targetElement.value
-      .replace(/[^0-9]/g, '')
-      .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
-  });
-}
+//폰 번호 오토하이픈
 autoHyphen('.user-phone-number-back');
 autoHyphen('.receiver-phone-number-back');
 
-//주문자와 동일한 정보 채우기
+// 함수로 주문자와 동일한 정보 채우기 구현
 const $fillDeliveryInformationButton = $('.fill-delivery-information');
 $fillDeliveryInformationButton.addEventListener('click', () => {
   const userName = $('.user-name').value;
@@ -181,36 +188,10 @@ $fillDeliveryInformationButton.addEventListener('click', () => {
   $receiverAddressDetail.value = userAddressDetail;
 });
 
-//전체선택 버튼
-function selectAllCheckbox() {
-  const termCheckboxElements = document.querySelectorAll('.term-checkbox');
-  let selectAllCheckboxElement = document.querySelector('.select-all');
-  selectAllCheckboxElement.addEventListener('change', () => {
-    if (selectAllCheckboxElement.checked) {
-      for (let checkbox of termCheckboxElements) {
-        checkbox.checked = true;
-      }
-    } else {
-      for (let checkbox of termCheckboxElements) {
-        checkbox.checked = false;
-      }
-    }
-  });
+//전체선택 버튼 기능
+selectAllCheckbox('term-checkbox', 'select-all');
 
-  for (let checkbox of termCheckboxElements) {
-    checkbox.addEventListener('change', () => {
-      let checkedCount = 0;
-      for (let _checkbox of termCheckboxElements) {
-        _checkbox.checked === true ? checkedCount++ : null;
-      }
-      checkedCount === termCheckboxElements.length
-        ? (selectAllCheckboxElement.checked = true)
-        : (selectAllCheckboxElement.checked = false);
-    });
-  }
-}
-selectAllCheckbox();
-
+// 주문자 정보 가져오기
 function getOrdererData() {
   const email = $('.user-email').value;
   const name = $('.user-name').value;
@@ -220,6 +201,7 @@ function getOrdererData() {
   return { email, name, phoneNumber };
 }
 
+// 수령자 정보 가져오기
 function getRecipientData() {
   const name = $('.receiver').value;
   const address1 = $('.receiver-address-base').value;
@@ -232,25 +214,13 @@ function getRecipientData() {
   return { name, address1, address2, zipCode, phoneNumber };
 }
 
+// 주문 데이터 전송
 async function postOrderData(event) {
   event.preventDefault();
   const products = await getData();
   const orderer = getOrdererData();
   const recipient = getRecipientData();
   const data = { products, orderer, recipient };
-  console.log(data);
-  fetch('/api/v1/orders', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  })
-    .then(response => {
-      return response.json();
-    })
-    .then(data => {
-      window.location.href = `/user/orders/complete/${data.createdOrder.orderId}`;
-    });
+  const postedData = await postData('/orders', data);
+  window.location.href = `/user/orders/complete/${postedData.createdOrder.orderId}`;
 }
-
-const $checkOutButton = $('.check-out-button');
-$checkOutButton.addEventListener('click', postOrderData);

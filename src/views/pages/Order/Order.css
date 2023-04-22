@@ -6,7 +6,11 @@ body {
 .order-wrapper {
   max-width: 1136px;
   margin: 0 auto;
-  padding-bottom: 18rem;
+  padding-bottom: 10rem;
+}
+
+h3 {
+  padding-top: 2rem;
 }
 
 .order-wrapper form {
@@ -55,8 +59,8 @@ select {
   margin-bottom: 12px;
 }
 .order-list-container .order-product .image-container {
-  width: 100px;
-  aspect-ratio: 1 / 1;
+  width: 120px;
+  height: 120px;
   margin-right: 18px;
   border: 1px solid rgb(232, 232, 232);
   border-radius: 4px;
@@ -67,9 +71,45 @@ select {
   flex-direction: column;
 }
 
+.order-list-container .order-product .product-information div {
+  margin-bottom: 4px;
+}
+
+.order-product-team {
+  background-color: rgb(179, 255, 14);
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.order-product-title {
+  font-weight: 500;
+}
+
+.order-product-rate {
+  font-size: 14px;
+  margin-right: 8px;
+  color: rgb(191, 191, 191);
+  font-weight: 600;
+}
+
+.order-product-price {
+  font-size: 14px;
+  color: rgb(191, 191, 191);
+  text-decoration: line-through;
+}
+
+.order-product-total-amount {
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .fill-delivery-information {
-  background-color: rgb(0, 132, 255);
-  color: rgb(0, 162, 255);
+  background-color: rgb(255, 95, 3);
+  color: rgb(255, 255, 255);
+  border: none;
   font-weight: 800;
   font-size: 16px;
   margin-bottom: 16px;
@@ -79,7 +119,6 @@ select {
   padding: 16px 32px 16px 32px;
   border: none;
   border-radius: 8px;
-  background-color: rgb(0, 132, 255);
   color: rgb(255, 255, 255);
   font-size: 16px;
 }
