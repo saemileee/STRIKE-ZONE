@@ -11,9 +11,7 @@ const authController = {
         throw new Error('토큰 발급에 실패하였습니다.');
       }
 
-      const result = JSON.stringify({ token: userToken });
-
-      res.json(result);
+      res.json({ token: userToken });
     } catch (err) {
       next(err);
     }
@@ -29,9 +27,7 @@ const authController = {
         throw new Error('비밀번호가 일치하지 않습니다.');
       }
 
-      const result = JSON.stringify({ result: 'success' });
-
-      res.json(result);
+      res.json({ result: 'success' });
     } catch (err) {
       next(err.message);
     }

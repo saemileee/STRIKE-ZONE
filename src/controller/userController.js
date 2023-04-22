@@ -40,9 +40,7 @@ const userController = {
         throw new Error('유저 등록에 실패하였습니다.');
       }
 
-      const result = JSON.stringify({ result: 'success' });
-
-      res.json(result);
+      res.json({ result: 'success' });
     } catch (err) {
       next(err);
     }
@@ -67,9 +65,7 @@ const userController = {
         throw new Error('유저 수정에 실패하였습니다.');
       }
 
-      const result = JSON.stringify({ result: 'success' });
-
-      res.json(result);
+      res.json({ result: 'success' });
     } catch (err) {
       next(err);
     }
@@ -83,9 +79,7 @@ const userController = {
         throw new Error('유저 삭제에 실패하였습니다.');
       }
 
-      const result = JSON.stringify({ result: 'success' });
-
-      res.json(result);
+      res.json({ result: 'success' });
     } catch (err) {
       next(err);
     }
