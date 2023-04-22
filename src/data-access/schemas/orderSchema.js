@@ -1,25 +1,35 @@
 import { Schema } from 'mongoose';
 
-const OrderSchema = new Schema({
-  orderId: { type: Number, required: true },
-
+const OrderedProductSchema = new Schema({
   productId: { type: Number, required: true },
   productName: { type: String, required: true },
   quantity: { type: Number, required: true },
   price: { type: Number, required: true },
+  img: { type: String, required: true },
+});
+
+const OrdererSchema = new Schema({
+  email: { type: String, required: true },
+  name: { type: String, required: true },
+  phoneNumber: { type: String, required: true },
+});
+
+const RecipientSchema = new Schema({
+  name: { type: String, required: true },
+  address1: { type: String, required: true },
+  address2: { type: String, required: true },
+  zipCode: { type: String, required: true },
+  phoneNumber: { type: String, required: true },
+});
+
+const OrderSchema = new Schema({
+  orderId: { type: Number, required: true },
+  productsPayment: { type: Number, required: true },
   deliveryCharge: { type: Number, required: true },
   totalPayment: { type: Number, required: true },
-  img: { type: String, required: true },
-
-  ordererEmail: { type: String, required: true },
-  ordererName: { type: String, required: true },
-  ordererPhoneNumber: { type: String, required: true },
-
-  recipientName: { type: String, required: true },
-  recipientAddress1: { type: String, required: true },
-  recipientAddress2: { type: String, required: true },
-  recipientZipCode: { type: String, required: true },
-  recipientPhoneNumber: { type: String, required: true },
+  products: [OrderedProductSchema],
+  orderer: OrdererSchema,
+  recipient: RecipientSchema,
 }, {
   collection: 'orders',
   timestamps: true,
