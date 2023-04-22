@@ -9,15 +9,30 @@ body {
   padding-bottom: 18rem;
 }
 
+.order-wrapper form {
+  display: flex;
+}
+
+.order-wrapper form .left-side-container {
+  display: flex;
+  flex-direction: column;
+  width: 90rem;
+  margin-right: 2rem;
+}
+
 .order-wrapper section {
-  width: 50rem;
-  padding: 24px 36px 24px 36px;
+  padding: 24px 26px 24px 26px;
   background-color: rgb(255, 255, 255);
-  margin-bottom: 12px;
+  margin-bottom: 24px;
+  border-radius: 8px;
 }
 
 label {
   text-align: left;
+}
+
+div.field-body .button {
+  margin-right: 12px;
 }
 
 div.field-body > input[type='text'] {
@@ -33,6 +48,7 @@ select {
   padding: 12px;
   border: 1px solid rgb(232, 232, 232);
   border-radius: 6px;
+  margin-bottom: 12px;
 }
 .order-list-container .order-product .image-container {
   width: 100px;
@@ -66,4 +82,63 @@ select {
 
 .check-out-button:hover {
   cursor: pointer;
+}
+
+.receipt-information-container {
+  position: sticky;
+  top: 120px;
+}
+
+.receipt-information-container .payment-information {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.receipt-information-container .payment-information span {
+  line-height: 2rem;
+}
+
+.receipt-information-container .payment-information span.price {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.receipt-information-container .payment-information span.total-product-amount {
+  font-weight: 700;
+}
+
+.receipt-information-container .payment-information span.total-pay-amount {
+  font-size: 24px;
+  font-weight: 800;
+  color: rgb(255, 95, 3);
+}
+
+.term-checkboxes-container label {
+  margin-bottom: 8px;
+}
+
+.check-out-button {
+  width: 100%;
+  background-color: rgb(255, 95, 3);
+}
+
+@media screen and (max-width: 768px) {
+  div.field-body {
+    display: flex;
+    width: 100%;
+  }
+  div.field-body div.field {
+    flex-grow: 1;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .order-wrapper form {
+    flex-direction: column;
+  }
+
+  .order-wrapper form .left-side-container {
+    width: 100%;
+  }
 }
