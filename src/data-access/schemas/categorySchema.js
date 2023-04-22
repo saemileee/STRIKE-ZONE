@@ -20,6 +20,7 @@ const CategorySchema = new Schema(
     },
     categoryName: {
       type: String,
+      enum: ['유니폼', '모자', '의류', '잡화', '응원용품', '야구용품'],
       required: true,
     },
     categoryDescription: {
