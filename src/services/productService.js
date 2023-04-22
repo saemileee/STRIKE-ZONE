@@ -29,6 +29,11 @@ const productService = {
   async postProduct(categoryId, productInfo) {
     await productDAO.createProduct(categoryId, productInfo);
   },
+
+  // 상품 수정하기 (관리자)
+  async updateProductByProductId(productId, updateInfo) {
+    await productDAO.updateProductByProductId(productId, updateInfo);
+  },
 };
 
 export { productService };

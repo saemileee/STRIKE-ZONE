@@ -74,6 +74,20 @@ const productController = {
     }
   },
 
+  // 상품 수정
+  async updateProductByProductId(req, res, next) {
+    try {
+      const { productId } = req.params;
+      const updateInfo = req.body;
+
+      await productService.updateProductByProductId(productId, updateInfo);
+
+      res.status(200).json({ result: 'product updated successfully.' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
 };
 
 export { productController };
