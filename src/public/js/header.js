@@ -1,38 +1,9 @@
+import { getAllProduct } from '/js/api/cartAPI.js';
+
 const DUMMY_USER_DATA = {
   // userId: 'elice@elice.com',d
 };
-const DUMMY_TEAM_CATEGORY_DATA = [
-  { name: 'SSG랜더스', logo: '/assets/img/category/team/SSG.png', url: '#' },
-  {
-    name: '키움히어로즈',
-    logo: '/assets/img/category/team/KIWOOM.png',
-    url: '#',
-  },
-  { name: 'LG트윈스', logo: '/assets/img/category/team/LG.png', url: '#' },
-  { name: 'KT위즈', logo: '/assets/img/category/team/KT.png', url: '#' },
-  { name: 'KIA타이거즈', logo: '/assets/img/category/team/KIA.png', url: '#' },
-  { name: 'NC다이노스', logo: '/assets/img/category/team/NC.png', url: '#' },
-  {
-    name: '삼성라이온즈',
-    logo: '/assets/img/category/team/SAMSUNG.png',
-    url: '#',
-  },
-  {
-    name: '롯데자이언츠',
-    logo: '/assets/img/category/team/LOTTE.png',
-    url: '#',
-  },
-  {
-    name: '두산베어스',
-    logo: '/assets/img/category/team/DOOSAN.png',
-    url: '#',
-  },
-  {
-    name: '한화이글스',
-    logo: '/assets/img/category/team/HANHWA.png',
-    url: '#',
-  },
-];
+
 const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '유니폼', url: '#' },
   { name: '모자', url: '#' },
@@ -41,7 +12,8 @@ const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '응원용품', url: '#' },
   { name: '야구용품', url: '#' },
 ];
-const CART_AMOUNT = 2;
+
+const CART_AMOUNT = getAllProduct();
 
 const headerElement = document.createElement('header');
 const headerWrapper = document.createElement('div');
@@ -64,14 +36,23 @@ categoryUlElement.append(teamCategoryLiElement, productCategoryLiElement);
 const cartElement = document.createElement('button');
 cartElement.className = 'cart';
 cartElement.innerHTML = `<i class="fa fa-shopping-cart" style="font-size:18px"></i><span class = "cart-amount">${CART_AMOUNT}</span>`;
+cartElement.addEventListener('click', () => {
+  window.location.href = '/cart';
+});
 
 const loginElement = document.createElement('button');
 loginElement.className = 'login';
 loginElement.innerHTML = '로그인';
+loginElement.addEventListener('click', () => {
+  window.location.href = '/login';
+});
 
 const signUpElement = document.createElement('button');
 signUpElement.className = 'signup';
 signUpElement.innerHTML = '회원가입';
+signUpElement.addEventListener('click', () => {
+  window.location.href = '/signup';
+});
 
 const myPageElement = document.createElement('button');
 myPageElement.className = 'my-page';
@@ -95,21 +76,21 @@ headerWrapper.append(headerContainer);
 headerContainer.append(categoryUlElement, rightSideElementsContainer);
 document.body.prepend(headerElement);
 
-const createTeamElement = (team) => {
+const createTeamElement = team => {
   const teamLiElement = document.createElement('li');
   teamLiElement.innerHTML = `
     <div>
-      <img src="${team.logo}">
+      <img src="${team.emblemPath}">
     </div>
-    <p>${team.name}</p>
+    <p>${team.teamName}</p>
   `;
   teamLiElement.addEventListener('click', () => {
-    window.location.href = team.url;
+    window.location.href = `/products?team=${team.teamId}&category=all`;
   });
   return teamLiElement;
 };
 
-const createProductElement = (category) => {
+const createProductElement = category => {
   const productLiElement = document.createElement('li');
   productLiElement.innerHTML = `
       <p>${category.name}</p>
@@ -126,22 +107,31 @@ categoryContainerElement.classList.add('category-container');
 const teamsContainerElement = document.createElement('div');
 teamsContainerElement.classList.add('teams-container');
 const teamsUlElement = document.createElement('ul');
-DUMMY_TEAM_CATEGORY_DATA.forEach((team) => {
-  const teamElement = createTeamElement(team);
-  teamsUlElement.append(teamElement);
-});
+
+fetch('//10.10.6.36:8092/api/v1/teams')
+  .then(response => response.json())
+  .then(data =>
+    data.forEach(team => {
+      const teamElement = createTeamElement(team);
+      teamsUlElement.append(teamElement);
+    })
+  );
+
 teamsContainerElement.append(teamsUlElement);
 
 const productsContainerElement = document.createElement('div');
 productsContainerElement.classList.add('products-container');
 const productsUlElement = document.createElement('ul');
-DUMMY_PRODUCT_CATEGORY_DATA.forEach((category) => {
+DUMMY_PRODUCT_CATEGORY_DATA.forEach(category => {
   const productElement = createProductElement(category);
   productsUlElement.append(productElement);
 });
 productsContainerElement.append(productsUlElement);
 
-categoryContainerElement.append(teamsContainerElement, productsContainerElement);
+categoryContainerElement.append(
+  teamsContainerElement,
+  productsContainerElement
+);
 headerElement.append(categoryContainerElement);
 
 teamsContainerElement.style.display = 'none';

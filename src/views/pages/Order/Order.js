@@ -1,8 +1,38 @@
 // eslint-disable-next-line
 import { $ } from '/js/utils.js';
+import { getCartListSelected, getOrderPrice } from '/js/api/cartAPI.js';
+
+const cartListSelected = getCartListSelected();
+const orderPrice = getOrderPrice();
+
+function renderOrderList() {
+  const orderListContainer = document.querySelector('.order-list-container');
+  cartListSelected.forEach(orderData => {
+    const { amount, id, img, name, price, team, total } = orderData;
+    const orderProduct = document.createElement('div');
+    orderProduct.className = 'order-product';
+    orderProduct.innerHTML = `<div class="image-container">
+    <img src="${img}" />
+  </div>
+  <div class="product-information">
+    <span class="order-product-team">${team}</span>
+    <span class="order-product-title">${name}</span
+    ><span class="order-product-total-amount">${price}원</span
+    ><span class="order-product-count">${amount}개</span>
+  </div>`;
+    orderListContainer.append(orderProduct);
+  });
+
+  const totalProductAmountElement = document.querySelector(
+    '.total-product-amount'
+  );
+  totalProductAmountElement.innerHTML = `${orderPrice}원`;
+}
+
+renderOrderList();
 
 function findAndFillAddress(target) {
-  document.querySelectorAll(`.${target}-address`).forEach((input) => {
+  document.querySelectorAll(`.${target}-address`).forEach(input => {
     input.addEventListener('click', () => {
       new daum.Postcode({
         oncomplete(data) {
@@ -18,10 +48,21 @@ function findAndFillAddress(target) {
 findAndFillAddress('user');
 findAndFillAddress('receiver');
 
+// function checkValidation(target) {
+//   const regex = {
+//     email:
+//       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+//   };
+//   if (!target.value.match(regex[target.id])) return false;
+//   return true;
+// }
+
 function autoHyphen(target) {
   const targetElement = $(target);
   targetElement.addEventListener('input', () => {
-    targetElement.value = targetElement.value.replace(/[^0-9]/g, '').replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
+    targetElement.value = targetElement.value
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
   });
 }
 
@@ -84,5 +125,11 @@ $checkOutButton.addEventListener('click', () => {
     paymentMethod.checked ? (paymentMethod = element.className) : null;
   }
 
-  console.log(userData, deliveryData, paymentMethod);
+  console.log(
+    cartListSelected,
+    orderPrice,
+    userData,
+    deliveryData,
+    paymentMethod
+  );
 });

@@ -1,28 +1,69 @@
-body {
-  background-color: #F5F5F5;
-}
-
 a {
   color: #000;
   text-decoration: none;
 }
 
 .products-wrapper {
-  max-width: 1136px;
+  width: 1000px;
   height: auto;
   margin: auto;
   padding: 30px;
+  margin: 0 auto;
 }
 
 .products-list-header {
   display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+  animation: leftAppear 0.5s ease-out;
+}
+
+.products-list-header .products-team {
+  font-size: 48px;
+  font-weight: 300;
 }
 
 .products-list-header .products-category {
-  font-size: 48px;
-  font-weight: 300;
-  margin-bottom: 30px;
-  animation: leftAppear 0.5s ease-out;
+  position: relative;
+  width: fit-content;
+  font-size: 40px;
+  color: #fff;
+  padding: 5px 20px 0 20px;
+  background-color: #000;
+  user-select: none;
+}
+
+.products-list-header .products-category:hover {
+  cursor: pointer;
+}
+
+.products-category-nav {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  transform-origin: left;
+}
+
+.products-list-header .products-category:hover .products-category-nav {
+  display: block;
+  transform: scaleX(1);
+}
+
+.products-category-list {
+  display: flex;
+  height: 100%;
+  background-color: #000;
+}
+
+.products-category-list .products-category-item {
+  padding: 5px 20px 0 20px;
+}
+
+.products-category-list .products-category-item a {
+  color: #fff;
 }
 
 .products {
@@ -30,6 +71,7 @@ a {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 40px;
   max-width: 1136px;
+  color: #000;
 }
 
 .product {
@@ -37,7 +79,7 @@ a {
   aspect-ratio: 1/1.6;
   position: relative;
   border-radius: 10px;
-  background-color: rgb(249, 249, 249);
+  background-color: #fff;
   box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
@@ -48,7 +90,7 @@ a {
 
 .product:hover {
   transform: translateY(-15px);
-  background-color: rgb(239, 239, 239);
+  background-color: rgb(249, 249, 249);
 }
 
 .product-image {
@@ -129,8 +171,10 @@ a {
   margin-right: 10px;
 }
 
-.tag {
-  display: block;
+.product-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 50px;
   height: 20px;
   font-size: 14px;
@@ -139,7 +183,6 @@ a {
   text-align: center;
   background-color: rgb(0, 0, 0);
   border-radius: 5px;
-  padding-top: 6px;
   margin-top: 8px;
 }
 

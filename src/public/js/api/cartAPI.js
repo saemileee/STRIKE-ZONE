@@ -26,18 +26,16 @@ export function getCartList() {
   return arrayCart;
 }
 
-/* order 페이지 사용 영역 */
-
-export function getAllProduct(ship) {
-  const cartList = getCartListSelected();
-  return cartList.length;
-}
-
 export function getCartListSelected() {
   const cartList = getCartList();
   const selectedCartList = cartList.filter(({ selected }) => selected);
 
   return selectedCartList;
+}
+
+export function getAllProduct() {
+  const cartList = getCartListSelected();
+  return cartList.length;
 }
 
 export function getOrderPrice(ship) {
@@ -49,9 +47,7 @@ export function getOrderPrice(ship) {
   return totalPrice;
 }
 
-/* order 페이지 사용 영역 */
-
-export function addItemCart(id) {
+export function addItemCart(id, requestAmount = 1) {
   const cartList = getCartFromLocal();
   const { img, name, team, price } = getItemById(id);
   if (cartList[id]) {
@@ -59,7 +55,7 @@ export function addItemCart(id) {
     cartList[id] = {
       ...cartList[id],
       price,
-      amount: amount + 1,
+      amount: amount + Number(requestAmount),
       total: price * (amount + 1),
     };
   } else {
@@ -67,8 +63,8 @@ export function addItemCart(id) {
       name,
       team,
       img,
-      amount: 1,
       price,
+      amount: Number(requestAmount),
       total: price,
       selected: true,
     };
@@ -109,16 +105,22 @@ export function toggleItemOfCart(id) {
 
 export function toggleAllItemOfCart(boolean) {
   const cartList = getCartFromLocal();
-  for (const key in cartList) {
-    cartList[key].selected = boolean;
-  }
+  const cartListKeys = Object.keys(cartList);
+
+  cartListKeys.forEach((key) => {
+    cartList[key].selected = !boolean;
+  });
   setCartToLocal(cartList);
 }
 
-export function getIsAllSelceted(boolean) {
+export function getIsAllSelceted() {
   const cartList = getCartFromLocal();
-  for (const key in cartList) {
-    if (!cartList[key].selected) return false;
-  }
-  return true;
+  const cartListKeys = Object.keys(cartList);
+
+  return cartListKeys.every((key) => {
+    if (!cartList[key].selected) {
+      return false;
+    }
+    return true;
+  });
 }

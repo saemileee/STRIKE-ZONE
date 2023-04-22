@@ -33,3 +33,22 @@ label {
 .password-verify-warning {
   margin-top: 10px;
 }
+.check-login-form {
+  margin: 40px 40px 40px 100px;
+}
+.login-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.login-input {
+  width: 50%;
+}
+.login-input > input {
+  margin: 5px 0 5px 0;
+}
+#login {
+  margin-left: 20px;
+  width: 150px;
+  height: 90px;
+}

@@ -1,6 +1,7 @@
 /* eslint-disable */
 import {
   getCartList,
+  getCartListSelected,
   addItemCart,
   decreaseItemOfCart,
   deleteItemOfCart,
@@ -10,20 +11,11 @@ import {
   getOrderPrice,
   getIsAllSelceted,
 } from '/js/api/cartAPI.js';
+// eslint-disable-next-line
+import { $, $createElement } from '/js/utils.js';
 
-function $(selector) {
-  return document.querySelector(selector);
-}
-
-function $createElement(elementType, className) {
-  const $el = document.createElement(elementType);
-  $el.className = className;
-  return $el;
-}
-
-const $price = $('.price');
 const $checkAll = $('.cart-select-all-checkbox');
-const $deleteAll = $('.delete-all');
+const $price = $('.price');
 
 const CartItem = (target, { productID, name, total, img, amount, selected }) => {
   const $cartItem = $createElement('li', 'cart-item');
@@ -40,7 +32,7 @@ const CartItem = (target, { productID, name, total, img, amount, selected }) => 
       <div class="cart-product">
         <div class="cart-product-data">
           <img src=${img} alt="">
-          <h1 class="cart-product-name">${name}</h1>
+          <a href="/products/${productID}" class="cart-product-name">${name}</a>
           <div class="cart-product-order">
             <div class="cart-product-amount">
               <span class="amount-minus">-</span>
@@ -60,14 +52,15 @@ const CartItem = (target, { productID, name, total, img, amount, selected }) => 
     render();
   });
 
-  const $amountController = $cartItem.querySelector('.cart-product-amount');
-  $amountController.addEventListener('click', (event) => {
-    if (event.target.closest('.amount-minus')) {
-      decreaseItemOfCart(productID);
-    }
-    if (event.target.closest('.amount-plus')) {
-      addItemCart(productID);
-    }
+  const $amountIncreaseButton = $cartItem.querySelector('.amount-plus');
+  $amountIncreaseButton.addEventListener('click', (event) => {
+    addItemCart(productID);
+    render();
+  });
+
+  const $amountDecreaseButton = $cartItem.querySelector('.amount-minus');
+  $amountDecreaseButton.addEventListener('click', (event) => {
+    decreaseItemOfCart(productID);
     render();
   });
 
@@ -98,20 +91,32 @@ const CartPrice = (shipPrice, allProductsPrice) => {
       <p>최종 금액</p>
       <em class="total-price">${total}원</em>
     </div>
-    <button class="button is-primary order-button" onclick="location.href='/order'">주문하기</button>
+    <button class="button is-black order-button">주문하기</button>
   `;
+  const $orderButton = $cartPrice.querySelector('.order-button');
+
+  $orderButton.addEventListener('click', () => {
+    const selectedItemAmount = getCartListSelected();
+    if (selectedItemAmount < 1) {
+      alert('최소 한 가지 이상의 항목을 선택해주세요!');
+      return;
+    }
+    location.href = '/order';
+  });
+
   $price.append($cartPrice);
 };
 
-const checkAllHandler = () => {
+const toggleHandler = () => {
   $checkAll.addEventListener('click', (event) => {
     const currentCheck = event.target.checked;
-    toggleAllItemOfCart(currentCheck);
+    toggleAllItemOfCart(!currentCheck);
     render();
   });
 };
 
 const deleteAllHandler = () => {
+  const $deleteAll = $('.delete-all');
   $deleteAll.addEventListener('click', (event) => {
     deleteAllOfCart();
     render();
@@ -127,17 +132,16 @@ function render() {
 
   const currentCart = getCartList();
 
-  if (currentCart)
-    currentCart.forEach(({ amount, id, img, name, total, selected }) => {
-      CartItem($cartList, {
-        productID: id,
-        name,
-        total,
-        img,
-        amount,
-        selected,
-      });
+  currentCart.forEach(({ amount, id, img, name, total, selected }) => {
+    CartItem($cartList, {
+      productID: id,
+      name,
+      total,
+      img,
+      amount,
+      selected,
     });
+  });
   $price.innerHTML = '';
 
   const shipPrice = 3000;
@@ -146,5 +150,5 @@ function render() {
 }
 
 render();
-checkAllHandler();
+toggleHandler();
 deleteAllHandler();
