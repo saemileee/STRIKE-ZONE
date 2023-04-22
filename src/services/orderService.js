@@ -4,7 +4,8 @@ const orderService = {
 
   // 주문 저장하기
   async createOrder(orderInfo) {
-    await orderDAO.createOrder(orderInfo);
+    const createdOrder = await orderDAO.createOrder(orderInfo);
+    return createdOrder;
   },
 
   // 모든 주문 정보 조회하기

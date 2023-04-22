@@ -7,9 +7,9 @@ const orderController = {
     try {
       const orderInfo = request.body;
 
-      await orderService.createOrder(orderInfo);
+      const createdOrder = await orderService.createOrder(orderInfo);
 
-      response.status(201).json({ result: 'success' });
+      response.status(201).json({ result: 'success', createdOrder });
     } catch (error) {
       next(error);
     }

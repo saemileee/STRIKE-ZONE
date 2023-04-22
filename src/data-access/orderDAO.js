@@ -17,6 +17,10 @@ const orderDAO = {
     const currentProductQuantity = product.quantity;
 
     await Product.updateOne({ productId }, { quantity: currentProductQuantity - orderedQuantity });
+
+    // 완료된 주문 정보를 다시 전달
+    const createdOrder = await Order.findOne({ orderId: nextOrderId });
+    return createdOrder;
   },
 
   // 모든 주문 정보 조회하기
