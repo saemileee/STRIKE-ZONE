@@ -1,0 +1,33 @@
+body {
+  background-color: #F1F1F1;
+}
+
+.order-complete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+  height:60vh;
+  background-color: #fff;
+  margin: 100px auto;
+  border-radius: 20px;
+  box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  animation: appear 1s forwards;
+}
+
+.order-complete h1 {
+  font-size: 48px;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
