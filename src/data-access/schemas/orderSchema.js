@@ -27,6 +27,17 @@ const OrderSchema = new Schema({
   productsPayment: { type: Number, required: true },
   deliveryCharge: { type: Number, required: true },
   totalPayment: { type: Number, required: true },
+  paymentMethod: {
+    type: String,
+    enum: ['무통장 입금', '카드', '네이버페이', '카카오페이', '토스'],
+    default: '무통장 입금',
+  },
+  requirement: { type: String },
+  status: {
+    type: String,
+    enum: ['결제 전', '상품 준비중', '배송 준비중', '배송 중', '배송 완료'],
+    default: '결제 전',
+  },
   products: [OrderedProductSchema],
   orderer: OrdererSchema,
   recipient: RecipientSchema,
