@@ -13,7 +13,9 @@ const userController = {
 
   async getUser(req, res, next) {
     try {
-      const user = await userService.getUser(req.email);
+      const { email } = req;
+
+      const user = await userService.getUser(email);
 
       res.json(user);
     } catch (err) {
@@ -40,9 +42,7 @@ const userController = {
         throw new Error('유저 등록에 실패하였습니다.');
       }
 
-      const result = JSON.stringify({ result: 'success' });
-
-      res.json(result);
+      res.json({ result: 'success' });
     } catch (err) {
       next(err);
     }
@@ -50,6 +50,8 @@ const userController = {
 
   async setUser(req, res, next) {
     try {
+      const { email } = req;
+
       const { postCode, roughAddress, detailAddress, ...restUpdateInfo } =
         req.body;
 
@@ -61,15 +63,13 @@ const userController = {
 
       const toUpdate = { address, ...restUpdateInfo };
 
-      const updatedUser = await userService.setUser(req.email, toUpdate);
+      const updatedUser = await userService.setUser(email, toUpdate);
 
       if (!updatedUser) {
         throw new Error('유저 수정에 실패하였습니다.');
       }
 
-      const result = JSON.stringify({ result: 'success' });
-
-      res.json(result);
+      res.json({ result: 'success' });
     } catch (err) {
       next(err);
     }
@@ -77,15 +77,15 @@ const userController = {
 
   async deleteUser(req, res, next) {
     try {
-      const { deletedCount } = await userService.deleteUser(req.email);
+      const { email } = req;
+
+      const { deletedCount } = await userService.deleteUser(email);
 
       if (deletedCount === 0) {
         throw new Error('유저 삭제에 실패하였습니다.');
       }
 
-      const result = JSON.stringify({ result: 'success' });
-
-      res.json(result);
+      res.json({ result: 'success' });
     } catch (err) {
       next(err);
     }
