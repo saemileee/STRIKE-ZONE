@@ -1,141 +1,166 @@
 // eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
 
-const OrderItem = (target, { team, name, img, amount, price }) => {
+const OrderItem = (
+  target,
+  { orderId, productsPayment, deliveryCharge, totalPayment, products, createdAt }
+) => {
   const $item = $createElement('li', 'order-item');
+  const convertedDate = new Date(createdAt);
+  const orderDate = {
+    year: convertedDate.getFullYear(),
+    month: convertedDate.getMonth() + 1,
+    day: convertedDate.getDate(),
+  };
+
   $item.innerHTML = `
-    <div class="image-container">
-      <img src=${img} />
+    <div class="order-item-header">
+      <h1>${orderDate.year}. ${orderDate.month}. ${orderDate.day} 주문</h1>
     </div>
-    <div class="product-information">
-      <span class="order-product-team">${team}</span>
-      <span class="order-product-title">${name}</span>
-      <span class="order-product-total-amount">${price.toLocaleString()}원</span>
-      <span class="order-product-count">${amount}개</span>
+    <ul class="order-item-products-list">
+      ${products
+        .map(
+          ({ productName, img, price, quantity }) => `
+          <li class="order-item-product">
+            <img class="product-img" src=${img}>
+            <div class="order-item-product-desc">
+              <h2 class="product-name">
+                ${productName}
+              </h2>
+              <span class="product-price">
+                ${price.toLocaleString()}원
+              </span>
+              <span class="product-quantity">
+                ${quantity}개
+              </span>
+              <span class="product-price">
+              </span>
+            </div>
+          </li>
+        `
+        )
+        .join('')}
+    </ul>
+    <div class="price">
+      <span>상품 가격 ${productsPayment.toLocaleString()}원</span>
+      <span>+</span>
+      <span>배송비 ${deliveryCharge.toLocaleString()}원</span>
+      <span>=</span>
+      <span class="total-price">총 ${totalPayment.toLocaleString()}원</span>
     </div>
   `;
+
+  $item.addEventListener('click', (event) => {
+    location.href = `/user/orders/${orderId}`;
+  });
   target.append($item);
 };
 
-const render = () => {
-  // const orderIdByPath = location.pathname.split('/')[2];
-  const DUMMY = {
-    order_id: '2424121',
-    orderDate: '2023-04-30',
-    priceData: {
-      productsPrice: 47000,
-      shipPrice: 50000,
-      totalPrice: 3000,
-    },
-    userData: {
-      name: '김민규',
-      phoneNumber: '010-1234-5678',
-      address: '경기도 구리시 수택천로33번길 9',
-      requirement: '부재시 문 앞에 놔주세요',
-    },
-    products: [
-      {
-        productID: '734541',
-        name: '김성근 싸인볼',
-        team: '한화',
-        img: '/assets/img/product/ball.jpg',
-        price: 30000,
-        amount: 3,
+const render = async () => {
+  const urlParams = new URL(location.href).searchParams;
+  const SORTEDBY = urlParams.get('sorted');
+  console.log(SORTEDBY);
+
+  const DUMMY = [
+    {
+      _id: '64436ebf865e23b8f38616b2',
+      orderId: 1,
+      productsPayment: 365000,
+      deliveryCharge: 3000,
+      totalPayment: 368000,
+      products: [
+        {
+          productId: 3,
+          productName: '[롯데 자이언츠] 자수형 어센틱 원정 유니폼',
+          quantity: 3,
+          price: 100000,
+          img: '/assets/img/products/23-lotte-giants-authentic-away-uniform-1.jpg',
+          _id: '64436ebf865e23b8f38616b3',
+        },
+        {
+          productId: 1,
+          productName: '[롯데 자이언츠] 일반형 원정 유니폼',
+          quantity: 1,
+          price: 65000,
+          img: '/assets/img/products/23-lotte-giants-away-uniform-1.jpg',
+          _id: '64436ebf865e23b8f38616b4',
+        },
+      ],
+      orderer: {
+        email: 'abc@example.com',
+        name: '홍길동',
+        phoneNumber: '010-1234-5678',
+        _id: '64436ebf865e23b8f38616b5',
       },
-      {
-        productID: '1241244',
-        name: '김성근 선글라스',
-        team: '태평양 돌핀스',
-        img: '/assets/img/product/sunglass.jpg',
-        price: 17000,
-        amount: 3,
+      recipient: {
+        name: '홍길동',
+        address1: '경기 성남시 분당구 정자일로 95',
+        address2: '1층',
+        zipCode: '13561',
+        phoneNumber: '010-1234-5678',
+        _id: '64436ebf865e23b8f38616b6',
       },
-    ],
-  };
+      createdAt: '2023-04-22T05:21:03.229Z',
+      updatedAt: '2023-04-22T05:21:03.229Z',
+      __v: 0,
+    },
+    {
+      _id: '64436ebf865e23b8f38616b2',
+      orderId: 1,
+      productsPayment: 365000,
+      deliveryCharge: 3000,
+      totalPayment: 368000,
+      products: [
+        {
+          productId: 3,
+          productName: '[롯데 자이언츠] 자수형 어센틱 원정 유니폼',
+          quantity: 3,
+          price: 100000,
+          img: '/assets/img/products/23-lotte-giants-authentic-away-uniform-1.jpg',
+          _id: '64436ebf865e23b8f38616b3',
+        },
+        {
+          productId: 1,
+          productName: '[롯데 자이언츠] 일반형 원정 유니폼',
+          quantity: 1,
+          price: 65000,
+          img: '/assets/img/products/23-lotte-giants-away-uniform-1.jpg',
+          _id: '64436ebf865e23b8f38616b4',
+        },
+      ],
+      orderer: {
+        email: 'abc@example.com',
+        name: '홍길동',
+        phoneNumber: '010-1234-5678',
+        _id: '64436ebf865e23b8f38616b5',
+      },
+      recipient: {
+        name: '홍길동',
+        address1: '경기 성남시 분당구 정자일로 95',
+        address2: '1층',
+        zipCode: '13561',
+        phoneNumber: '010-1234-5678',
+        _id: '64436ebf865e23b8f38616b6',
+      },
+      createdAt: '2022-04-22T05:21:03.229Z',
+      updatedAt: '2022-04-22T05:21:03.229Z',
+      __v: 0,
+    },
+  ];
+  // const orders = await fetch("/api/v1/orders").then(res => res.json());
 
   const $userData = $('.user-data');
   $userData.innerHTML = `
     <h3 class="title is-3">주문 내역</h3>
     <hr>
-    <div class="order-list-container">
-      <div class="order-data order-id-group">
-        <p>주문 번호</p>
-        <em class="order-id">123123</em>
-      </div>
-      <div class="order-data order-address">
-        <p>주문 일자</p>
-        <em class="order-date">123123</em>
-      </div>
-      <hr>
-      <h4 class="title is-4">주문상품</h4>
-      <ul class="order-list">
-      </ul>
-      <hr>
-      <div class="price-box ship">
-        <p>상품 금액</p>
-        <em>47,000</em>
-      </div>
-      <div class="price-box price">
-        <p>배송비</p>
-        <em>3,000</em>
-      </div>
-      <hr>
-      <div class="price-box total-price">
-        <p>총 결제 금액</p>
-        <em>50,000</em>
-      </div>
-    </div>
-    <hr>
-    <div class="order-user-data">
-      <h4 class="title is-3">배송지 정보</h4>
-      <hr>
-      <h4 class="title is-4">받으시는 분</h4>
-      <div class="user-data-box">
-        <div class="user-name">
-          <p>받는 사람</p>
-          <em></em>
-        </div>
-        <div class="user-phone-number">
-          <p>주소</p>
-          <em></em>
-        </div>
-        <div class="user-address">
-          <p>연락처</p>
-          <em></em>
-        </div>
-        <div class="user-requirement">
-          <p>요청사항</p>
-          <em></em>
-        </div>
-      </div>
-    </div>
-  </section>
+    <ul class="order-list">
+    </ul>
   `;
 
   const $orderList = $('.order-list');
-  DUMMY.products.forEach(({ team, name, img, amount, price }) => {
-    OrderItem($orderList, {
-      team,
-      name,
-      img,
-      amount,
-      price,
-    });
+  DUMMY.forEach((order) => {
+    OrderItem($orderList, order);
   });
-
-  const $orderId = $('.order-id');
-  $orderId.textContent = DUMMY.order_id;
-  const $orderDate = $('.order-date');
-  $orderDate.textContent = DUMMY.orderDate;
-
-  $('.price em').textContent = DUMMY.priceData.productsPrice.toLocaleString();
-  $('.ship em').textContent = DUMMY.priceData.shipPrice.toLocaleString();
-  $('.total-price em').textContent = DUMMY.priceData.totalPrice.toLocaleString();
-
-  $('.user-name em').textContent = DUMMY.userData.name;
-  $('.user-address em').textContent = DUMMY.userData.address;
-  $('.user-phone-number em').textContent = DUMMY.userData.phoneNumber;
-  $('.user-requirement em').textContent = DUMMY.userData.requirement;
 };
 
 render();
