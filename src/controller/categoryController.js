@@ -3,10 +3,10 @@ import { categoryService } from '../services';
 const categoryController = {
 
   // 카테고리 추가
-  async addCategory(request, response, next) {
+  async addCategory(req, res, next) {
     try {
-      const { teamId } = request.params;
-      const { categoryId, categoryName, categoryDescription } = request.body;
+      const { teamId } = req.params;
+      const { categoryId, categoryName, categoryDescription } = req.body;
 
       const categoryInfo = {
         categoryId, categoryName, categoryDescription,
@@ -14,20 +14,20 @@ const categoryController = {
 
       await categoryService.addCategory(teamId, categoryInfo);
 
-      response.status(201).json({ result: 'category created successfully.' });
+      res.status(201).json({ result: 'category created successfully.' });
     } catch (error) {
       next(error);
     }
   },
 
   // 특정 팀의 전체 카테고리 조회
-  async getCategoriesByTeamId(request, response, next) {
+  async getCategoriesByTeamId(req, res, next) {
     try {
-      const { teamId } = request.params;
+      const { teamId } = req.params;
 
       const categories = await categoryService.getCategoriesByTeamId(teamId);
 
-      response.status(200).json(categories);
+      res.status(200).json(categories);
     } catch (error) {
       next(error);
     }
