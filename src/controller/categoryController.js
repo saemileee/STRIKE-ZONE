@@ -33,6 +33,19 @@ const categoryController = {
     }
   },
 
+  // 특정 카테고리 정보 조회
+  async getCategoryByCategoryId(req, res, next) {
+    try {
+      const { categoryId } = req.params;
+
+      const category = await categoryService.getCategoryByCategoryId(categoryId);
+
+      res.status(200).json(category);
+    } catch (error) {
+      next(error);
+    }
+  },
+
 };
 
 export { categoryController };

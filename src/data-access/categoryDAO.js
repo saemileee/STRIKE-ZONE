@@ -16,6 +16,12 @@ const categoryDAO = {
 
     return categories;
   },
+
+  async getCategoryByCategoryId(categoryId) {
+    const category = await Category.findOne({ categoryId });
+
+    return category;
+  },
 };
 
 export { categoryDAO };

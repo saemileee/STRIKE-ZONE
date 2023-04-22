@@ -10,6 +10,12 @@ const categoryService = {
     const categories = await categoryDAO.getCategories(teamId);
     return categories;
   },
+
+  async getCategoryByCategoryId(categoryId) {
+    const category = await categoryDAO.getCategoryByCategoryId(categoryId);
+
+    return category;
+  },
 };
 
 export { categoryService };
