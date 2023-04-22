@@ -22,6 +22,10 @@ const categoryDAO = {
 
     return category;
   },
+
+  async updateCategoryByCategoryId(categoryId, updateInfo) {
+    await Category.findOneAndUpdate({ categoryId }, updateInfo);
+  },
 };
 
 export { categoryDAO };

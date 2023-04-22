@@ -16,6 +16,10 @@ const categoryService = {
 
     return category;
   },
+
+  async updateCategoryByCategoryId(categoryId, updateInfo) {
+    await categoryDAO.updateCategoryByCategoryId(categoryId, updateInfo);
+  },
 };
 
 export { categoryService };

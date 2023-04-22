@@ -46,6 +46,20 @@ const categoryController = {
     }
   },
 
+  // 특정 카테고리 정보 수정
+  async updateCategoryByCategoryId(req, res, next) {
+    try {
+      const { categoryId } = req.params;
+      const updateInfo = req.body;
+
+      await categoryService.updateCategoryByCategoryId(categoryId, updateInfo);
+
+      res.status(200).json({ result: 'successfully updated.' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
 };
 
 export { categoryController };

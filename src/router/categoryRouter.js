@@ -13,4 +13,7 @@ categoryRouter.post('/teams/:teamId/categories', categoryController.addCategory)
 // 특정 카테고리 정보 조회
 categoryRouter.get('/categories/:categoryId/info', categoryController.getCategoryByCategoryId);
 
+// 특정 카테고리 정보 수정
+categoryRouter.put('/categories/:categoryId', categoryController.updateCategoryByCategoryId);
+
 export { categoryRouter };
