@@ -15,7 +15,7 @@ import { $, $createElement } from '/js/utils.js';
 const $checkAll = $('.cart-select-all-checkbox');
 const $price = $('.price');
 
-const CartItem = (target, { productID, name, total, img, amount, selected }) => {
+const CartItem = (target, { productID, name, price, total, img, amount, selected, rate }) => {
   const $cartItem = $createElement('li', 'cart-item');
   $cartItem.innerHTML = `
     <article class="cart-group" product-id=${productID}>
@@ -37,7 +37,19 @@ const CartItem = (target, { productID, name, total, img, amount, selected }) => 
               <span class="amount">${amount}</span>
               <span class="amount-plus">+</span>
             </div>
-            <p class="cart-product-price">${total.toLocaleString()}원</p>
+            <div class="cart-product-price-box">
+              <p class="cart-product-price ${rate > 0 ? 'has-rate' : ''}"> ${(
+    price * amount
+  ).toLocaleString()}원 </p>
+              ${
+                rate > 0
+                  ? `
+                    <p class="cart-product-price">${total.toLocaleString()}원</p>
+                    <span class="cart-product-rate">${rate}%</span>
+                  `
+                  : ''
+              }
+            </div>
         </div>
       </div>
     </article>
@@ -130,14 +142,18 @@ async function render() {
 
   const currentCart = getCartList();
 
-  currentCart.forEach(({ amount, id, img, name, total, selected }) => {
+  console.log(currentCart);
+
+  currentCart.forEach(({ amount, id, img, name, price, total, selected, rate }) => {
     CartItem($cartList, {
       productID: id,
       name,
+      price,
       total,
       img,
       amount,
       selected,
+      rate,
     });
   });
   $price.innerHTML = '';
