@@ -1,3 +1,5 @@
+import { setDiscount } from '../utils.js';
+
 function getCartFromLocal() {
   const existsCart = localStorage.getItem('cart');
   const cartList = JSON.parse(existsCart) || {};
@@ -42,7 +44,8 @@ export async function getOrderPrice(ship) {
   const totalPricesByServer = await Promise.all(
     cartList.map(async ({ id, amount }) => {
       const cartItem = await getItemById(id);
-      const combinedPrice = cartItem.price * amount;
+      const { price, rate } = cartItem;
+      const combinedPrice = setDiscount(price, rate) * amount;
       return combinedPrice;
     })
   );
@@ -54,23 +57,27 @@ export async function getOrderPrice(ship) {
 
 export async function addItemCart(id, requestAmount = 1) {
   const cartList = getCartFromLocal();
-  const { img, name, team, price } = await getItemById(id);
+  const { img, name, team, price, rate } = await getItemById(id);
+  const discountedPrice = setDiscount(price, rate);
   if (cartList[id]) {
     const { amount } = cartList[id];
     cartList[id] = {
       ...cartList[id],
+      rate,
       price,
       amount: amount + Number(requestAmount),
-      total: price * (amount + 1),
+      total: discountedPrice * (amount + 1),
     };
   } else {
     cartList[id] = {
       name,
       team,
+      rate,
       img: img[0],
       price,
+      discountedPrice: discountedPrice,
       amount: Number(requestAmount),
-      total: price,
+      total: discountedPrice,
       selected: true,
     };
   }
@@ -81,12 +88,14 @@ export async function decreaseItemOfCart(id) {
   const cartList = getCartFromLocal();
   if (cartList[id].amount > 1) {
     const { amount } = cartList[id];
-    const { price } = await getItemById(id);
+    const { price, rate } = await getItemById(id);
+    const discountedPrice = setDiscount(price, rate);
     cartList[id] = {
       ...cartList[id],
+      rate,
       price,
       amount: amount - 1,
-      total: price * (amount - 1),
+      total: discountedPrice * (amount - 1),
     };
   } else delete cartList[id];
   setCartToLocal(cartList);
