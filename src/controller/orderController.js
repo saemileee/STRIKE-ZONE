@@ -66,6 +66,20 @@ const orderController = {
     }
   },
 
+  // 특정 orderId 에 해당하는 배송 상태 수정하기
+  async updateStatusByOrderId(req, res, next) {
+    try {
+      const { orderId } = req.params;
+      const { status } = req.body;
+
+      await orderService.updateStatusByOrderId(orderId, status);
+
+      res.status(200).json({ result: 'order status updated successfully' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   // 특정 orderId 에 해당하는 주문 정보 삭제하기
   async deleteOrderByOrderId(req, res, next) {
     try {

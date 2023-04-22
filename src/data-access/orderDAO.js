@@ -56,6 +56,11 @@ const orderDAO = {
     await Order.updateOne({ orderId }, { recipient: { ...recipientInfo } });
   },
 
+  // 특정 주문의 배송 상태 수정
+  async updateStatusByOrderId(orderId, status) {
+    await Order.updateOne({ orderId }, { status });
+  },
+
   async deleteOrderByOrderId(orderId) {
     await Order.deleteOne({ orderId });
   },

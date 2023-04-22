@@ -34,6 +34,11 @@ const orderService = {
     await orderDAO.updateRecipientByOrderId(orderId, recipientInfo);
   },
 
+  // 특정 orderId 에 해당하는 배송 상태 정보 수정
+  async updateStatusByOrderId(orderId, status) {
+    await orderDAO.updateStatusByOrderId(orderId, status);
+  },
+
   // 특정 orderId 에 해당하는 주문 정보 삭제하기
   async deleteOrderByOrderId(orderId) {
     await orderDAO.deleteOrderByOrderId(orderId);
