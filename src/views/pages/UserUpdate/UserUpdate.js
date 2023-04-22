@@ -354,19 +354,28 @@ function showUpdateForm() {
   }
 
   function selectTeam() {
-    for (let i = 0; i < teams.length; i++) {
-      if (teams[i].checked) {
-        teams[i].parentNode.classList.add('is-info');
-      } else {
-        teams[i].parentNode.classList.remove('is-info');
-      }
-    }
+    teams.forEach((team) =>
+      team.checked
+        ? team.parentNode.classList.add('is-info')
+        : team.parentNode.classList.remove('is-info')
+    );
   }
 
   function getCheerTeam() {
-    for (let i = 0; i < teams.length; i++) {
-      if (teams[i].checked) return teams[i].value;
-    }
+    const teamID = {
+      롯데자이언츠: '6440ec92b1154c52aee0c4a7',
+      KIA타이거즈: '6440ee20be78f271d6821815',
+      삼성라이온즈: '6440ee2ebe78f271d6821817',
+      LG트윈스: '6440ee33be78f271d6821819',
+      두산베어스: '6440ee37be78f271d682181b',
+      키움히어로즈: '6440ee3cbe78f271d682181d',
+      SSG랜더스: '6440ee43be78f271d682181f',
+      KT위즈: '6440ee48be78f271d6821821',
+      한화이글스: '6440ee4dbe78f271d6821823',
+      NC다이노스: '6440ee51be78f271d6821825',
+    };
+    const checkedTeam = Array.from(teams).find((team) => team.checked);
+    return teamID[checkedTeam.value];
   }
 
   function onUpdateSubmit(e) {
@@ -383,24 +392,30 @@ function showUpdateForm() {
         'detailAddress',
         'cheerTeam',
       ];
-      for (let i = 0; i < userInfoKey.length; i++) {
-        const userInfo = $(`#${userInfoKey[i]}`);
-        if (userInfoKey[i] === 'phoneNumber') {
-          newUser[userInfoKey[i]] = getPhoneNumber();
-        } else if (userInfoKey[i] === 'cheerTeam') {
-          newUser[userInfoKey[i]] = getCheerTeam();
-        } else {
-          newUser[userInfoKey[i]] = userInfo.value;
-        }
-      }
+      userInfoKey.forEach((key) => {
+        const userInfo = $(`#${key}`);
+        if (key === 'phoneNumber') newUser[key] = getPhoneNumber();
+        else if (key === 'cheerTeam') newUser[key] = getCheerTeam();
+        else newUser[key] = userInfo.value;
+      });
+      const { token } = JSON.parse(localStorage.getItem('user'));
 
-      fetch('/api/v1/users', {
-        method: 'POST',
+      fetch('/api/v1/users/email', {
+        method: 'PUT',
         headers: {
+          token,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newUser),
-      }).then((user) => console.log(user));
+      })
+        .then((response) => response.json())
+        .then(() => {
+          alert('회원정보를 수정하였습니다.');
+          window.location.href = '/user/mypage';
+        })
+        .catch(() => {
+          alert('입력한 정보를 다시 확인해주세요.');
+        });
     }
   }
 
@@ -413,9 +428,9 @@ function showUpdateForm() {
   for (let i = 0; i < 3; i++) {
     findAddress[i].addEventListener('click', searchZipcode);
   }
-  for (let i = 0; i < teams.length; i++) {
-    teams[i].addEventListener('click', selectTeam);
-  }
+  teams.forEach((node) => {
+    node.addEventListener('click', selectTeam);
+  });
 }
 
 function fillUserInfo(userData) {
@@ -429,7 +444,7 @@ function fillUserInfo(userData) {
 
 function getUserInfo() {
   const { token } = JSON.parse(localStorage.getItem('user'));
-  fetch('/api/v1/users', {
+  fetch('/api/v1/users/email', {
     method: 'GET',
     headers: {
       token,
@@ -437,6 +452,7 @@ function getUserInfo() {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data);
       fillUserInfo(data);
     });
 }
