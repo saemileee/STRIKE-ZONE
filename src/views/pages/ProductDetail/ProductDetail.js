@@ -52,12 +52,16 @@ function readerBasicDescription(
     '.product-short-description'
   );
   $productShortDescription.innerHTML = shortDescription;
-
   const $productDiscountRate = document.querySelector('.product-discount-rate');
-  $productDiscountRate.innerHTML = `${rate}%`;
-
   const $productPrice = document.querySelector('.product-price');
-  $productPrice.innerHTML = `${price.toLocaleString()}원`;
+
+  if (rate !== 0 || rate !== null) {
+    $productDiscountRate.innerHTML = `${rate}%`;
+    $productPrice.innerHTML = `${price.toLocaleString()}원`;
+  } else {
+    $productDiscountRate.style.display = 'none';
+    $productPrice.style.display = 'none';
+  }
 
   const $productSellingPrice = document.querySelector('.product-selling-price');
   $productSellingPrice.innerHTML = `${productSellingPrice.toLocaleString()}원`;
@@ -87,7 +91,6 @@ function renderBuyButtons(productId) {
     }
   });
 }
-
 function renderProductDetailDescription(productDetailDescription) {
   const $detailDescription = document.querySelector(
     '.product-detail-description'
