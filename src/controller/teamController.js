@@ -53,6 +53,31 @@ const teamController = {
     }
   },
 
+  async updateTeamById(req, res, next) {
+    try {
+      const { teamId } = req.params;
+      const updateInfo = req.body;
+
+      await teamService.updateTeamById(teamId, updateInfo);
+
+      res.status(200).json({ result: 'team updated successfully.' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async deleteTeamById(req, res, next) {
+    try {
+      const { teamId } = req.params;
+
+      await teamService.deleteTeamById(teamId);
+
+      res.status(200).json({ result: 'team deleted successfully.' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
 };
 
 export { teamController };

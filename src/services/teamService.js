@@ -21,12 +21,12 @@ const teamService = {
     return team;
   },
 
-  async updateProductById(productId, updateInfo) {
-    await teamDAO.updateByProductId(productId, updateInfo);
+  async updateTeamById(teamId, updateInfo) {
+    await teamDAO.updateByTeamId(teamId, updateInfo);
   },
 
-  async deleteProductById(productId) {
-    await teamDAO.deleteByProductId(productId);
+  async deleteTeamById(teamId) {
+    await teamDAO.deleteByTeamId(teamId);
   },
 
 };

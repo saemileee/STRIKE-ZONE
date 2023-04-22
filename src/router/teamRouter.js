@@ -13,4 +13,10 @@ teamRouter.get('/:teamId', teamController.getTeamById);
 // 팀 추가
 teamRouter.post('/', teamController.addTeam);
 
+// 팀 수정
+teamRouter.put('/:teamId', teamController.updateTeamById);
+
+// 팀 삭제
+teamRouter.delete('/:teamId', teamController.deleteTeamById);
+
 export { teamRouter };

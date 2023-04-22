@@ -26,16 +26,11 @@ const teamDAO = {
   },
 
   async updateByTeamId(teamId, updateInfo) {
-    const option = { returnOriginal: false };
-    const updatedTeam = await Team.findOneAndUpdate({ teamId }, updateInfo, option);
-
-    return updatedTeam;
+    await Team.updateOne({ teamId }, updateInfo);
   },
 
   async deleteByTeamId(teamId) {
-    const deletedTeam = await Team.findOneAndDelete({ teamId });
-
-    return deletedTeam;
+    await Team.deleteOne({ teamId });
   },
 };
 
