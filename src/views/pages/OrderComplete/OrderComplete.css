@@ -4,13 +4,16 @@ body {
 
 .order-complete {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  position: relative;
   align-items: center;
-  width: 50vw;
-  height:60vh;
+  width: 700px;
+  height: 500px;
   background-color: #fff;
-  margin: 100px auto;
+  margin: 10vh auto;
   border-radius: 20px;
+  overflow: hidden;
   box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
@@ -18,7 +21,10 @@ body {
 }
 
 .order-complete h1 {
-  font-size: 48px;
+  position: absolute;
+  bottom: 90px;
+  font-size: 40px;
+  font-weight: 600;
 }
 
 @keyframes appear {
@@ -30,4 +36,77 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.cart-wrapper {
+  position: relative;
+  bottom: 70px;
+  left: 20px;
+  width: 300px;
+}
+
+@keyframes complete {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.cart-wrapper .ball{
+  position: absolute;
+  width: 120px;
+  bottom: 110px;
+  left: 40px;
+  transform: translateY(-500px);
+  animation: dropBall 1.5s 0.6s forwards,
+  rolling 2s 1.9s forwards;
+}
+
+@keyframes dropBall {
+  0% {
+    transform: translateY(-500px);
+  }
+  25% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-70px);
+  }
+  50% {
+    transform: translateY(0)
+  }
+  60% {
+    transform: translateY(-30px)
+  }
+  70% {
+    transform: translateY(0)
+  }
+  80% {
+    transform: translateY(-10px)
+  }
+  90% {
+    transform: translateY(0)
+  }
+  100% {
+    transform: translate(0)
+  }
+}
+
+@keyframes rolling {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(30px) rotate(80deg);
+  }
+}
+
+.to-order-detail-button {
+  position: absolute;
+  bottom: 30px;
 }
