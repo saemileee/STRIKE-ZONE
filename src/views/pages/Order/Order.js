@@ -17,39 +17,48 @@ const orderListContainer = document.querySelector('.order-list-container');
 
 async function getData() {
   const { deliveryCharge } = await fetchData('/api/v1/shippings/default');
-  const DELIVERY_CHARGE = await deliveryCharge;
+  let products = [];
+  let totalAmount = 0;
 
-  let ALL_ORDERS_TOTAL_AMOUNT = 0;
   for (let cartList of cartListSelected) {
-    const { id: PRODUCT_ID, amount: PURCHASE_QUANTITY } = cartList;
-    const {
-      discountedPrice: DISCOUNTED_PRODUCT_PRICE,
-      name: NAME,
-      teamName: TEAM,
-      price: PRICE,
-      rate: RATE,
-      img: IMAGES,
-    } = await fetchData(`/api/v1/products/${PRODUCT_ID}`);
+    const { id: productId, amount: quantity } = cartList;
+    const { discountedPrice, name, teamName, price, rate, img } =
+      await fetchData(`/api/v1/products/${productId}`);
 
-    const TOTAL_PRODUCT_AMOUNT = DISCOUNTED_PRODUCT_PRICE * PURCHASE_QUANTITY;
-    ALL_ORDERS_TOTAL_AMOUNT += TOTAL_PRODUCT_AMOUNT;
+    const totalProductAmount = discountedPrice * quantity;
+    totalAmount += totalProductAmount;
+
     renderOrderList(
-      TEAM,
-      NAME,
-      PURCHASE_QUANTITY,
-      RATE,
-      PRICE,
-      DISCOUNTED_PRODUCT_PRICE,
-      TOTAL_PRODUCT_AMOUNT,
-      IMAGES
+      teamName,
+      name,
+      quantity,
+      rate,
+      price,
+      discountedPrice,
+      totalProductAmount,
+      img
     );
-  }
-  const TOTAL_PAYMENT_AMOUNT = ALL_ORDERS_TOTAL_AMOUNT + DELIVERY_CHARGE;
-  renderReceipt(ALL_ORDERS_TOTAL_AMOUNT, DELIVERY_CHARGE, TOTAL_PAYMENT_AMOUNT);
 
+    products.push({
+      productId,
+      productName: name,
+      quantity,
+      price: discountedPrice,
+      img: img[0],
+    });
+  }
+
+  const deliveryChargeAmount = await deliveryCharge;
+  const totalPaymentAmount = totalAmount + deliveryChargeAmount;
+  updateCheckoutButton(totalPaymentAmount);
+  renderReceipt(totalAmount, deliveryChargeAmount, totalPaymentAmount);
+
+  return products;
+}
+
+async function updateCheckoutButton(amount) {
   const checkoutButton = document.querySelector('.check-out-button');
-  checkoutButton.value = `${TOTAL_PAYMENT_AMOUNT.toLocaleString()}원 결제하기`;
-  console.log(checkoutButton);
+  checkoutButton.value = `${amount.toLocaleString()}원 결제하기`;
 }
 
 getData();
@@ -96,37 +105,7 @@ function renderReceipt(totalProductAmount, deliveryCharge, totalPaymentAmount) {
   totalPaymentAmountElement.innerHTML = `${totalPaymentAmount.toLocaleString()}원`;
 }
 
-//장바구니 API에서 받아올 때
-// function renderOrderList() {
-//   const orderListContainer = document.querySelector('.order-list-container');
-//   cartListSelected.forEach(orderData => {
-//     const { amount, id, img, name, price, team, total } = orderData;
-//     const orderProduct = document.createElement('div');
-//     orderProduct.className = 'order-product';
-//     orderProduct.innerHTML = `<div class="image-container">
-//     <img src="${img}" />
-//   </div>
-//   <div class="product-information">
-//     <span class="order-product-team">${team}</span>
-//     <span class="order-product-title">${name}</span
-//     ><span class="order-product-total-amount">${price.toLocaleString()}원</span
-//     ><span class="order-product-count">${amount}개</span>
-//   </div>`;
-//     orderListContainer.append(orderProduct);
-//   });
-
-//   const totalProductAmountElement = document.querySelector(
-//     '.total-product-amount'
-//   );
-//   totalProductAmountElement.innerHTML = `${orderPrice.toLocaleString()}원`;
-
-//   const shippingChargeElement = document.querySelector('.shipping-charge');
-
-//   const totalPaymentAmountElement = document.querySelector('.total-pay-amount');
-// }
-
-renderOrderList();
-
+//주소찾기 기능 연결
 function findAndFillAddress(target) {
   document.querySelectorAll(`.${target}-address`).forEach(input => {
     input.addEventListener('click', () => {
@@ -140,10 +119,10 @@ function findAndFillAddress(target) {
     });
   });
 }
-
 findAndFillAddress('user');
 findAndFillAddress('receiver');
 
+//유효성 검사
 function checkValidation(target) {
   const regex = {
     'user-email':
@@ -152,7 +131,6 @@ function checkValidation(target) {
   if (!target.value.match(regex[target.id])) return false;
   return true;
 }
-
 function isValid(event) {
   if (!checkValidation(event.target)) {
     event.target.classList.add('is-danger');
@@ -164,9 +142,9 @@ function isValid(event) {
     warning.style.display = 'none';
   }
 }
-
 $('.user-email').addEventListener('blur', isValid);
 
+//전화번호 하이픈 추가
 function autoHyphen(target) {
   const targetElement = $(target);
   targetElement.addEventListener('input', () => {
@@ -175,10 +153,10 @@ function autoHyphen(target) {
       .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
   });
 }
-
 autoHyphen('.user-phone-number-back');
 autoHyphen('.receiver-phone-number-back');
 
+//주문자와 동일한 정보 채우기
 const $fillDeliveryInformationButton = $('.fill-delivery-information');
 $fillDeliveryInformationButton.addEventListener('click', () => {
   const userName = $('.user-name').value;
@@ -203,71 +181,76 @@ $fillDeliveryInformationButton.addEventListener('click', () => {
   $receiverAddressDetail.value = userAddressDetail;
 });
 
-const termCheckboxElements = document.querySelectorAll('.term-checkbox');
-
-let selectAllCheckboxElement = document.querySelector('.select-all');
-
-selectAllCheckboxElement.addEventListener('change', () => {
-  if (selectAllCheckboxElement.checked) {
-    for (let checkbox of termCheckboxElements) {
-      checkbox.checked = true;
+//전체선택 버튼
+function selectAllCheckbox() {
+  const termCheckboxElements = document.querySelectorAll('.term-checkbox');
+  let selectAllCheckboxElement = document.querySelector('.select-all');
+  selectAllCheckboxElement.addEventListener('change', () => {
+    if (selectAllCheckboxElement.checked) {
+      for (let checkbox of termCheckboxElements) {
+        checkbox.checked = true;
+      }
+    } else {
+      for (let checkbox of termCheckboxElements) {
+        checkbox.checked = false;
+      }
     }
-  } else {
-    for (let checkbox of termCheckboxElements) {
-      checkbox.checked = false;
-    }
-  }
-});
-
-for (let checkbox of termCheckboxElements) {
-  checkbox.addEventListener('change', () => {
-    let checkedCount = 0;
-    for (let _checkbox of termCheckboxElements) {
-      _checkbox.checked === true ? checkedCount++ : null;
-    }
-    checkedCount === termCheckboxElements.length
-      ? (selectAllCheckboxElement.checked = true)
-      : (selectAllCheckboxElement.checked = false);
   });
+
+  for (let checkbox of termCheckboxElements) {
+    checkbox.addEventListener('change', () => {
+      let checkedCount = 0;
+      for (let _checkbox of termCheckboxElements) {
+        _checkbox.checked === true ? checkedCount++ : null;
+      }
+      checkedCount === termCheckboxElements.length
+        ? (selectAllCheckboxElement.checked = true)
+        : (selectAllCheckboxElement.checked = false);
+    });
+  }
+}
+selectAllCheckbox();
+
+function getOrdererData() {
+  const email = $('.user-email').value;
+  const name = $('.user-name').value;
+  const phoneNumber = `${$('.user-phone-number-pro').value}-${
+    $('.user-phone-number-back').value
+  }`;
+  return { email, name, phoneNumber };
+}
+
+function getRecipientData() {
+  const name = $('.receiver').value;
+  const address1 = $('.receiver-address-base').value;
+  const address2 = $('.receiver-address-detail').value;
+  const zipCode = $('.receiver-address-zonecode').value;
+  const phoneNumber = `${$('.receiver-phone-number-pro').value}-${
+    $('.receiver-phone-number-back').value
+  }`;
+
+  return { name, address1, address2, zipCode, phoneNumber };
+}
+
+async function postOrderData(event) {
+  event.preventDefault();
+  const products = await getData();
+  const orderer = getOrdererData();
+  const recipient = getRecipientData();
+  const data = { products, orderer, recipient };
+  console.log(data);
+  fetch('/api/v1/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+    .then(response => {
+      return response.json();
+    })
+    .then(data => {
+      window.location.href = `/user/orders/complete/${data.createdOrder.orderId}`;
+    });
 }
 
 const $checkOutButton = $('.check-out-button');
-$checkOutButton.addEventListener('click', () => {
-  const userName = $('.user-name').value;
-  const userEmail = $('.user-email').value;
-  const userPhoneNumberPro = $('.user-phone-number-pro').value;
-  const userPhoneNumberBack = $('.user-phone-number-back').value;
-  const userData = {
-    userName,
-    userEmail,
-    userPhoneNumber: `${userPhoneNumberPro}${userPhoneNumberBack}`,
-  };
-
-  const receiver = $('.receiver').value;
-  const receiverPhoneNumberPro = $('.receiver-phone-number-pro').value;
-  const receiverPhoneNumberBack = $('.receiver-phone-number-back').value;
-  const receiverAddressZonecode = $('.receiver-address-zonecode').value;
-  const receiverAddressBase = $('.receiver-address-base').value;
-  const receiverAddressDetail = $('.receiver-address-detail').value;
-  const deliveryData = {
-    receiver,
-    receiverPhoneNumber: `${receiverPhoneNumberPro}${receiverPhoneNumberBack}`,
-    receiverAddressZonecode,
-    receiverAddressBase,
-    receiverAddressDetail,
-  };
-
-  const $paymentMethods = document.getElementsByName('payment-method');
-  let paymentMethod = $paymentMethods[0];
-  for (const element of $paymentMethods) {
-    paymentMethod.checked ? (paymentMethod = element.className) : null;
-  }
-
-  console.log(
-    cartListSelected,
-    orderPrice,
-    userData,
-    deliveryData,
-    paymentMethod
-  );
-});
+$checkOutButton.addEventListener('click', postOrderData);
