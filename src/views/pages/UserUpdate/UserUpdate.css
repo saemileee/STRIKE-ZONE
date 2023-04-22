@@ -20,7 +20,7 @@ label {
   margin-top: 10px;
 }
 .check-login-form {
-  margin: 40px 40px 40px 100px;
+  margin: 60px 40px 40px 100px;
 }
 .login-form {
   display: flex;
@@ -35,8 +35,6 @@ label {
 }
 #login {
   margin-left: 20px;
-  width: 150px;
-  height: 90px;
 }
 .login-warning {
   margin: 10px;

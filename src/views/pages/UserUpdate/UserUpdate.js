@@ -238,17 +238,10 @@ userUpdateForm.innerHTML = `
 const checkPasswordForm = $createElement('form', 'check-login-form');
 checkPasswordForm.innerHTML = `
 <section class="check-login-wrapper">
-  <h3 class="title is-3">로그인</h3>
+  <h3 class="title is-3">비밀번호 확인</h3>
   <div class="login-form-wrapper">
     <div class="login-form">
       <div class="login-input">
-        <input
-          type="text"
-          placeholder="이메일"
-          class="input check-email"
-          id="loginId"
-          required
-        />
         <input
           type="password"
           placeholder="비밀번호"
@@ -257,7 +250,7 @@ checkPasswordForm.innerHTML = `
           required
         />
       </div>
-      <button type="submit" class="button is-info" id="login">로그인</button>
+      <button type="submit" class="button is-info" id="login">확인</button>
     </div>    
   </div>
 </section>
@@ -314,6 +307,11 @@ function showUpdateForm() {
     return true;
   }
 
+  function checkAddress() {
+    if (findAddress[1].value) return true;
+    return false;
+  }
+
   function userInfoComplete() {
     if (!checkValidation(newUserEmail)) {
       alert('이메일 형식이 올바르지 않습니다.');
@@ -325,6 +323,10 @@ function showUpdateForm() {
     }
     if (!passwordVerify()) {
       alert('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
+    if (!checkAddress()) {
+      alert('주소를 입력해 주세요');
       return false;
     }
     return true;
@@ -375,7 +377,11 @@ function showUpdateForm() {
       NC다이노스: '6440ee51be78f271d6821825',
     };
     const checkedTeam = Array.from(teams).find((team) => team.checked);
-    return teamID[checkedTeam.value];
+    let selectedTeam;
+    checkedTeam === undefined
+      ? (selectedTeam = false)
+      : (selectedTeam = teamID[checkedTeam.value]);
+    return selectedTeam;
   }
 
   function onUpdateSubmit(e) {
@@ -394,9 +400,12 @@ function showUpdateForm() {
       ];
       userInfoKey.forEach((key) => {
         const userInfo = $(`#${key}`);
-        if (key === 'phoneNumber') newUser[key] = getPhoneNumber();
-        else if (key === 'cheerTeam') newUser[key] = getCheerTeam();
-        else newUser[key] = userInfo.value;
+        if (key === 'phoneNumber') {
+          newUser[key] = getPhoneNumber();
+        } else if (key === 'cheerTeam') {
+          const isSelected = getCheerTeam();
+          if (isSelected) newUser[key] = isSelected;
+        } else newUser[key] = userInfo.value;
       });
       const { token } = JSON.parse(localStorage.getItem('user'));
 
@@ -452,7 +461,6 @@ function getUserInfo() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       fillUserInfo(data);
     });
 }
@@ -460,9 +468,7 @@ function getUserInfo() {
 const checkForm = $('.check-login-form');
 checkForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const ckeckEmail = $('.check-email').value;
   const checkPassword = $('.check-password').value;
-  const userInfo = { email: ckeckEmail, password: checkPassword };
   const { token } = JSON.parse(localStorage.getItem('user'));
 
   fetch('/api/v1/auth/check', {
@@ -471,7 +477,7 @@ checkForm.addEventListener('submit', (e) => {
       token,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(userInfo),
+    body: JSON.stringify({ password: checkPassword }),
   })
     .then((response) => response.json())
     .then(() => {
@@ -483,7 +489,7 @@ checkForm.addEventListener('submit', (e) => {
       if (isloginWarning === null) {
         const loginFormWrapper = $('.login-form-wrapper');
         const loginWarning = $createElement('div', 'login-warning');
-        loginWarning.innerText = '아이디 또는 비밀번호가 올바르지 않습니다.';
+        loginWarning.innerText = '비밀번호가 올바르지 않습니다.';
         loginFormWrapper.appendChild(loginWarning);
       }
     });
