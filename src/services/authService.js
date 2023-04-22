@@ -3,6 +3,20 @@ import jwt from 'jsonwebtoken';
 import { userDAO } from '../data-access';
 
 const authService = {
+  async getUserEmailByToken(token) {
+    const secretKey = process.env.SECRET_KEY || 'secret';
+
+    const decodedToken = jwt.verify(token, secretKey);
+
+    if (!decodedToken) {
+      throw new Error('유저 이메일이 존재하지 않습니다.');
+    }
+
+    const { email } = decodedToken;
+
+    return email;
+  },
+
   async getUserToken(email, password) {
     try {
       await this.checkPasswordCorrect(email, password);
