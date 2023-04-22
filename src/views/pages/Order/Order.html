@@ -25,281 +25,295 @@
       <section class="order-list-container">
         <h4 class="title is-4">주문상품</h4>
       </section>
-      <section>
-        <h4 class="title is-4">주문자</h4>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">이름</label>
+      <form>
+        <section class="user-information-container">
+          <h4 class="title is-4">주문자</h4>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">이름</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input user-name"
+                    type="text"
+                    placeholder="이름을 입력해 주세요."
+                    required
+                  />
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="field-body">
-            <div class="field">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">이메일</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    id="user-email"
+                    class="input user-email"
+                    type="email"
+                    placeholder="이메일을 입력해 주세요."
+                    required
+                  />
+                </p>
+                <p class="user-email-warning" style="display: none">
+                  이메일 형식이 올바르지 않습니다.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">휴대전화</label>
+            </div>
+            <div class="field-body">
+              <p class="control">
+                <span class="select">
+                  <select class="user-phone-number-pro">
+                    <option>010</option>
+                    <option>011</option>
+                    <option>016</option>
+                    <option>017</option>
+                    <option>018</option>
+                    <option>019</option>
+                  </select>
+                </span>
+              </p>
               <p class="control is-expanded">
                 <input
-                  class="input user-name"
-                  type="text"
-                  placeholder="이름을 입력해 주세요."
+                  class="input user-phone-number-back"
+                  type="tel"
+                  placeholder="나머지 번호를 입력해주세요."
+                  maxlength="9"
                   required
                 />
               </p>
             </div>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">이메일</label>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">주소</label>
+            </div>
+            <div class="field-body">
+              <p class="control">
+                <span id="user-address-button" class="button user-address"
+                  >주소찾기</span
+                >
+              </p>
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input user-address user-address-zonecode"
+                    type="text"
+                    placeholder="우편번호"
+                    readonly
+                    required
+                  />
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="field-body">
-            <div class="field">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label"></label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    id="address-base"
+                    class="input user-address user-address-base"
+                    type="text"
+                    placeholder="주소"
+                    readonly
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label"></label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input user-address-detail"
+                    type="text"
+                    placeholder="상세주소를 입력해 주세요."
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="delivery-information-container">
+          <h4 class="title is-4">배송지</h4>
+          <button class="button is-small is-info fill-delivery-information">
+            위와 동일하게 채우기
+          </button>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">받는 사람</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input receiver"
+                    type="text"
+                    placeholder="받는 사람을 입력해 주세요."
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">연락처</label>
+            </div>
+            <div class="field-body">
+              <p class="control">
+                <span class="select">
+                  <select class="receiver-phone-number-pro">
+                    <option>010</option>
+                    <option>011</option>
+                    <option>016</option>
+                    <option>017</option>
+                    <option>018</option>
+                    <option>019</option>
+                  </select>
+                </span>
+              </p>
               <p class="control is-expanded">
                 <input
-                  class="input user-email"
-                  type="email"
-                  placeholder="이메일을 입력해 주세요."
+                  class="input receiver-phone-number-back"
+                  type="tel"
+                  placeholder="나머지 번호를 입력해 주세요."
+                  maxlength="9"
                   required
                 />
               </p>
             </div>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">휴대전화</label>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">주소</label>
+            </div>
+            <div class="field-body">
+              <p class="control">
+                <span
+                  id="receiver-address-button"
+                  class="button receiver-address"
+                  >주소찾기</span
+                >
+              </p>
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input receiver-address receiver-address-zonecode"
+                    type="text"
+                    placeholder="우편번호"
+                    readonly
+                    required
+                  />
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="field-body">
-            <p class="control">
-              <span class="select">
-                <select class="user-phone-number-pro">
-                  <option>010</option>
-                  <option>011</option>
-                  <option>016</option>
-                  <option>017</option>
-                  <option>018</option>
-                  <option>019</option>
-                </select>
-              </span>
-            </p>
-            <p class="control is-expanded">
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label"></label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    id="address-base"
+                    class="input receiver-address receiver-address-base"
+                    type="text"
+                    placeholder="주소"
+                    readonly
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label"></label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input receiver-address-detail"
+                    type="text"
+                    placeholder="상세주소를 입력해 주세요."
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="payment-information-container">
+          <h4 class="title is-4">결제 수단</h4>
+          <div class="control">
+            <label class="radio payment-method">
               <input
-                class="input user-phone-number-back"
-                type="tel"
-                placeholder="나머지 번호를 입력해주세요."
-                maxlength="9"
-                required
+                type="radio"
+                name="payment-method"
+                checked
+                class="account-transfer"
               />
-            </p>
+              무통장입금
+            </label>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">주소</label>
+        </section>
+        <section class="reciept-information-container">
+          <h4 class="title is-4">결제금액</h4>
+          <div>
+            <span>총 상품 금액</span
+            ><span class="price total-product-amount">11,300원</span>
           </div>
-          <div class="field-body">
-            <p class="control">
-              <span id="user-address-button" class="button user-address"
-                >주소찾기</span
-              >
-            </p>
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input user-address user-address-zonecode"
-                  type="text"
-                  placeholder="우편번호"
-                  readonly
-                  required
-                />
-              </p>
-            </div>
+          <div><span>배송비</span><span class="price">2,300원</span></div>
+          <hr />
+          <div>
+            <span>최종 결제금액</span><span class="price">2,300원</span>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"></label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  id="address-base"
-                  class="input user-address user-address-base"
-                  type="text"
-                  placeholder="주소"
-                  readonly
-                  required
-                />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"></label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input user-address-detail"
-                  type="text"
-                  placeholder="상세주소를 입력해 주세요."
-                  required
-                />
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="delivery-information-container">
-        <h4 class="title is-4">배송지</h4>
-        <button class="button is-small is-info fill-delivery-information">
-          위와 동일하게 채우기
-        </button>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">받는 사람</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input receiver"
-                  type="text"
-                  placeholder="받는 사람을 입력해 주세요."
-                  required
-                />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">연락처</label>
-          </div>
-          <div class="field-body">
-            <p class="control">
-              <span class="select">
-                <select class="receiver-phone-number-pro">
-                  <option>010</option>
-                  <option>011</option>
-                  <option>016</option>
-                  <option>017</option>
-                  <option>018</option>
-                  <option>019</option>
-                </select>
-              </span>
-            </p>
-            <p class="control is-expanded">
-              <input
-                class="input receiver-phone-number-back"
-                type="tel"
-                placeholder="나머지 번호를 입력해 주세요."
-                maxlength="9"
-                required
-              />
-            </p>
-          </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">주소</label>
-          </div>
-          <div class="field-body">
-            <p class="control">
-              <span id="receiver-address-button" class="button receiver-address"
-                >주소찾기</span
-              >
-            </p>
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input receiver-address receiver-address-zonecode"
-                  type="text"
-                  placeholder="우편번호"
-                  readonly
-                  required
-                />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"></label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  id="address-base"
-                  class="input receiver-address receiver-address-base"
-                  type="text"
-                  placeholder="주소"
-                  readonly
-                  required
-                />
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"></label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input receiver-address-detail"
-                  type="text"
-                  placeholder="상세주소를 입력해 주세요."
-                  required
-                />
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section>
-        <h4 class="title is-4">결제 수단</h4>
-        <div class="control">
-          <label class="radio payment-method">
-            <input
-              type="radio"
-              name="payment-method"
-              checked
-              class="account-transfer"
-            />
-            무통장입금
+        </section>
+        <section>
+          <label class="checkbox">
+            <input class="select-all" name="term" type="checkbox" required />
+            아래 내용에 모두 동의합니다. (필수)
           </label>
-        </div>
-      </section>
-      <section>
-        <h4 class="title is-4">결제금액</h4>
-        <div>
-          <span>총 상품 금액</span
-          ><span class="price total-product-amount">11,300원</span>
-        </div>
-        <div><span>배송비</span><span class="price">2,300원</span></div>
-        <hr />
-        <div><span>최종 결제금액</span><span class="price">2,300원</span></div>
-      </section>
-      <section>
-        <label class="checkbox">
-          <input type="checkbox" />
-          아래 내용에 모두 동의합니다. (필수)
-        </label>
-        <label class="checkbox">
-          <input class="term" type="checkbox" />
-          개인정보 제 3자 제공 (필수)
-          <a>약관보기 ></a>
-        </label>
-        <label class="checkbox">
-          <input class="term" type="checkbox" />
-          개인정보 수집 및 이용 (필수)
-          <a>약관보기 ></a>
-        </label>
-      </section>
-      <button class="check-out-button">13,800원 결제하기</button>
+          <label class="checkbox">
+            <input name="term" type="checkbox" required />
+            개인정보 제 3자 제공 (필수)
+            <a>약관보기 ></a>
+          </label>
+          <label class="checkbox">
+            <input name="term" type="checkbox" required />
+            개인정보 수집 및 이용 (필수)
+            <a>약관보기 ></a>
+          </label>
+          <input
+            type="submit"
+            class="check-out-button"
+            value="13,800원 결제하기"
+          />
+        </section>
+      </form>
     </section>
   </body>
   <script src="/js/header.js" type="module"></script>

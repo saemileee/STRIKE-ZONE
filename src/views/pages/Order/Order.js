@@ -17,7 +17,7 @@ function renderOrderList() {
   <div class="product-information">
     <span class="order-product-team">${team}</span>
     <span class="order-product-title">${name}</span
-    ><span class="order-product-total-amount">${price}원</span
+    ><span class="order-product-total-amount">${price.toLocaleString()}원</span
     ><span class="order-product-count">${amount}개</span>
   </div>`;
     orderListContainer.append(orderProduct);
@@ -26,7 +26,7 @@ function renderOrderList() {
   const totalProductAmountElement = document.querySelector(
     '.total-product-amount'
   );
-  totalProductAmountElement.innerHTML = `${orderPrice}원`;
+  totalProductAmountElement.innerHTML = `${orderPrice.toLocaleString()}원`;
 }
 
 renderOrderList();
@@ -48,14 +48,28 @@ function findAndFillAddress(target) {
 findAndFillAddress('user');
 findAndFillAddress('receiver');
 
-// function checkValidation(target) {
-//   const regex = {
-//     email:
-//       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-//   };
-//   if (!target.value.match(regex[target.id])) return false;
-//   return true;
-// }
+function checkValidation(target) {
+  const regex = {
+    'user-email':
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+  };
+  if (!target.value.match(regex[target.id])) return false;
+  return true;
+}
+
+function isValid(event) {
+  if (!checkValidation(event.target)) {
+    event.target.classList.add('is-danger');
+    const warning = $(`.${event.target.id}-warning`);
+    warning.style.display = '';
+  } else {
+    event.target.classList.remove('is-danger');
+    const warning = $(`.${event.target.id}-warning`);
+    warning.style.display = 'none';
+  }
+}
+
+$('.user-email').addEventListener('blur', isValid);
 
 function autoHyphen(target) {
   const targetElement = $(target);
