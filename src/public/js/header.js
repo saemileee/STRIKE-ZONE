@@ -108,14 +108,24 @@ const teamsContainerElement = document.createElement('div');
 teamsContainerElement.classList.add('teams-container');
 const teamsUlElement = document.createElement('ul');
 
-fetch('//10.10.6.36:8092/api/v1/teams')
-  .then(response => response.json())
-  .then(data =>
-    data.forEach(team => {
-      const teamElement = createTeamElement(team);
-      teamsUlElement.append(teamElement);
-    })
-  );
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function renderTeamCategory() {
+  const data = await fetchData('/api/v1/teams');
+  data.forEach(team => {
+    const teamElement = createTeamElement(team);
+    teamsUlElement.append(teamElement);
+  });
+}
+renderTeamCategory();
 
 teamsContainerElement.append(teamsUlElement);
 

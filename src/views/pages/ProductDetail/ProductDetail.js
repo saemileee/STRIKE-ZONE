@@ -1,4 +1,3 @@
-import DUMMY_DATA from './dummy.js';
 import { addItemCart } from '/js/api/cartAPI.js';
 
 function $createElement(elementType, className) {
