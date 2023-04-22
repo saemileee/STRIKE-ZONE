@@ -10,4 +10,6 @@ authRouter.post('/login', authController.userLogin);
 
 authRouter.post('/check', loginRequired, authController.passwordCheck);
 
+authRouter.post('/logout', loginRequired, authController.userLogout);
+
 export { authRouter };
