@@ -4,6 +4,7 @@ import { productService } from './productService';
 import { teamService } from './teamService';
 import { categoryService } from './categoryService';
 import { orderService } from './orderService';
+import { shippingService } from './shippingService';
 
 export {
   userService,
@@ -12,4 +13,5 @@ export {
   teamService,
   categoryService,
   orderService,
+  shippingService,
 };

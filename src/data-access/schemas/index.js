@@ -3,6 +3,7 @@ import { ProductSchema } from './productSchema';
 import { TeamSchema } from './teamSchema';
 import { CategorySchema } from './categorySchema';
 import { OrderSchema } from './orderSchema';
+import { ShippingSchema } from './shippingSchema';
 
 export {
   UserSchema,
@@ -10,4 +11,5 @@ export {
   TeamSchema,
   CategorySchema,
   OrderSchema,
+  ShippingSchema,
 };
