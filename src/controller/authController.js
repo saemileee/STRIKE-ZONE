@@ -1,4 +1,4 @@
-import { authService } from "../services";
+import { authService } from '../services';
 
 const authController = {
   async getEmailByToken(req, res, next) {
@@ -27,9 +27,23 @@ const authController = {
 
       const { password } = req.body;
 
-      await authService.checkPasswordCorrect(email, password);
+      const isPasswordCorrect = await authService.checkPasswordCorrect(email, password);
+
+      if (!isPasswordCorrect) {
+        throw new Error('비밀번호가 일치하지 않습니다.');
+      }
 
       res.json({ result: 'success' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async userLogout(req, res, next) {
+    try {
+      if (req.email) {
+        res.json({ result: 'success' });
+      }
     } catch (err) {
       next(err);
     }
