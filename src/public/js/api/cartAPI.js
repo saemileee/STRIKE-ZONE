@@ -1,6 +1,3 @@
-// eslint-disable-next-line
-import DUMMY_DATA from '/js/constants/dummy.js';
-
 function getCartFromLocal() {
   const existsCart = localStorage.getItem('cart');
   const cartList = JSON.parse(existsCart) || {};
@@ -11,8 +8,8 @@ function setCartToLocal(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-function getItemById(id) {
-  return DUMMY_DATA.find(({ productID }) => productID === id);
+async function getItemById(id) {
+  return await fetch(`/api/v1/products/${id}`).then((res) => res.json());
 }
 
 export function getCartList() {
@@ -38,18 +35,26 @@ export function getAllProduct() {
   return cartList.length;
 }
 
-export function getOrderPrice(ship) {
+export async function getOrderPrice(ship) {
   const cartList = getCartListSelected();
-  const totalPricesByServer = cartList.map(({ id, amount }) => getItemById(id).price * amount);
+  if (cartList.length < 1) return 0;
+
+  const totalPricesByServer = await Promise.all(
+    cartList.map(async ({ id, amount }) => {
+      const cartItem = await getItemById(id);
+      const combinedPrice = cartItem.price * amount;
+      return combinedPrice;
+    })
+  );
   const totalPrice = totalPricesByServer.reduce((acc, cur) => acc + cur, 0);
 
   if (ship) return totalPrice + ship;
   return totalPrice;
 }
 
-export function addItemCart(id, requestAmount = 1) {
+export async function addItemCart(id, requestAmount = 1) {
   const cartList = getCartFromLocal();
-  const { img, name, team, price } = getItemById(id);
+  const { img, name, team, price } = await getItemById(id);
   if (cartList[id]) {
     const { amount } = cartList[id];
     cartList[id] = {
@@ -62,7 +67,7 @@ export function addItemCart(id, requestAmount = 1) {
     cartList[id] = {
       name,
       team,
-      img,
+      img: img[0],
       price,
       amount: Number(requestAmount),
       total: price,
@@ -72,11 +77,11 @@ export function addItemCart(id, requestAmount = 1) {
   setCartToLocal(cartList);
 }
 
-export function decreaseItemOfCart(id) {
+export async function decreaseItemOfCart(id) {
   const cartList = getCartFromLocal();
   if (cartList[id].amount > 1) {
     const { amount } = cartList[id];
-    const { price } = getItemById(id);
+    const { price } = await getItemById(id);
     cartList[id] = {
       ...cartList[id],
       price,
@@ -113,14 +118,9 @@ export function toggleAllItemOfCart(boolean) {
   setCartToLocal(cartList);
 }
 
-export function getIsAllSelceted() {
+export function getIsAllSelected() {
   const cartList = getCartFromLocal();
   const cartListKeys = Object.keys(cartList);
 
-  return cartListKeys.every((key) => {
-    if (!cartList[key].selected) {
-      return false;
-    }
-    return true;
-  });
+  return cartListKeys.every((key) => cartList[key].selected);
 }
