@@ -145,7 +145,12 @@ function onSignUpSubmit(e) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newUser),
-    }).then((user) => console.log(user));
+    })
+      .then((response) => response.json())
+      .then((user) => console.log(user))
+      .catch(() => {
+        alert('이미 존재하는 이메일입니다.');
+      });
   }
 }
 
