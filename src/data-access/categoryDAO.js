@@ -26,6 +26,10 @@ const categoryDAO = {
   async updateCategoryByCategoryId(categoryId, updateInfo) {
     await Category.findOneAndUpdate({ categoryId }, updateInfo);
   },
+
+  async deleteCategoryByCategoryId(categoryId) {
+    await Category.deleteOne({ categoryId });
+  },
 };
 
 export { categoryDAO };

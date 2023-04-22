@@ -20,6 +20,10 @@ const categoryService = {
   async updateCategoryByCategoryId(categoryId, updateInfo) {
     await categoryDAO.updateCategoryByCategoryId(categoryId, updateInfo);
   },
+
+  async deleteCategoryByCategoryId(categoryId) {
+    await categoryDAO.deleteCategoryByCategoryId(categoryId);
+  },
 };
 
 export { categoryService };

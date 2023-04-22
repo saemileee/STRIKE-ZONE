@@ -16,4 +16,7 @@ categoryRouter.get('/categories/:categoryId/info', categoryController.getCategor
 // 특정 카테고리 정보 수정
 categoryRouter.put('/categories/:categoryId', categoryController.updateCategoryByCategoryId);
 
+// 특정 카테고리 정보 삭제
+categoryRouter.delete('/categories/:categoryId', categoryController.deleteCategoryByCategoryId);
+
 export { categoryRouter };

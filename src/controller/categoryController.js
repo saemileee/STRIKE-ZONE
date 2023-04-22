@@ -14,7 +14,7 @@ const categoryController = {
 
       await categoryService.addCategory(teamId, categoryInfo);
 
-      response.status(201).json({ result: 'success' });
+      response.status(201).json({ result: 'category created successfully.' });
     } catch (error) {
       next(error);
     }
@@ -54,12 +54,24 @@ const categoryController = {
 
       await categoryService.updateCategoryByCategoryId(categoryId, updateInfo);
 
-      res.status(200).json({ result: 'successfully updated.' });
+      res.status(200).json({ result: 'category updated successfully.' });
     } catch (error) {
       next(error);
     }
   },
 
+  // 특정 카테고리 삭제
+  async deleteCategoryByCategoryId(req, res, next) {
+    try {
+      const { categoryId } = req.params;
+
+      await categoryService.deleteCategoryByCategoryId(categoryId);
+
+      res.status(200).json({ result: 'category deleted successfully.' });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export { categoryController };
