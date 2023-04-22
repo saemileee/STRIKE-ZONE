@@ -34,6 +34,11 @@ const productService = {
   async updateProductByProductId(productId, updateInfo) {
     await productDAO.updateProductByProductId(productId, updateInfo);
   },
+
+  // 상품 삭제하기 (관리자)
+  async deleteProductByProductId(productId) {
+    await productDAO.deleteProductByProductId(productId);
+  },
 };
 
 export { productService };

@@ -88,6 +88,19 @@ const productController = {
     }
   },
 
+  // 상품 삭제
+  async deleteProductByProductId(req, res, next) {
+    try {
+      const { productId } = req.params;
+
+      await productService.deleteProductByProductId(productId);
+
+      res.status(200).json({ result: 'product deleted successfully.' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
 };
 
 export { productController };

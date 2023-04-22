@@ -65,6 +65,11 @@ const productDAO = {
     await Product.updateOne({ productId }, { ...updateInfo, discountedPrice });
   },
 
+  // 상품 삭제
+  async deleteProductByProductId(productId) {
+    await Product.deleteOne({ productId });
+  },
+
   // 할인된 가격을 구하는 함수
   calculateDiscountedPrice(productInfo) {
     const { price, rate } = productInfo;
