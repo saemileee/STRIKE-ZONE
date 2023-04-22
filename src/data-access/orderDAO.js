@@ -54,7 +54,7 @@ const orderDAO = {
 
   // 특정 유저의 모든 주문 정보 조회하기
   async getOrdersByUserId(ordererEmail) {
-    const orders = await Order.find({ ordererEmail });
+    const orders = await Order.find({ 'orderer.email': ordererEmail });
 
     return orders;
   },
