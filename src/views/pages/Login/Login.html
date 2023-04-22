@@ -17,31 +17,35 @@
   <body>
     <section class="login-wrapper">
       <h3 class="title is-3">회원 로그인</h3>
-      <form class="login-form">
-        <div class="login-input">
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  type="text"
-                  placeholder="이메일"
-                  class="input user-email"
-                  id="loginId"
-                  required
-                />
-              </p>
+      <div class="login-form-wrapper">
+        <form class="login-form">
+          <div class="login-input">
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    type="text"
+                    placeholder="이메일"
+                    class="input user-email"
+                    id="loginId"
+                    required
+                  />
+                </p>
+              </div>
             </div>
+            <input
+              type="password"
+              placeholder="비밀번호"
+              class="input user-password"
+              id="loginPassword"
+              required
+            />
           </div>
-          <input
-            type="password"
-            placeholder="비밀번호"
-            class="input user-password"
-            id="loginPassword"
-            required
-          />
-        </div>
-        <button type="submit" class="button is-info" id="login">로그인</button>
-      </form>
+          <button type="submit" class="button is-info" id="login">
+            로그인
+          </button>
+        </form>
+      </div>
       <div class="sign-up">
         <a href="/SignUp">
           <button class="button is-info" id="signUp">회원가입</button>
