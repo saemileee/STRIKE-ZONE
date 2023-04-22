@@ -1,10 +1,10 @@
 import { Shipping } from './model';
 
 const shippingDAO = {
-  async getDefaultDeliveryCharge() {
-    const { deliveryCharge } = await Shipping.findOne({ shippingId: 'default' });
+  async getDefaultDeliveryInfo() {
+    const defaultDeliveryInfo = await Shipping.findOne({ shippingId: 'default' });
 
-    return deliveryCharge;
+    return defaultDeliveryInfo;
   },
 };
 
