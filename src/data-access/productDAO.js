@@ -43,7 +43,7 @@ const productDAO = {
 
     // 할인율을 적용한 상품 가격 계산하기
     const { price, rate } = productInfo;
-    const discountedPrice = price - (price * (rate / 100));
+    const discountedPrice = rate === 0 ? price : price - (price * (rate / 100));
 
     const createNewProduct = await Product.create({
       teamId,
