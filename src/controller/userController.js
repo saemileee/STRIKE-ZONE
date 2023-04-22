@@ -13,7 +13,9 @@ const userController = {
 
   async getUser(req, res, next) {
     try {
-      const user = await userService.getUser(req.email);
+      const { email } = req.params;
+
+      const user = await userService.getUser(email);
 
       res.json(user);
     } catch (err) {
@@ -48,6 +50,8 @@ const userController = {
 
   async setUser(req, res, next) {
     try {
+      const { email } = req.params;
+
       const { postCode, roughAddress, detailAddress, ...restUpdateInfo } =
         req.body;
 
@@ -59,7 +63,7 @@ const userController = {
 
       const toUpdate = { address, ...restUpdateInfo };
 
-      const updatedUser = await userService.setUser(req.email, toUpdate);
+      const updatedUser = await userService.setUser(email, toUpdate);
 
       if (!updatedUser) {
         throw new Error('유저 수정에 실패하였습니다.');
@@ -73,7 +77,9 @@ const userController = {
 
   async deleteUser(req, res, next) {
     try {
-      const { deletedCount } = await userService.deleteUser(req.email);
+      const { email } = req.params;
+
+      const { deletedCount } = await userService.deleteUser(email);
 
       if (deletedCount === 0) {
         throw new Error('유저 삭제에 실패하였습니다.');

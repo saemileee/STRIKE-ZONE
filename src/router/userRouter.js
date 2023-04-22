@@ -4,14 +4,14 @@ import { loginRequired } from '../middleware';
 
 const userRouter = Router();
 
-userRouter.get('/list', userController.getAllUsers);
+userRouter.get('/', userController.getAllUsers);
 
-userRouter.get('/', loginRequired, userController.getUser);
+userRouter.get('/:email', loginRequired, userController.getUser);
 
 userRouter.post('/', userController.addUser);
 
-userRouter.put('/', loginRequired, userController.setUser);
+userRouter.put('/:email', loginRequired, userController.setUser);
 
-userRouter.delete('/', loginRequired, userController.deleteUser);
+userRouter.delete('/:email', loginRequired, userController.deleteUser);
 
 export { userRouter };
