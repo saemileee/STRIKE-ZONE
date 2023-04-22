@@ -1,4 +1,3 @@
-/* eslint-disable */
 import {
   getCartList,
   getCartListSelected,
@@ -9,9 +8,8 @@ import {
   toggleItemOfCart,
   toggleAllItemOfCart,
   getOrderPrice,
-  getIsAllSelceted,
+  getIsAllSelected,
 } from '/js/api/cartAPI.js';
-// eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
 
 const $checkAll = $('.cart-select-all-checkbox');
@@ -53,14 +51,14 @@ const CartItem = (target, { productID, name, total, img, amount, selected }) => 
   });
 
   const $amountIncreaseButton = $cartItem.querySelector('.amount-plus');
-  $amountIncreaseButton.addEventListener('click', (event) => {
-    addItemCart(productID);
+  $amountIncreaseButton.addEventListener('click', async (event) => {
+    await addItemCart(productID);
     render();
   });
 
   const $amountDecreaseButton = $cartItem.querySelector('.amount-minus');
-  $amountDecreaseButton.addEventListener('click', (event) => {
-    decreaseItemOfCart(productID);
+  $amountDecreaseButton.addEventListener('click', async (event) => {
+    await decreaseItemOfCart(productID);
     render();
   });
 
@@ -123,11 +121,11 @@ const deleteAllHandler = () => {
   });
 };
 
-function render() {
+async function render() {
   const $cartList = $('.cart-list');
   $cartList.innerHTML = '';
 
-  const isAllSelceted = getIsAllSelceted();
+  const isAllSelceted = getIsAllSelected();
   $checkAll.checked = isAllSelceted;
 
   const currentCart = getCartList();
@@ -145,7 +143,7 @@ function render() {
   $price.innerHTML = '';
 
   const shipPrice = 3000;
-  const totalPrice = getOrderPrice();
+  const totalPrice = await getOrderPrice();
   CartPrice(shipPrice, totalPrice);
 }
 
