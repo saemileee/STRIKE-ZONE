@@ -1,26 +1,29 @@
 import { Schema } from 'mongoose';
 
-import { v4 as uuid4 } from 'uuid';
-
-const categoryId = {
-  type: String,
-  default: () => uuid4(),
-  required: true,
-  index: true,
-};
-
 const CategorySchema = new Schema(
   {
     teamId: {
       type: String,
       required: true,
     },
-    categoryId,
-    categoryName: {
+    teamName: {
       type: String,
       required: true,
     },
-    description: {
+    teamDescription: {
+      type: String,
+      required: true,
+    },
+    categoryId: {
+      type: String,
+      required: true,
+    },
+    categoryName: {
+      type: String,
+      enum: ['유니폼', '모자', '의류', '잡화', '응원용품', '야구용품'],
+      required: true,
+    },
+    categoryDescription: {
       type: String,
     },
   },

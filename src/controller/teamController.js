@@ -2,10 +2,16 @@ import { teamService } from '../services';
 
 const teamController = {
   async addTeam(request, response, next) {
-    const { title, description, emblemPath } = request.body;
+    const {
+      teamId, teamName, teamDescription, emblemPath,
+    } = request.body;
+
+    const teamInfo = {
+      teamId, teamName, teamDescription, emblemPath,
+    };
 
     try {
-      await teamService.addTeam({ title, description, emblemPath });
+      await teamService.addTeam(teamInfo);
 
       response
         .status(201)
@@ -20,7 +26,7 @@ const teamController = {
       const teams = await teamService.getTeams();
 
       response
-        .status(201)
+        .status(200)
         .json(teams);
     } catch (error) {
       next(error);
@@ -34,7 +40,7 @@ const teamController = {
       const team = await teamService.getTeamById(teamId);
 
       response
-        .status(201)
+        .status(200)
         .json(team);
     } catch (error) {
       next(error);
@@ -48,7 +54,7 @@ const teamController = {
       const team = await teamService.getTeamByTitle(title);
 
       response
-        .status(201)
+        .status(200)
         .json(team);
     } catch (error) {
       next(error);

@@ -1,21 +1,31 @@
 import { Schema } from 'mongoose';
 
-import { v4 as uuid4 } from 'uuid';
-
-const productId = {
-  type: String,
-  default: () => uuid4(),
-  required: true,
-  index: true,
-};
-
 const ProductSchema = new Schema(
   {
+    teamId: {
+      type: String,
+      required: true,
+    },
+    teamName: {
+      type: String,
+      required: true,
+    },
+    teamDescription: {
+      type: String,
+      required: true,
+    },
     categoryId: {
       type: String,
       required: true,
     },
-    productId,
+    categoryName: {
+      type: String,
+      required: true,
+    },
+    productId: {
+      type: Number,
+      required: true,
+    },
     name: {
       type: String,
       required: true,
@@ -38,7 +48,7 @@ const ProductSchema = new Schema(
       type: String,
     },
     img: {
-      type: String,
+      type: Array,
     },
   },
   {

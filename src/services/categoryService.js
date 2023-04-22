@@ -2,8 +2,8 @@ import { categoryDAO } from '../data-access';
 
 const categoryService = {
 
-  async addCategory(teamId, categoryName, description) {
-    await categoryDAO.addCategory(teamId, categoryName, description);
+  async addCategory(teamId, categoryInfo) {
+    await categoryDAO.addCategory(teamId, categoryInfo);
   },
 
   async getCategoriesByTeamId(teamId) {

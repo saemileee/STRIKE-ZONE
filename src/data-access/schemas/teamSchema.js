@@ -1,22 +1,16 @@
 import { Schema } from 'mongoose';
 
-import { v4 as uuid4 } from 'uuid';
-
-const teamId = {
-  type: String,
-  default: () => uuid4(),
-  required: true,
-  index: true,
-};
-
 const TeamSchema = new Schema(
   {
-    teamId,
-    title: {
+    teamId: {
       type: String,
       required: true,
     },
-    description: {
+    teamName: {
+      type: String,
+      required: true,
+    },
+    teamDescription: {
       type: String,
     },
     emblemPath: {

@@ -6,9 +6,13 @@ const categoryController = {
   async addCategory(request, response, next) {
     try {
       const { teamId } = request.params;
-      const { categoryName, description } = request.body;
+      const { categoryId, categoryName, categoryDescription } = request.body;
 
-      await categoryService.addCategory(teamId, categoryName, description);
+      const categoryInfo = {
+        categoryId, categoryName, categoryDescription,
+      };
+
+      await categoryService.addCategory(teamId, categoryInfo);
 
       response.status(201).json({ result: 'success' });
     } catch (error) {
@@ -23,7 +27,7 @@ const categoryController = {
 
       const categories = await categoryService.getCategoriesByTeamId(teamId);
 
-      response.status(201).json(categories);
+      response.status(200).json(categories);
     } catch (error) {
       next(error);
     }
