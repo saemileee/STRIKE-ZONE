@@ -56,11 +56,11 @@ const productController = {
   async postProduct(request, response, next) {
     const { categoryId } = request.params;
     const {
-      name, quantity, price, rate, shortDescription, detailDescription, img,
+      name, inventory, price, rate, shortDescription, detailDescription, img,
     } = request.body;
 
     const productInfo = {
-      name, quantity, price, rate, shortDescription, detailDescription, img,
+      name, inventory, price, rate, shortDescription, detailDescription, img,
     };
 
     try {

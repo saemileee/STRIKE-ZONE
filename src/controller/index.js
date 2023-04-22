@@ -4,6 +4,7 @@ import { productController } from './productController';
 import { teamController } from './teamController';
 import { categoryController } from './categoryController';
 import { orderController } from './orderController';
+import { shippingController } from './shippingController';
 
 export {
   userController,
@@ -12,4 +13,5 @@ export {
   teamController,
   categoryController,
   orderController,
+  shippingController,
 };
