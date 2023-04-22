@@ -86,7 +86,7 @@ const orderDAO = {
         const product = await Product.findOne({ productId: orderedProductId });
 
         // 수정될 상품 수량 계산하기
-        const quantityToBeUpdated = product.quantity - orderedProductQuantity;
+        const quantityToBeUpdated = product.inventory - orderedProductQuantity;
 
         await Product.updateOne(
           { productId: orderedProductId },
