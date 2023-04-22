@@ -21,9 +21,7 @@ const onLoginSubmit = (e) => {
   })
     .then((response) => response.json())
     .then((token) => {
-      const usertoken = JSON.parse(token);
-      console.log(usertoken);
-      localStorage.setItem('userToken', usertoken.token);
+      localStorage.setItem('user', token);
     })
     .catch(() => {
       const isloginWarning = $('.login-warning');
