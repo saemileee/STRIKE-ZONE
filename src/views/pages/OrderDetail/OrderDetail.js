@@ -1,53 +1,11 @@
 // eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
 
-const render = () => {
-  // const orderIdByPath = location.pathname.split('/')[2];
-  const DUMMY = {
-    _id: '64436ebf865e23b8f38616b2',
-    orderId: 1,
-    productsPayment: 365000,
-    deliveryCharge: 3000,
-    totalPayment: 368000,
-    products: [
-      {
-        productId: 3,
-        productName: '[롯데 자이언츠] 자수형 어센틱 원정 유니폼',
-        quantity: 3,
-        price: 100000,
-        img: '/assets/img/products/23-lotte-giants-authentic-away-uniform-1.jpg',
-        _id: '64436ebf865e23b8f38616b3',
-      },
-      {
-        productId: 1,
-        productName: '[롯데 자이언츠] 일반형 원정 유니폼',
-        quantity: 1,
-        price: 65000,
-        img: '/assets/img/products/23-lotte-giants-away-uniform-1.jpg',
-        _id: '64436ebf865e23b8f38616b4',
-      },
-    ],
-    orderer: {
-      email: 'abc@example.com',
-      name: '홍길동',
-      phoneNumber: '010-1234-5678',
-      _id: '64436ebf865e23b8f38616b5',
-    },
-    recipient: {
-      name: '홍길동',
-      address1: '경기 성남시 분당구 정자일로 95',
-      address2: '1층',
-      zipCode: '13561',
-      phoneNumber: '010-1234-5678',
-      _id: '64436ebf865e23b8f38616b6',
-    },
-    createdAt: '2023-04-22T05:21:03.229Z',
-    updatedAt: '2023-04-22T05:21:03.229Z',
-    __v: 0,
-  };
-
+const render = async () => {
+  const orderIdByPath = location.pathname.split('/')[3];
+  const orderData = await fetch(`/api/v1/orders/${orderIdByPath}`).then((res) => res.json());
   const { orderId, createdAt, products, productsPayment, deliveryCharge, totalPayment, recipient } =
-    DUMMY;
+    orderData;
   const convertedDate = new Date(createdAt);
   const orderDateObj = {
     year: `${convertedDate.getFullYear()}`,
