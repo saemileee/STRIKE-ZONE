@@ -1,23 +1,8 @@
-// eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
 
-function getUser() {
-  const { token } = JSON.parse(localStorage.getItem('user'));
-
-  fetch('/api/v1/users', {
-    method: 'GET',
-    headers: {
-      token,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-}
-
 const $userData = $('.user-data');
-
-const $form = $createElement('form', 'update-form');
-$form.innerHTML = `
+const userUpdateForm = $createElement('form', 'update-form');
+userUpdateForm.innerHTML = `
   <form class="update-form">
   <h4 class="title is-4">회원 정보 수정</h4>
   <div class="field is-horizontal">
@@ -32,7 +17,8 @@ $form.innerHTML = `
             class="input user-email"
             type="text"
             placeholder="이메일을 입력해 주세요."
-            required
+            readonly
+            onfocus="this.blur()"
             autocomplete="off"
           />
           <p class="email-warning" style="display: none;">이메일 형식이 올바르지 않습니다.</p>
@@ -249,7 +235,6 @@ $form.innerHTML = `
   </div>
   </form>
 `;
-
 const checkPasswordForm = $createElement('form', 'check-login-form');
 checkPasswordForm.innerHTML = `
 <section class="check-login-wrapper">
@@ -277,15 +262,12 @@ checkPasswordForm.innerHTML = `
   </div>
 </section>
 `;
-
 $userData.append(checkPasswordForm);
 
 function showUpdateForm() {
   checkPasswordForm.remove();
 
-  // getUser();
-
-  $userData.append($form);
+  $userData.append(userUpdateForm);
 
   const updateForm = $('.update-form');
   const newUserEmail = $('#email');
@@ -436,7 +418,28 @@ function showUpdateForm() {
   }
 }
 
-function fillUserInfo() {}
+function fillUserInfo(userData) {
+  $('#email').value = userData.email;
+  $('#koreanName').value = userData.koreanName;
+  $('#phoneNumber').value = userData.phoneNumber.substring(4);
+  $('#postCode').value = userData.address.postCode;
+  $('#roughAddress').value = userData.address.roughAddress;
+  $('#detailAddress').value = userData.address.detailAddress;
+}
+
+function getUserInfo() {
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  fetch('/api/v1/users', {
+    method: 'GET',
+    headers: {
+      token,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      fillUserInfo(data);
+    });
+}
 
 const checkForm = $('.check-login-form');
 checkForm.addEventListener('submit', (e) => {
@@ -456,9 +459,8 @@ checkForm.addEventListener('submit', (e) => {
   })
     .then((response) => response.json())
     .then(() => {
-      getUser();
       showUpdateForm();
-      fillUserInfo();
+      getUserInfo();
     })
     .catch(() => {
       const isloginWarning = $('.login-warning');
