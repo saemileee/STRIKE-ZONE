@@ -16,8 +16,12 @@ body {
 .order-wrapper form .left-side-container {
   display: flex;
   flex-direction: column;
-  width: 90rem;
   margin-right: 2rem;
+  width: 65%;
+}
+
+.order-wrapper form .right-side-container {
+  flex-grow: 1;
 }
 
 .order-wrapper section {
@@ -114,8 +118,17 @@ select {
   color: rgb(255, 95, 3);
 }
 
+.term-checkboxes-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .term-checkboxes-container label {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.term-checkboxes-container label:first-child {
+  font-weight: 600;
 }
 
 .check-out-button {

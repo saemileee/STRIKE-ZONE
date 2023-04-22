@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import { $ } from '/js/utils.js';
 import { getCartListSelected, getOrderPrice } from '/js/api/cartAPI.js';
 
@@ -106,6 +105,34 @@ $fillDeliveryInformationButton.addEventListener('click', () => {
   $receiverAddressBase.value = userAddressBase;
   $receiverAddressDetail.value = userAddressDetail;
 });
+
+const termCheckboxElements = document.querySelectorAll('.term-checkbox');
+
+let selectAllCheckboxElement = document.querySelector('.select-all');
+
+selectAllCheckboxElement.addEventListener('change', () => {
+  if (selectAllCheckboxElement.checked) {
+    for (let checkbox of termCheckboxElements) {
+      checkbox.checked = true;
+    }
+  } else {
+    for (let checkbox of termCheckboxElements) {
+      checkbox.checked = false;
+    }
+  }
+});
+
+for (let checkbox of termCheckboxElements) {
+  checkbox.addEventListener('change', () => {
+    let checkedCount = 0;
+    for (let _checkbox of termCheckboxElements) {
+      _checkbox.checked === true ? checkedCount++ : null;
+    }
+    checkedCount === termCheckboxElements.length
+      ? (selectAllCheckboxElement.checked = true)
+      : (selectAllCheckboxElement.checked = false);
+  });
+}
 
 const $checkOutButton = $('.check-out-button');
 $checkOutButton.addEventListener('click', () => {
