@@ -85,13 +85,11 @@ function searchZipcode() {
 }
 
 function selectTeam() {
-  for (let i = 0; i < teams.length; i++) {
-    if (teams[i].checked) {
-      teams[i].parentNode.classList.add('is-info');
-    } else {
-      teams[i].parentNode.classList.remove('is-info');
-    }
-  }
+  teams.forEach((team) =>
+    team.checked
+      ? team.parentNode.classList.add('is-info')
+      : team.parentNode.classList.remove('is-info')
+  );
 }
 
 function getCheerTeam() {
@@ -107,11 +105,8 @@ function getCheerTeam() {
     한화이글스: '6440ee4dbe78f271d6821823',
     NC다이노스: '6440ee51be78f271d6821825',
   };
-  for (let i = 0; i < teams.length; i++) {
-    if (teams[i].checked) {
-      return teamID[teams[i].value];
-    }
-  }
+  const checkedTeam = Array.from(teams).find((team) => team.checked);
+  return teamID[checkedTeam.value];
 }
 
 function onSignUpSubmit(e) {
@@ -128,16 +123,12 @@ function onSignUpSubmit(e) {
       'detailAddress',
       'cheerTeam',
     ];
-    for (let i = 0; i < userInfoKey.length; i++) {
-      const userInfo = $(`#${userInfoKey[i]}`);
-      if (userInfoKey[i] === 'phoneNumber') {
-        newUser[userInfoKey[i]] = getPhoneNumber();
-      } else if (userInfoKey[i] === 'cheerTeam') {
-        newUser[userInfoKey[i]] = getCheerTeam();
-      } else {
-        newUser[userInfoKey[i]] = userInfo.value;
-      }
-    }
+    userInfoKey.forEach((key) => {
+      const userInfo = $(`#${key}`);
+      if (key === 'phoneNumber') newUser[key] = getPhoneNumber();
+      else if (key === 'cheerTeam') newUser[key] = getCheerTeam();
+      else newUser[key] = userInfo.value;
+    });
 
     fetch('/api/v1/users', {
       method: 'POST',
@@ -167,6 +158,6 @@ newUserPhoneNumber.addEventListener('input', autoHyphen);
 for (let i = 0; i < 3; i++) {
   findAddress[i].addEventListener('click', searchZipcode);
 }
-for (let i = 0; i < teams.length; i++) {
-  teams[i].addEventListener('click', selectTeam);
-}
+teams.forEach((node) => {
+  node.addEventListener('click', selectTeam);
+});
