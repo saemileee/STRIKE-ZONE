@@ -13,9 +13,13 @@ const orderDAO = {
     // orderId 계산하기
     const orderId = await this.createOrderId();
 
+    // 결제 수단 확인 : 만약 '무통장 입금'이 아니라면 status 를 '상품 준비중'으로 저장한다.
+    const { paymentMethod } = orderInfo;
+    const status = paymentMethod === '무통장 입금' ? '결제 전' : '상품 준비중';
+
     // 주문 등록하기
     await Order.create({
-      ...orderInfo, orderId, productsPayment, totalPayment, deliveryCharge,
+      ...orderInfo, orderId, productsPayment, totalPayment, deliveryCharge, status,
     });
 
     // 주문을 저장 후, [해당 productId의 상품 수량]에서 [주문 수량]만큼 차감해야 한다.
