@@ -45,6 +45,11 @@ function passwordVerify() {
   return true;
 }
 
+function checkAddress() {
+  if (findAddress[1].value) return true;
+  return false;
+}
+
 function userInfoComplete() {
   if (!checkValidation(newUserEmail)) {
     alert('이메일 형식이 올바르지 않습니다.');
@@ -56,6 +61,10 @@ function userInfoComplete() {
   }
   if (!passwordVerify()) {
     alert('비밀번호가 일치하지 않습니다.');
+    return false;
+  }
+  if (!checkAddress()) {
+    alert('주소를 입력해 주세요');
     return false;
   }
   return true;
@@ -106,7 +115,11 @@ function getCheerTeam() {
     NC다이노스: '6440ee51be78f271d6821825',
   };
   const checkedTeam = Array.from(teams).find((team) => team.checked);
-  return teamID[checkedTeam.value];
+  let selectedTeam;
+  checkedTeam === undefined
+    ? (selectedTeam = false)
+    : (selectedTeam = teamID[checkedTeam.value]);
+  return selectedTeam;
 }
 
 function onSignUpSubmit(e) {
@@ -125,9 +138,12 @@ function onSignUpSubmit(e) {
     ];
     userInfoKey.forEach((key) => {
       const userInfo = $(`#${key}`);
-      if (key === 'phoneNumber') newUser[key] = getPhoneNumber();
-      else if (key === 'cheerTeam') newUser[key] = getCheerTeam();
-      else newUser[key] = userInfo.value;
+      if (key === 'phoneNumber') {
+        newUser[key] = getPhoneNumber();
+      } else if (key === 'cheerTeam') {
+        const isSelected = getCheerTeam();
+        if (isSelected) newUser[key] = isSelected;
+      } else newUser[key] = userInfo.value;
     });
 
     fetch('/api/v1/users', {
