@@ -37,7 +37,7 @@ const OrderSchema = new Schema({
   status: {
     type: String,
     enum: ['결제 전', '상품 준비중', '배송 준비중', '배송 중', '배송 완료'],
-    requird: true,
+    required: true,
   },
   products: [OrderedProductSchema],
   orderer: OrdererSchema,
