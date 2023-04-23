@@ -61,8 +61,12 @@ const productService = {
     // 할인율을 적용한 상품 가격 계산하기
     const discountedPrice = this.calculateDiscountedPrice(productInfo);
 
+    // productId 구하기
+    const productId = await productDAO.createProductId();
+
     const productInfoToBeCreated = {
       ...productInfo,
+      productId,
       teamId,
       teamName,
       teamDescription,
