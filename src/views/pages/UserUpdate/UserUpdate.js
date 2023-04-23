@@ -186,43 +186,43 @@ userUpdateForm.innerHTML = `
     <div class="field-body">
       <div class="field" id="cheerTeam">
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="SSG랜더스" />
+          <input type="radio" name="team" class="team" value="SSG 랜더스" />
           SSG 랜더스
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="키움히어로즈" />
+          <input type="radio" name="team" class="team" value="키움 히어로즈" />
           키움 히어로즈
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="LG트윈스" />
+          <input type="radio" name="team" class="team" value="LG 트윈스" />
           LG 트윈스
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="KT위즈" />
+          <input type="radio" name="team" class="team" value="KT 위즈" />
           KT 위즈
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="KIA타이거즈" />
+          <input type="radio" name="team" class="team" value="KIA 타이거즈" />
           KIA 타이거즈
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="NC다이노스" />
+          <input type="radio" name="team" class="team" value="NC 다이노스" />
           NC 다이노스
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="삼성라이온즈" />
+          <input type="radio" name="team" class="team" value="삼성 라이온즈" />
           삼성 라이온즈
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="롯데자이언츠" />
+          <input type="radio" name="team" class="team" value="롯데 자이언츠" />
           롯데 자이언츠
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="두산베어스" />
+          <input type="radio" name="team" class="team" value="두산 베어스" />
           두산 베어스
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="한화이글스" />
+          <input type="radio" name="team" class="team" value="한화 이글스" />
           한화 이글스
         </label>
       </div>
@@ -365,16 +365,16 @@ function showUpdateForm() {
 
   function getCheerTeam() {
     const teamID = {
-      롯데자이언츠: '6440ec92b1154c52aee0c4a7',
-      KIA타이거즈: '6440ee20be78f271d6821815',
-      삼성라이온즈: '6440ee2ebe78f271d6821817',
-      LG트윈스: '6440ee33be78f271d6821819',
-      두산베어스: '6440ee37be78f271d682181b',
-      키움히어로즈: '6440ee3cbe78f271d682181d',
-      SSG랜더스: '6440ee43be78f271d682181f',
-      KT위즈: '6440ee48be78f271d6821821',
-      한화이글스: '6440ee4dbe78f271d6821823',
-      NC다이노스: '6440ee51be78f271d6821825',
+      '롯데 자이언츠': '644221ccead2ae1ca8f0c9d0',
+      'KIA 타이거즈': '644221deead2ae1ca8f0c9d2',
+      '삼성 라이온즈': '644221e4ead2ae1ca8f0c9d4',
+      'LG 트윈스': '644221ecead2ae1ca8f0c9d6',
+      '두산 베어스': '644221f4ead2ae1ca8f0c9d8',
+      '키움 히어로즈': '644221fcead2ae1ca8f0c9da',
+      'SSG 랜더스': '64422203ead2ae1ca8f0c9dc',
+      'KT 위즈': '64422209ead2ae1ca8f0c9de',
+      '한화 이글스': '64422210ead2ae1ca8f0c9e0',
+      'NC 다이노스': '64422215ead2ae1ca8f0c9e2',
     };
     const checkedTeam = Array.from(teams).find((team) => team.checked);
     let selectedTeam;
@@ -442,6 +442,14 @@ function showUpdateForm() {
   });
 }
 
+function fillCheerTeam(userData) {
+  const teamName = userData.cheerTeam.teamName;
+  const teams = document.getElementsByName('team');
+  const checkedTeam = Array.from(teams).find((team) => team.value === teamName);
+  checkedTeam.checked = 'checked';
+  checkedTeam.parentNode.classList.add('is-info');
+}
+
 function fillUserInfo(userData) {
   $('#email').value = userData.email;
   $('#koreanName').value = userData.koreanName;
@@ -449,6 +457,7 @@ function fillUserInfo(userData) {
   $('#postCode').value = userData.address.postCode;
   $('#roughAddress').value = userData.address.roughAddress;
   $('#detailAddress').value = userData.address.detailAddress;
+  fillCheerTeam(userData);
 }
 
 function getUserInfo() {
