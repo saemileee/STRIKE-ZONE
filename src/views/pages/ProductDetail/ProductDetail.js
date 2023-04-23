@@ -107,6 +107,10 @@ function renderProductDetailDescription(productDetailDescription) {
 async function getProductData() {
   const selectedProductId = await window.location.pathname.split('/')[2];
   const productData = await fetchData(`/products/${selectedProductId}`);
+  if (!productData) {
+    alert('존재하지 않는 상품입니다.');
+    window.history.back();
+  }
   const {
     productId,
     teamName,
