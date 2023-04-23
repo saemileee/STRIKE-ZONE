@@ -1,4 +1,5 @@
 import { addItemCart } from '/js/api/cartAPI.js';
+import { fetchData } from '/js/api/api.js';
 
 function $createElement(elementType, className) {
   const $element = document.createElement(elementType);
@@ -55,7 +56,7 @@ function readerBasicDescription(
   const $productDiscountRate = document.querySelector('.product-discount-rate');
   const $productPrice = document.querySelector('.product-price');
 
-  if (rate !== 0 || rate !== null) {
+  if (rate !== 0) {
     $productDiscountRate.innerHTML = `${rate}%`;
     $productPrice.innerHTML = `${price.toLocaleString()}원`;
   } else {
@@ -66,10 +67,10 @@ function readerBasicDescription(
   const $productSellingPrice = document.querySelector('.product-selling-price');
   $productSellingPrice.innerHTML = `${productSellingPrice.toLocaleString()}원`;
 }
-function renderPrice(price, quantity, productSellingPrice) {
+function renderPrice(price, inventory, productSellingPrice) {
   let totalAmountValue = price;
   const $productCountInput = document.querySelector('.product-count');
-  $productCountInput.setAttribute('max', `${quantity}`);
+  $productCountInput.setAttribute('max', `${inventory}`);
   const $totalAmountValue = document.querySelector('.total-amount');
   $totalAmountValue.innerHTML = `${totalAmountValue.toLocaleString()}원`;
   $productCountInput.addEventListener('change', () => {
@@ -77,17 +78,22 @@ function renderPrice(price, quantity, productSellingPrice) {
     $totalAmountValue.innerHTML = `${totalAmountValue.toLocaleString()}원`;
   });
 }
-function renderBuyButtons(productId) {
+function renderBuyButtons(productId, inventory) {
   const $cartButton = document.querySelector('.cart-button');
   $cartButton.addEventListener('click', () => {
     const $productCountInput = document.querySelector('.product-count');
-    addItemCart(productId, $productCountInput.value);
-    if (
-      confirm(
-        '해당 상품이 장바구니에 추가되었습니다. 바로 장바구니를 확인하시겠습니까?'
-      ) === true
-    ) {
-      window.location.href = '/cart';
+
+    if ($productCountInput.value < inventory) {
+      addItemCart(productId, $productCountInput.value);
+      if (
+        confirm(
+          '해당 상품이 장바구니에 추가되었습니다. 바로 장바구니를 확인하시겠습니까?'
+        ) === true
+      ) {
+        window.location.href = '/cart';
+      }
+    } else {
+      alert('주문 가능한 최소 수량을 초과하였습니다.');
     }
   });
 }
@@ -95,29 +101,19 @@ function renderProductDetailDescription(productDetailDescription) {
   const $detailDescription = document.querySelector(
     '.product-detail-description'
   );
-  $detailDescription.innerHTML = `${productDetailDescription}`;
-}
-
-async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
+  $detailDescription.innerHTML = `<img src='${productDetailDescription}'/>`;
 }
 
 async function getProductData() {
   const selectedProductId = await window.location.pathname.split('/')[2];
-  const productData = await fetchData(`/api/v1/products/${selectedProductId}`);
+  const productData = await fetchData(`/products/${selectedProductId}`);
   const {
     productId,
     teamName,
     name,
     price,
     rate,
-    quantity,
+    inventory,
     img,
     shortDescription,
     detailDescription,
@@ -132,8 +128,8 @@ async function getProductData() {
     rate,
     productSellingPrice
   );
-  renderPrice(price, quantity, productSellingPrice);
-  renderBuyButtons(productId);
+  renderPrice(price, inventory, productSellingPrice);
+  renderBuyButtons(productId, inventory);
   renderProductDetailDescription(detailDescription);
 }
 
