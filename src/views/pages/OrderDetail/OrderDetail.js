@@ -1,11 +1,32 @@
 // eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
+import { isLogin } from '/js/api/authAPI.js';
 
 const render = async () => {
-  const orderIdByPath = location.pathname.split('/')[3];
+  const [, , , orderIdByPath] = location.pathname.split('/');
   const orderData = await fetch(`/api/v1/orders/${orderIdByPath}`).then((res) => res.json());
-  const { orderId, createdAt, products, productsPayment, deliveryCharge, totalPayment, recipient } =
-    orderData;
+  const {
+    orderId,
+    createdAt,
+    products,
+    productsPayment,
+    deliveryCharge,
+    totalPayment,
+    recipient,
+    orderer: { email },
+  } = orderData;
+
+  try {
+    const userEmail = await isLogin();
+    if (email !== userEmail) {
+      alert('본인의 주문 정보만 확인 할 수 있습니다!');
+      return (location.href = '/NotFound');
+    }
+  } catch (err) {
+    alert(err);
+    location.href = '/NotFound';
+  }
+
   const convertedDate = new Date(createdAt);
   const orderDateObj = {
     year: `${convertedDate.getFullYear()}`,
