@@ -1,4 +1,5 @@
 import { fetchData } from '/js/api/api.js';
+import { isLogin, getUserInfo } from '/js/api/authAPI.js';
 
 const mainBannerElement = document.querySelector('.main-banner');
 const bannerContentElement = document.querySelector('.banner-content');
@@ -137,7 +138,10 @@ function getDiscountPrice(price, rate) {
   return price * ((100 - rate) * 0.01);
 }
 
-const Product = (target, { productId, name, teamName, img, price, rate }) => {
+const renderProducts = (
+  target,
+  { productId, name, teamName, img, price, rate }
+) => {
   const isDiscount = rate > 0;
   let renderedPrice;
   if (isDiscount) renderedPrice = getDiscountPrice(price, rate);
@@ -176,11 +180,71 @@ const Product = (target, { productId, name, teamName, img, price, rate }) => {
 };
 
 const products = await fetchData('/products');
+const userData = await getUserInfo();
+const loginStatus = await isLogin();
 
-for (let i = 0; i < 4; i++) {
-  Product(document.querySelector('.new .products'), await products[i]);
+function renderRelatedProducts() {
+  const { koreanName, cheerTeam } = userData;
+  const productsContainer = document.querySelector(
+    '.product-contents-container'
+  );
+
+  const filteringRelatedProducts = products.filter(
+    product => product.teamId === cheerTeam.teamId
+  );
+  filteringRelatedProducts.length > 3 ? paintDocuments() : null;
+
+  function paintDocuments() {
+    const productsContents = document.createElement('section');
+    productsContents.className = 'product-list-contianer related';
+    productsContents.innerHTML = `<h3 class="title is-3">${koreanName}님이 응원하는 ${cheerTeam.teamName}에서 새로 나왔어요!</h3>
+  <div class="products"></div>`;
+    productsContainer.prepend(productsContents);
+
+    function renderProductsBySort() {
+      const filteringNewProductsSorting = filteringRelatedProducts.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+
+      for (let i = 0; i < 4; i++) {
+        renderProducts(
+          document.querySelector('.related .products'),
+          filteringNewProductsSorting[i]
+        );
+      }
+    }
+    renderProductsBySort();
+  }
 }
 
-for (let i = 0; i < 4; i++) {
-  Product(document.querySelector('.popular .products'), await products[i]);
+//로그인 여부 확인하여 관련 상품 띄우기
+loginStatus ? renderRelatedProducts() : null;
+
+function renderNewProducts() {
+  const newProductsSorting = products.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+  for (let i = 0; i < 4; i++) {
+    renderProducts(
+      document.querySelector('.new .products'),
+      newProductsSorting[i]
+    );
+  }
 }
+renderNewProducts();
+
+function renderDiscountProducts() {
+  const newProductsSorting = products.sort(
+    (a, b) => new Date(b.rate) - new Date(a.rate)
+  );
+
+  for (let i = 0; i < 4; i++) {
+    renderProducts(
+      document.querySelector('.popular .products'),
+      newProductsSorting[i]
+    );
+  }
+}
+
+renderDiscountProducts();
