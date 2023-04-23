@@ -4,12 +4,12 @@ function getDiscountPrice(price, rate) {
 
 const renderProducts = (
   target,
-  { productId, name, teamName, img, price, rate }
+  { productId, name, teamName, img, discountedPrice, rate }
 ) => {
   const isDiscount = rate > 0;
   let renderedPrice;
-  if (isDiscount) renderedPrice = getDiscountPrice(price, rate);
-  renderedPrice = price.toLocaleString();
+  if (isDiscount) renderedPrice = getDiscountPrice(discountedPrice, rate);
+  renderedPrice = discountedPrice.toLocaleString();
 
   const $product = document.createElement('a');
   $product.setAttribute('href', `/products/${productId}`);
