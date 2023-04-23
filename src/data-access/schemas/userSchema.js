@@ -37,6 +37,11 @@ const UserSchema = new Schema(
       ref: 'teams',
       required: false,
     },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     collection: 'users',

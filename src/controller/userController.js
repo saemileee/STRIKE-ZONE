@@ -13,7 +13,9 @@ const userController = {
 
   async getUser(req, res, next) {
     try {
-      const { email } = req;
+      const { isAdmin } = req;
+
+      const { email } = isAdmin ? req.params : req;
 
       const user = await userService.getUser(email);
 
@@ -50,7 +52,9 @@ const userController = {
 
   async setUser(req, res, next) {
     try {
-      const { email } = req;
+      const { isAdmin } = req;
+
+      const { email } = isAdmin ? req.params : req;
 
       const { postCode, roughAddress, detailAddress, ...restUpdateInfo } =
         req.body;
@@ -77,7 +81,9 @@ const userController = {
 
   async deleteUser(req, res, next) {
     try {
-      const { email } = req;
+      const { isAdmin } = req;
+
+      const { email } = isAdmin ? req.params : req;
 
       const { deletedCount } = await userService.deleteUser(email);
 
