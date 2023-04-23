@@ -179,3 +179,12 @@ header .category-container .products-container ul li:hover {
 header .category-container .products-container ul li p {
   margin-right: 36px;
 }
+
+@media (max-width: 1023px) {
+  header .header-container ul {
+    flex-basis: 50%;
+  }
+  header .header-container .right-side-container {
+    flex-basis: 40%;
+  }
+}
