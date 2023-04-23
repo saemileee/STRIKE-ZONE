@@ -22,3 +22,14 @@ export async function isLogin() {
     return false;
   }
 }
+
+// 사용자 정보 확인 API, 현재 토큰을 가진 유저의 정보를 반환. 로그인 상태가 아니거나 유효하지 않은 토큰일시 false 반환
+export async function getUserInfo() {
+  try {
+    const result = await fetch('/api/v1/users/me', getAuthOption());
+    const userData = await result.json();
+    return userData;
+  } catch (err) {
+    return false;
+  }
+}
