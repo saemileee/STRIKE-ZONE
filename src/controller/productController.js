@@ -66,7 +66,7 @@ const productController = {
     try {
       await productService.postProduct(categoryId, productInfo);
 
-      res.status(201).json({ result: 'success' });
+      res.status(201).json({ result: 'product created successfully.' });
     } catch (error) {
       next(error);
     }

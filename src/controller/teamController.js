@@ -13,7 +13,7 @@ const teamController = {
     try {
       await teamService.addTeam(teamInfo);
 
-      res.status(201).json({ result: 'success' });
+      res.status(201).json({ result: 'team created successfully.' });
     } catch (error) {
       next(error);
     }
