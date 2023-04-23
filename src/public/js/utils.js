@@ -11,10 +11,10 @@ export function $createElement(elementType, className) {
 //체크박스 전체선택 기능
 export function selectAllCheckbox(checkboxesClassName, selectAllClassName) {
   const termCheckboxElements = document.querySelectorAll(
-    .${checkboxesClassName}
+    `.${checkboxesClassName}`
   );
   let selectAllCheckboxElement = document.querySelector(
-    .${selectAllClassName}
+    `.${selectAllClassName}`
   );
   selectAllCheckboxElement.addEventListener('change', () => {
     if (selectAllCheckboxElement.checked) {
