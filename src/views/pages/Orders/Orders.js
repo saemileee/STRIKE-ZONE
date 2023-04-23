@@ -1,5 +1,6 @@
 // eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
+import { isLogin } from '/js/api/authAPI.js';
 
 const OrderItem = (
   target,
@@ -57,101 +58,19 @@ const OrderItem = (
 };
 
 const render = async () => {
-  const DUMMY = [
-    {
-      _id: '64436ebf865e23b8f38616b2',
-      orderId: 1,
-      productsPayment: 365000,
-      deliveryCharge: 3000,
-      totalPayment: 368000,
-      products: [
-        {
-          productId: 3,
-          productName: '[롯데 자이언츠] 자수형 어센틱 원정 유니폼',
-          quantity: 3,
-          price: 100000,
-          img: '/assets/img/products/23-lotte-giants-authentic-away-uniform-1.jpg',
-          _id: '64436ebf865e23b8f38616b3',
-        },
-        {
-          productId: 1,
-          productName: '[롯데 자이언츠] 일반형 원정 유니폼',
-          quantity: 1,
-          price: 65000,
-          img: '/assets/img/products/23-lotte-giants-away-uniform-1.jpg',
-          _id: '64436ebf865e23b8f38616b4',
-        },
-      ],
-      orderer: {
-        email: 'abc@example.com',
-        name: '홍길동',
-        phoneNumber: '010-1234-5678',
-        _id: '64436ebf865e23b8f38616b5',
-      },
-      recipient: {
-        name: '홍길동',
-        address1: '경기 성남시 분당구 정자일로 95',
-        address2: '1층',
-        zipCode: '13561',
-        phoneNumber: '010-1234-5678',
-        _id: '64436ebf865e23b8f38616b6',
-      },
-      createdAt: '2023-04-22T05:21:03.229Z',
-      updatedAt: '2023-04-22T05:21:03.229Z',
-      __v: 0,
-    },
-    {
-      _id: '64436ebf865e23b8f38616b2',
-      orderId: 1,
-      productsPayment: 365000,
-      deliveryCharge: 3000,
-      totalPayment: 368000,
-      products: [
-        {
-          productId: 3,
-          productName: '[롯데 자이언츠] 자수형 어센틱 원정 유니폼',
-          quantity: 3,
-          price: 100000,
-          img: '/assets/img/products/23-lotte-giants-authentic-away-uniform-1.jpg',
-          _id: '64436ebf865e23b8f38616b3',
-        },
-        {
-          productId: 1,
-          productName: '[롯데 자이언츠] 일반형 원정 유니폼',
-          quantity: 1,
-          price: 65000,
-          img: '/assets/img/products/23-lotte-giants-away-uniform-1.jpg',
-          _id: '64436ebf865e23b8f38616b4',
-        },
-      ],
-      orderer: {
-        email: 'abc@example.com',
-        name: '홍길동',
-        phoneNumber: '010-1234-5678',
-        _id: '64436ebf865e23b8f38616b5',
-      },
-      recipient: {
-        name: '홍길동',
-        address1: '경기 성남시 분당구 정자일로 95',
-        address2: '1층',
-        zipCode: '13561',
-        phoneNumber: '010-1234-5678',
-        _id: '64436ebf865e23b8f38616b6',
-      },
-      createdAt: '2022-04-22T05:21:03.229Z',
-      updatedAt: '2022-04-22T05:21:03.229Z',
-      __v: 0,
-    },
-  ];
-  // const { token } = JSON.parse(localStorage.getItem('user')) || '';
-  // const email = await fetch('/api/v1/auth', {
-  //   method: 'POST',
-  //   headers: {
-  //     Authorization: token,
-  //   },
-  // }).then((res) => res.json());
+  let email;
+  try {
+    email = await isLogin();
+    if (!email) {
+      location.href = '/NotFound';
+      alert('회원 전용 페이지 입니다!');
+    }
+  } catch (err) {
+    alert(err);
+    location.href = '/NotFound';
+  }
 
-  // const orders = await fetch(`/api/v1/users/${email}/orders`).then((res) => res.json());
+  const orders = await fetch(`/api/v1/users/${email}/orders`).then((res) => res.json());
 
   const $userData = $('.user-data');
   $userData.innerHTML = `
@@ -162,7 +81,7 @@ const render = async () => {
   `;
 
   const $orderList = $('.order-list');
-  DUMMY.forEach((order) => {
+  orders.forEach((order) => {
     OrderItem($orderList, order);
   });
 };
