@@ -161,7 +161,7 @@ function renderRelatedProducts() {
 
     function renderProductsBySort() {
       const filteringNewProductsSorting = filteringRelatedProducts.sort(
-        (a, b) => b.createdAt - a.createdAt
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
 
       for (let i = 0; i < 4; i++) {
@@ -180,7 +180,9 @@ loginStatus ? renderRelatedProducts() : null;
 
 //신상품 렌더링
 function renderNewProducts() {
-  const newProductsSorting = products.sort((a, b) => b.createdAt - a.createdAt);
+  const newProductsSorting = products.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   for (let i = 0; i < 4; i++) {
     renderProducts(
