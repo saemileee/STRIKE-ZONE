@@ -1,7 +1,14 @@
 import { $, selectAllCheckbox, autoHyphen } from '/js/utils.js';
 import { getCartListSelected } from '/js/api/cartAPI.js';
 import { fetchData, postData } from '/js/api/api.js';
-import { isLogin } from '/js/api/authAPI.js';
+import { getUserInfo } from '/js/api/authAPI.js';
+
+const {
+  email: userEmail,
+  koreanName: ordererName,
+  phoneNumber: ordererPhoneNumber,
+  address: ordererAddress,
+} = await getUserInfo();
 
 const cartListSelected = getCartListSelected();
 
@@ -164,6 +171,27 @@ findAndFillAddress('receiver');
 autoHyphen('.user-phone-number-back');
 autoHyphen('.receiver-phone-number-back');
 
+// 로그인한 유저 정보 기반으로 주문자 폼 채우기
+
+function fillOrdererInformation() {
+  let ordererInput = $('.user-name');
+  let ordererPhoneNumberProInput = $('.user-phone-number-pro');
+  let ordererPhoneNumberBackInput = $('.user-phone-number-back');
+  let ordererAddressZonecode = $('.user-address-zonecode');
+  let ordererAddressBase = $('.user-address-base');
+  let ordererAddressDetail = $('.user-address-detail');
+
+  ordererInput.value = ordererName;
+  ordererPhoneNumberProInput.value = ordererPhoneNumber.split('-')[0];
+  ordererPhoneNumberBackInput.value = `${ordererPhoneNumber.split('-')[1]}-${
+    ordererPhoneNumber.split('-')[2]
+  }`;
+  ordererAddressZonecode.value = ordererAddress.postCode;
+  ordererAddressBase.value = ordererAddress.roughAddress;
+  ordererAddressDetail.value = ordererAddress.detailAddress;
+}
+fillOrdererInformation();
+
 // 함수로 주문자와 동일한 정보 채우기 구현
 const $fillDeliveryInformationButton = $('.fill-delivery-information');
 $fillDeliveryInformationButton.addEventListener('click', () => {
@@ -194,7 +222,7 @@ selectAllCheckbox('term-checkbox', 'select-all');
 
 // 주문자 정보 가져오기
 function getOrdererData() {
-  const email = $('.user-email').value;
+  const email = userEmail;
   const name = $('.user-name').value;
   const phoneNumber = `${$('.user-phone-number-pro').value}-${
     $('.user-phone-number-back').value
@@ -215,13 +243,25 @@ function getRecipientData() {
   return { name, address1, address2, zipCode, phoneNumber };
 }
 
+// 결제수단 정보 가져오기
+function getPaymentMethodData() {
+  const paymentMethods = document.querySelectorAll(
+    '.payment-method input[type="radio"]'
+  );
+
+  for (const paymentMethod of paymentMethods) {
+    if (paymentMethod.checked) return paymentMethod.value;
+  }
+}
+
 // 주문 데이터 전송
 async function postOrderData(event) {
   event.preventDefault();
   const products = await getData();
   const orderer = getOrdererData();
   const recipient = getRecipientData();
-  const data = { products, orderer, recipient };
+  const paymentMethod = getPaymentMethodData();
+  const data = { products, orderer, recipient, paymentMethod };
   const postedData = await postData('/orders', data);
   window.location.href = `/order/complete?id=${postedData.createdOrder.orderId}`;
 }
