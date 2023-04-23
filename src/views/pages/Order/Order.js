@@ -1,7 +1,7 @@
 import { $, selectAllCheckbox, autoHyphen } from '/js/utils.js';
 import { getCartListSelected } from '/js/api/cartAPI.js';
 import { fetchData, postData } from '/js/api/api.js';
-import { getUserInfo } from '/js/api/authAPI.js';
+import { isLogin, getUserInfo } from '/js/api/authAPI.js';
 
 const {
   email: userEmail,
@@ -11,6 +11,10 @@ const {
 } = await getUserInfo();
 
 const cartListSelected = getCartListSelected();
+
+if (!(await isLogin())) {
+  window.location.href = '/login';
+}
 
 //결제 버튼 업데이트
 function updateCheckoutButton(amount) {
