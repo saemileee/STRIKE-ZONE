@@ -1,39 +1,35 @@
 import { $ } from '/js/utils.js';
+import { isLogin, getAuthOption } from '/js/api/authAPI.js';
 
 const render = async () => {
-  const DUMMY = {
-    address: {
-      postCode: 6035,
-      roughAddress: '서울 강남구 가로수길 5',
-      detailAddress: '상세주소',
-    },
-    _id: '6442144a861b6e5cd305fa89',
-    email: 'jjj@asd.com',
-    password: '$2b$10$ZwiViDoD20Nc5qb9hXfGDOXVN7YLYfwsfzHqGwea/q5KCAMaH2x7O',
-    koreanName: '봉길동',
-    phoneNumber: '010-0000-0000',
-    cheerTeam: {
-      _id: '6440ee4dbe78f271d6821823',
-      title: '한화 이글스',
-      description: '한화 이글스입니다.',
-      teamId: 'hanhwa-eagles',
-      createdAt: '2023-04-20T07:48:29.878Z',
-      updatedAt: '2023-04-20T07:48:29.878Z',
-      __v: 0,
-    },
-    createdAt: '2023-04-01T04:42:50.038Z',
-    updatedAt: '2023-04-21T04:42:50.038Z',
-    __v: 0,
-  };
+  let loginEmail;
+  try {
+    loginEmail = await isLogin();
+    if (!loginEmail) {
+      alert('회원 전용 페이지입니다!');
+      location.href = '/NotFound';
+    }
+  } catch (err) {
+    throw new Error({ messge: err });
+  }
+
+  let userInfo;
+  try {
+    const userData = await fetch(`/api/v1/users/${loginEmail}`, getAuthOption());
+    userInfo = await userData.json();
+  } catch (err) {
+    throw new Error({ messge: err });
+  }
 
   const {
     koreanName,
-    cheerTeam: { title, teamId },
+    // cheerTeam: { title, teamId },
     email,
     address: { postCode, roughAddress, detailAddress },
     phoneNumber,
     createdAt,
-  } = DUMMY;
+  } = userInfo;
+  const [title, teamId] = ['한화 이글스', 'hanhwa-eagles'];
 
   const currentDate = new Date();
   const convertedDate = new Date(createdAt);
