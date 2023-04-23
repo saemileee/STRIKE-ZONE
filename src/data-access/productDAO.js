@@ -43,9 +43,7 @@ const productDAO = {
 
   // 상품 수정
   async updateProductByProductId(productId, updateInfo) {
-    const discountedPrice = this.calculateDiscountedPrice(updateInfo);
-
-    await Product.updateOne({ productId }, { ...updateInfo, discountedPrice });
+    await Product.updateOne({ productId }, updateInfo);
   },
 
   // 상품 삭제

@@ -76,7 +76,11 @@ const productService = {
 
   // 상품 수정하기 (관리자)
   async updateProductByProductId(productId, updateInfo) {
-    await productDAO.updateProductByProductId(productId, updateInfo);
+    const discountedPrice = this.calculateDiscountedPrice(updateInfo);
+
+    const prodctInfoToBeUpdate = { ...updateInfo, discountedPrice };
+
+    await productDAO.updateProductByProductId(productId, prodctInfoToBeUpdate);
   },
 
   // 상품 삭제하기 (관리자)
