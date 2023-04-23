@@ -1,5 +1,9 @@
 import { Order, Product, Shipping } from './model';
 
+const DEFAULT_PAYMENT_METHOD = '무통장 입금';
+const STATUS_BY_DEFAULT_PAYMENT_METHOD = '결제 전';
+const STATUS_BY_PAYMENT_METHOD = '상품 준비중';
+
 const orderDAO = {
 
   async createOrder(orderInfo) {
@@ -13,9 +17,12 @@ const orderDAO = {
     // orderId 계산하기
     const orderId = await this.createOrderId();
 
+    // 결제 방식에 따라 주문 정보를 결정하기
+    const status = this.setOrderStatusByPaymentMethod(orderInfo.paymentMethod);
+
     // 주문 등록하기
     await Order.create({
-      ...orderInfo, orderId, productsPayment, totalPayment, deliveryCharge,
+      ...orderInfo, orderId, productsPayment, totalPayment, deliveryCharge, status,
     });
 
     // 주문을 저장 후, [해당 productId의 상품 수량]에서 [주문 수량]만큼 차감해야 한다.
@@ -42,6 +49,31 @@ const orderDAO = {
     const order = await Order.findOne({ orderId });
 
     return order;
+  },
+
+  // 특정 주문의 배송지 정보 수정
+  async updateRecipientByOrderId(orderId, recipientInfo) {
+    await Order.updateOne({ orderId }, { recipient: { ...recipientInfo } });
+  },
+
+  // 특정 주문의 배송 상태 수정
+  async updateStatusByOrderId(orderId, status) {
+    await Order.updateOne({ orderId }, { status });
+  },
+
+  async deleteOrderByOrderId(orderId) {
+    await Order.deleteOne({ orderId });
+  },
+
+  setOrderStatusByPaymentMethod(paymentMethod) {
+    let status = STATUS_BY_PAYMENT_METHOD;
+
+    // TODO: 프론트단에서 미리 결제 수단이 undefined 로 넘어오지 않도록 처리하는 게 더 좋을 것 같다.
+    if (paymentMethod === undefined || paymentMethod === DEFAULT_PAYMENT_METHOD) {
+      status = STATUS_BY_DEFAULT_PAYMENT_METHOD;
+    }
+
+    return status;
   },
 
   async createOrderId() {

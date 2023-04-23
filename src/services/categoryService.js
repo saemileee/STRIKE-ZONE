@@ -10,6 +10,20 @@ const categoryService = {
     const categories = await categoryDAO.getCategories(teamId);
     return categories;
   },
+
+  async getCategoryByCategoryId(categoryId) {
+    const category = await categoryDAO.getCategoryByCategoryId(categoryId);
+
+    return category;
+  },
+
+  async updateCategoryByCategoryId(categoryId, updateInfo) {
+    await categoryDAO.updateCategoryByCategoryId(categoryId, updateInfo);
+  },
+
+  async deleteCategoryByCategoryId(categoryId) {
+    await categoryDAO.deleteCategoryByCategoryId(categoryId);
+  },
 };
 
 export { categoryService };

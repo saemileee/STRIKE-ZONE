@@ -10,6 +10,12 @@ productRouter.get('/products', productController.getAllProducts);
 // 상품 단일 조회 (productId)
 productRouter.get('/products/:productId', productController.getProductByProductId);
 
+// 상품 수정 (productId)
+productRouter.put('/products/:productId', productController.updateProductByProductId);
+
+// 상품 삭제 (productId)
+productRouter.delete('/products/:productId', productController.deleteProductByProductId);
+
 // 특정 카테고리의 상품 목록 조회
 productRouter.get('/categories/:categoryId/products', productController.getProductsByCategoryId);
 

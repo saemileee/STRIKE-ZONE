@@ -16,6 +16,20 @@ const categoryDAO = {
 
     return categories;
   },
+
+  async getCategoryByCategoryId(categoryId) {
+    const category = await Category.findOne({ categoryId });
+
+    return category;
+  },
+
+  async updateCategoryByCategoryId(categoryId, updateInfo) {
+    await Category.findOneAndUpdate({ categoryId }, updateInfo);
+  },
+
+  async deleteCategoryByCategoryId(categoryId) {
+    await Category.deleteOne({ categoryId });
+  },
 };
 
 export { categoryDAO };

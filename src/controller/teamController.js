@@ -1,10 +1,10 @@
 import { teamService } from '../services';
 
 const teamController = {
-  async addTeam(request, response, next) {
+  async addTeam(req, res, next) {
     const {
       teamId, teamName, teamDescription, emblemPath,
-    } = request.body;
+    } = req.body;
 
     const teamInfo = {
       teamId, teamName, teamDescription, emblemPath,
@@ -13,49 +13,66 @@ const teamController = {
     try {
       await teamService.addTeam(teamInfo);
 
-      response
-        .status(201)
-        .json({ result: 'success' });
+      res.status(201).json({ result: 'success' });
     } catch (error) {
       next(error);
     }
   },
 
-  async getTeams(request, response, next) {
+  async getTeams(req, res, next) {
     try {
       const teams = await teamService.getTeams();
 
-      response
-        .status(200)
-        .json(teams);
+      res.status(200).json(teams);
     } catch (error) {
       next(error);
     }
   },
 
-  async getTeamById(request, response, next) {
+  async getTeamById(req, res, next) {
     try {
-      const { teamId } = request.params;
+      const { teamId } = req.params;
 
       const team = await teamService.getTeamById(teamId);
 
-      response
-        .status(200)
-        .json(team);
+      res.status(200).json(team);
     } catch (error) {
       next(error);
     }
   },
 
-  async getTeamByTitle(request, response, next) {
+  async getTeamByTitle(req, res, next) {
     try {
-      const { title } = request.params;
+      const { title } = req.params;
 
       const team = await teamService.getTeamByTitle(title);
 
-      response
-        .status(200)
-        .json(team);
+      res.status(200).json(team);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async updateTeamById(req, res, next) {
+    try {
+      const { teamId } = req.params;
+      const updateInfo = req.body;
+
+      await teamService.updateTeamById(teamId, updateInfo);
+
+      res.status(200).json({ result: 'team updated successfully.' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async deleteTeamById(req, res, next) {
+    try {
+      const { teamId } = req.params;
+
+      await teamService.deleteTeamById(teamId);
+
+      res.status(200).json({ result: 'team deleted successfully.' });
     } catch (error) {
       next(error);
     }

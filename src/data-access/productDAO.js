@@ -42,8 +42,7 @@ const productDAO = {
     } = category;
 
     // 할인율을 적용한 상품 가격 계산하기
-    const { price, rate } = productInfo;
-    const discountedPrice = rate === 0 ? price : price - (price * (rate / 100));
+    const discountedPrice = this.calculateDiscountedPrice(productInfo);
 
     const createNewProduct = await Product.create({
       teamId,
@@ -57,6 +56,26 @@ const productDAO = {
     });
 
     return createNewProduct;
+  },
+
+  // 상품 수정
+  async updateProductByProductId(productId, updateInfo) {
+    const discountedPrice = this.calculateDiscountedPrice(updateInfo);
+
+    await Product.updateOne({ productId }, { ...updateInfo, discountedPrice });
+  },
+
+  // 상품 삭제
+  async deleteProductByProductId(productId) {
+    await Product.deleteOne({ productId });
+  },
+
+  // 할인된 가격을 구하는 함수
+  calculateDiscountedPrice(productInfo) {
+    const { price, rate } = productInfo;
+    const discountedPrice = rate === 0 ? price : price - (price * (rate / 100));
+
+    return discountedPrice;
   },
 };
 
