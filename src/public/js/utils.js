@@ -55,3 +55,8 @@ export function getCookie(name) {
   let matches = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
   return matches ? decodeURIComponent(matches[2]) : undefined;
 }
+
+export function deleteCookie(name) {
+  document.cookie =
+    encodeURIComponent(name) + '=; expires=Thu, 01 JAN 1999 00:00:10 GMT; path=/';
+}

@@ -1,4 +1,5 @@
 import { getAllProduct } from '/js/api/cartAPI.js';
+import { deleteCookie } from './utils.js';
 import { fetchData } from './api/api.js';
 import { isLogin } from './api/authAPI.js';
 
@@ -63,7 +64,8 @@ const logoutElement = document.createElement('button');
 logoutElement.className = 'logout';
 logoutElement.innerHTML = '로그아웃';
 logoutElement.addEventListener('click', () => {
-  window.location.href = '/logout';
+  deleteCookie('userToken');
+  window.location.href = '/';
 });
 
 const rightSideElementsContainer = document.createElement('div');
@@ -81,7 +83,7 @@ headerWrapper.append(headerContainer);
 headerContainer.append(categoryUlElement, rightSideElementsContainer);
 document.body.prepend(headerElement);
 
-const createTeamElement = team => {
+const createTeamElement = (team) => {
   const teamLiElement = document.createElement('li');
   teamLiElement.innerHTML = `
     <div>
@@ -95,7 +97,7 @@ const createTeamElement = team => {
   return teamLiElement;
 };
 
-const createProductElement = category => {
+const createProductElement = (category) => {
   const productLiElement = document.createElement('li');
   productLiElement.innerHTML = `
       <p>${category.name}</p>
@@ -115,7 +117,7 @@ const teamsUlElement = document.createElement('ul');
 
 async function renderTeamCategory() {
   const data = await fetchData('/teams');
-  data.forEach(team => {
+  data.forEach((team) => {
     const teamElement = createTeamElement(team);
     teamsUlElement.append(teamElement);
   });
@@ -127,7 +129,7 @@ teamsContainerElement.append(teamsUlElement);
 const productsContainerElement = document.createElement('div');
 productsContainerElement.classList.add('products-container');
 const productsUlElement = document.createElement('ul');
-DUMMY_PRODUCT_CATEGORY_DATA.forEach(category => {
+DUMMY_PRODUCT_CATEGORY_DATA.forEach((category) => {
   const productElement = createProductElement(category);
   productsUlElement.append(productElement);
 });
