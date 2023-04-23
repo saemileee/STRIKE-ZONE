@@ -174,9 +174,14 @@ html {
 }
 
 .product-contents-container {
-  margin-top: 32px;
+  max-width: 1136px;
+  margin: 0 auto;
+  margin-bottom: 12rem;
 }
 
-.product-list-contianer h3 {
+.product-list-contianer .title.is-3 {
+  text-align: center;
+  margin-top: 70px;
+  padding-bottom: 20px;
   font-weight: 800;
 }

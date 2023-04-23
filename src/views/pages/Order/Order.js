@@ -1,6 +1,7 @@
 import { $, selectAllCheckbox, autoHyphen } from '/js/utils.js';
 import { getCartListSelected } from '/js/api/cartAPI.js';
 import { fetchData, postData } from '/js/api/api.js';
+import { isLogin } from '/js/api/authAPI.js';
 
 const cartListSelected = getCartListSelected();
 
@@ -13,7 +14,9 @@ function updateCheckoutButton(amount) {
 
 //결제정보 렌더링
 function renderReceipt(totalProductAmount, deliveryCharge, totalPaymentAmount) {
-  const totalProductAmountElement = document.querySelector('.total-product-amount');
+  const totalProductAmountElement = document.querySelector(
+    '.total-product-amount'
+  );
   totalProductAmountElement.innerHTML = `${totalProductAmount.toLocaleString()}원`;
 
   const shippingChargeElement = document.querySelector('.shipping-charge');
@@ -30,9 +33,8 @@ async function getData() {
 
   for (let cartList of cartListSelected) {
     const { id: productId, amount: quantity } = cartList;
-    const { discountedPrice, name, teamName, price, rate, img } = await fetchData(
-      `/products/${productId}`
-    );
+    const { discountedPrice, name, teamName, price, rate, img } =
+      await fetchData(`/products/${productId}`);
 
     const totalProductAmount = discountedPrice * quantity;
     totalAmount += totalProductAmount;
@@ -94,7 +96,7 @@ function renderOrderList(
   orderListContainer.append(orderProduct);
 }
 function displayOrderList(products) {
-  products.forEach((product) => {
+  products.forEach(product => {
     const {
       team,
       productName: name,
@@ -105,14 +107,23 @@ function displayOrderList(products) {
       totalProductAmount,
       img,
     } = product;
-    renderOrderList(team, name, quantity, rate, price, discountedPrice, totalProductAmount, img);
+    renderOrderList(
+      team,
+      name,
+      quantity,
+      rate,
+      price,
+      discountedPrice,
+      totalProductAmount,
+      img
+    );
   });
 }
 displayOrderList(await getData());
 
 //주소찾기 기능 연결
 function findAndFillAddress(target) {
-  document.querySelectorAll(`.${target}-address`).forEach((input) => {
+  document.querySelectorAll(`.${target}-address`).forEach(input => {
     input.addEventListener('click', () => {
       new daum.Postcode({
         oncomplete(data) {
@@ -128,26 +139,26 @@ findAndFillAddress('user');
 findAndFillAddress('receiver');
 
 //유효성 검사
-function checkValidation(target) {
-  const regex = {
-    'user-email':
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-  };
-  if (!target.value.match(regex[target.id])) return false;
-  return true;
-}
-function isValid(event) {
-  if (!checkValidation(event.target)) {
-    event.target.classList.add('is-danger');
-    const warning = $(`.${event.target.id}-warning`);
-    warning.style.display = '';
-  } else {
-    event.target.classList.remove('is-danger');
-    const warning = $(`.${event.target.id}-warning`);
-    warning.style.display = 'none';
-  }
-}
-$('.user-email').addEventListener('blur', isValid);
+// function checkValidation(target) {
+//   const regex = {
+//     'user-email':
+//       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+//   };
+//   if (!target.value.match(regex[target.id])) return false;
+//   return true;
+// }
+// function isValid(event) {
+//   if (!checkValidation(event.target)) {
+//     event.target.classList.add('is-danger');
+//     const warning = $(`.${event.target.id}-warning`);
+//     warning.style.display = '';
+//   } else {
+//     event.target.classList.remove('is-danger');
+//     const warning = $(`.${event.target.id}-warning`);
+//     warning.style.display = 'none';
+//   }
+// }
+// $('.user-email').addEventListener('blur', isValid);
 
 //폰 번호 오토하이픈
 autoHyphen('.user-phone-number-back');
@@ -185,7 +196,9 @@ selectAllCheckbox('term-checkbox', 'select-all');
 function getOrdererData() {
   const email = $('.user-email').value;
   const name = $('.user-name').value;
-  const phoneNumber = `${$('.user-phone-number-pro').value}-${$('.user-phone-number-back').value}`;
+  const phoneNumber = `${$('.user-phone-number-pro').value}-${
+    $('.user-phone-number-back').value
+  }`;
   return { email, name, phoneNumber };
 }
 
