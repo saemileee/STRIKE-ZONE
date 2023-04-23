@@ -2,11 +2,11 @@ import { authService } from '../services';
 
 const authController = {
   async getEmailByToken(req, res, next) {
-    const token = req.headers['token'];
+    const { token } = req.headers;
 
-    const email = await authService.getUserEmailByToken(token);
+    const { email, isAdmin } = await authService.getUserEmailByToken(token);
 
-    res.json({ email });
+    res.json({ email, isAdmin });
   },
 
   async userLogin(req, res, next) {
@@ -27,7 +27,7 @@ const authController = {
 
       const { password } = req.body;
 
-      const isPasswordCorrect = await authService.checkPasswordCorrect(email, password);
+      const { isPasswordCorrect } = await authService.checkPasswordAndAdmin(email, password);
 
       if (!isPasswordCorrect) {
         throw new Error('비밀번호가 일치하지 않습니다.');

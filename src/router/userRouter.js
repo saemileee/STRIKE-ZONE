@@ -1,17 +1,23 @@
 import { Router } from 'express';
 import { userController } from '../controller';
-import { loginRequired } from '../middleware';
+import { adminRequired, loginRequired } from '../middleware';
 
 const userRouter = Router();
 
-userRouter.get('/', userController.getAllUsers);
-
-userRouter.get('/:email', loginRequired, userController.getUser);
+userRouter.get('/', adminRequired, userController.getAllUsers);
 
 userRouter.post('/', userController.addUser);
 
-userRouter.put('/:email', loginRequired, userController.setUser);
+userRouter.get('/me', loginRequired, userController.getUser);
 
-userRouter.delete('/:email', loginRequired, userController.deleteUser);
+userRouter.put('/me', loginRequired, userController.setUser);
+
+userRouter.delete('/me', loginRequired, userController.deleteUser);
+
+userRouter.get('/:email', adminRequired, userController.getUser);
+
+userRouter.put('/:email', adminRequired, userController.setUser);
+
+userRouter.delete('/:email', adminRequired, userController.deleteUser);
 
 export { userRouter };

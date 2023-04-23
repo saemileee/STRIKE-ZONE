@@ -21,7 +21,8 @@ const onLoginSubmit = (e) => {
   })
     .then((response) => response.json())
     .then((token) => {
-      localStorage.setItem('user', JSON.stringify(token));
+      const userToken = JSON.stringify(token);
+      document.cookie = `userToken=${userToken}; path=/`;
       window.location.href = '/';
     })
     .catch(() => {

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-function loginRequired(req, res, next) {
+function adminRequired(req, res, next) {
   try {
     const { token } = req.headers;
 
@@ -14,6 +14,10 @@ function loginRequired(req, res, next) {
 
     const { email, isAdmin } = decodedToken;
 
+    if (!isAdmin) {
+      throw new Error('관리자가 아닙니다.');
+    }
+
     req.email = email;
     req.isAdmin = isAdmin;
 
@@ -23,4 +27,4 @@ function loginRequired(req, res, next) {
   }
 }
 
-export { loginRequired };
+export { adminRequired };

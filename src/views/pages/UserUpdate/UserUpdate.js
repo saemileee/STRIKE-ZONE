@@ -1,4 +1,5 @@
-import { $, $createElement } from '/js/utils.js';
+import { $, $createElement, getCookie } from '/js/utils.js';
+import { getUserInfo } from '/js/api/authAPI.js';
 
 const $userData = $('.user-data');
 const userUpdateForm = $createElement('form', 'update-form');
@@ -407,9 +408,9 @@ function showUpdateForm() {
           if (isSelected) newUser[key] = isSelected;
         } else newUser[key] = userInfo.value;
       });
-      const { token } = JSON.parse(localStorage.getItem('user'));
+      const { token } = JSON.parse(getCookie('userToken'));
 
-      fetch('/api/v1/users/email', {
+      fetch('/api/v1/users/me', {
         method: 'PUT',
         headers: {
           token,
@@ -460,25 +461,11 @@ function fillUserInfo(userData) {
   fillCheerTeam(userData);
 }
 
-function getUserInfo() {
-  const { token } = JSON.parse(localStorage.getItem('user'));
-  fetch('/api/v1/users/email', {
-    method: 'GET',
-    headers: {
-      token,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      fillUserInfo(data);
-    });
-}
-
 const checkForm = $('.check-login-form');
 checkForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const checkPassword = $('.check-password').value;
-  const { token } = JSON.parse(localStorage.getItem('user'));
+  const { token } = JSON.parse(getCookie('userToken'));
 
   fetch('/api/v1/auth/check', {
     method: 'POST',
@@ -489,9 +476,10 @@ checkForm.addEventListener('submit', (e) => {
     body: JSON.stringify({ password: checkPassword }),
   })
     .then((response) => response.json())
-    .then(() => {
+    .then(async () => {
       showUpdateForm();
-      getUserInfo();
+      const userData = await getUserInfo();
+      fillUserInfo(userData);
     })
     .catch(() => {
       const isloginWarning = $('.login-warning');
