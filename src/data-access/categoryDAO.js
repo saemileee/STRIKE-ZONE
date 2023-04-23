@@ -1,25 +1,17 @@
-import { Category, Team } from './model';
+import { Category } from './model';
 
 const categoryDAO = {
-  async addCategory(teamId, categoryInfo) {
-    const team = await Team.findOne({ teamId });
-
-    const { teamName, teamDescription } = team;
-
-    await Category.create({
-      teamId, teamName, teamDescription, ...categoryInfo,
-    });
+  async addCategory(categoryInfo) {
+    await Category.create(categoryInfo);
   },
 
   async getCategories(teamId) {
     const categories = await Category.find({ teamId });
-
     return categories;
   },
 
   async getCategoryByCategoryId(categoryId) {
     const category = await Category.findOne({ categoryId });
-
     return category;
   },
 
