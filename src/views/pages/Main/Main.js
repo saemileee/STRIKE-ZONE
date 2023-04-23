@@ -1,5 +1,6 @@
 import { fetchData } from '/js/api/api.js';
 import { isLogin, getUserInfo } from '/js/api/authAPI.js';
+import renderProducts from '/js/components/Products.js';
 
 const mainBannerElement = document.querySelector('.main-banner');
 const bannerContentElement = document.querySelector('.banner-content');
@@ -134,55 +135,12 @@ nextArrowButtonElement.addEventListener('click', nextArrowButtonClickHandler);
 arrowButtonsElement.append(prevArrowButtonElement, nextArrowButtonElement);
 mainBannerElement.append(arrowButtonsElement);
 
-function getDiscountPrice(price, rate) {
-  return price * ((100 - rate) * 0.01);
-}
-
-const renderProducts = (
-  target,
-  { productId, name, teamName, img, price, rate }
-) => {
-  const isDiscount = rate > 0;
-  let renderedPrice;
-  if (isDiscount) renderedPrice = getDiscountPrice(price, rate);
-  renderedPrice = price.toLocaleString();
-
-  const $product = document.createElement('a');
-  $product.setAttribute('href', `/products/${productId}`);
-  $product.className = 'product';
-
-  $product.innerHTML = `
-    <div class="product-image">
-      <img src="${img[0]}" alt="${name}">
-    </div>
-    <div class="product-content">
-      <button class="product-cart-button">
-        <i class="fa-solid fa-cart-shopping"></i>
-      </button>
-      <h1 class="product-header">
-        <span class="product-header-team">${teamName}</span>
-        <span class="product-header-name">${name}</span>
-      </h1>
-      <div class="product-price">
-        ${isDiscount ? `<em class="product-price-rate">${rate}%</em>` : ''}
-        <p class="product-price">${renderedPrice}원</p>
-      </div>
-    </div>
-  `;
-
-  const $cartBtn = $product.querySelector('.product-cart-button');
-  $cartBtn.addEventListener('click', e => {
-    e.preventDefault();
-    addItemCart(productID);
-  });
-
-  target.append($product);
-};
-
+//상품 콘텐츠
 const products = await fetchData('/products');
 const userData = await getUserInfo();
 const loginStatus = await isLogin();
 
+//관련 상품 렌더링
 function renderRelatedProducts() {
   const { koreanName, cheerTeam } = userData;
   const productsContainer = document.querySelector(
@@ -203,7 +161,7 @@ function renderRelatedProducts() {
 
     function renderProductsBySort() {
       const filteringNewProductsSorting = filteringRelatedProducts.sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        (a, b) => b.createdAt - a.createdAt
       );
 
       for (let i = 0; i < 4; i++) {
@@ -220,10 +178,9 @@ function renderRelatedProducts() {
 //로그인 여부 확인하여 관련 상품 띄우기
 loginStatus ? renderRelatedProducts() : null;
 
+//신상품 렌더링
 function renderNewProducts() {
-  const newProductsSorting = products.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
+  const newProductsSorting = products.sort((a, b) => b.createdAt - a.createdAt);
 
   for (let i = 0; i < 4; i++) {
     renderProducts(
@@ -234,10 +191,9 @@ function renderNewProducts() {
 }
 renderNewProducts();
 
+//할인률 순 렌더링
 function renderDiscountProducts() {
-  const newProductsSorting = products.sort(
-    (a, b) => new Date(b.rate) - new Date(a.rate)
-  );
+  const newProductsSorting = products.sort((a, b) => b.rate - a.rate);
 
   for (let i = 0; i < 4; i++) {
     renderProducts(
@@ -246,5 +202,4 @@ function renderDiscountProducts() {
     );
   }
 }
-
 renderDiscountProducts();
