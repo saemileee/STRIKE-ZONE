@@ -1,38 +1,118 @@
-// eslint-disable-next-line
-import { $ } from '/js/utils.js';
-import { getCartListSelected, getOrderPrice } from '/js/api/cartAPI.js';
+import { $, selectAllCheckbox, autoHyphen } from '/js/utils.js';
+import { getCartListSelected } from '/js/api/cartAPI.js';
+import { fetchData, postData } from '/js/api/api.js';
 
 const cartListSelected = getCartListSelected();
-const orderPrice = getOrderPrice();
 
-function renderOrderList() {
-  const orderListContainer = document.querySelector('.order-list-container');
-  cartListSelected.forEach(orderData => {
-    const { amount, id, img, name, price, team, total } = orderData;
-    const orderProduct = document.createElement('div');
-    orderProduct.className = 'order-product';
-    orderProduct.innerHTML = `<div class="image-container">
-    <img src="${img}" />
-  </div>
-  <div class="product-information">
-    <span class="order-product-team">${team}</span>
-    <span class="order-product-title">${name}</span
-    ><span class="order-product-total-amount">${price.toLocaleString()}원</span
-    ><span class="order-product-count">${amount}개</span>
-  </div>`;
-    orderListContainer.append(orderProduct);
-  });
-
-  const totalProductAmountElement = document.querySelector(
-    '.total-product-amount'
-  );
-  totalProductAmountElement.innerHTML = `${orderPrice.toLocaleString()}원`;
+//결제 버튼 업데이트
+function updateCheckoutButton(amount) {
+  const checkoutButton = document.querySelector('.check-out-button');
+  checkoutButton.value = `${amount.toLocaleString()}원 결제하기`;
+  checkoutButton.addEventListener('click', postOrderData);
 }
 
-renderOrderList();
+//결제정보 렌더링
+function renderReceipt(totalProductAmount, deliveryCharge, totalPaymentAmount) {
+  const totalProductAmountElement = document.querySelector('.total-product-amount');
+  totalProductAmountElement.innerHTML = `${totalProductAmount.toLocaleString()}원`;
 
+  const shippingChargeElement = document.querySelector('.shipping-charge');
+  shippingChargeElement.innerHTML = `${deliveryCharge.toLocaleString()}원`;
+
+  const totalPaymentAmountElement = document.querySelector('.total-pay-amount');
+  totalPaymentAmountElement.innerHTML = `${totalPaymentAmount.toLocaleString()}원`;
+}
+
+async function getData() {
+  const { deliveryCharge } = await fetchData('/shippings/default');
+  let products = [];
+  let totalAmount = 0;
+
+  for (let cartList of cartListSelected) {
+    const { id: productId, amount: quantity } = cartList;
+    const { discountedPrice, name, teamName, price, rate, img } = await fetchData(
+      `/products/${productId}`
+    );
+
+    const totalProductAmount = discountedPrice * quantity;
+    totalAmount += totalProductAmount;
+
+    products.push({
+      productId,
+      productName: name,
+      quantity,
+      price: discountedPrice,
+      img: img[0],
+      team: teamName,
+      originalPrice: price,
+      rate,
+      totalProductAmount,
+    });
+  }
+
+  const deliveryChargeAmount = await deliveryCharge;
+  const totalPaymentAmount = totalAmount + deliveryChargeAmount;
+  updateCheckoutButton(totalPaymentAmount);
+  renderReceipt(totalAmount, deliveryChargeAmount, totalPaymentAmount);
+
+  return products;
+}
+
+//주문 리스트 렌더링
+function renderOrderList(
+  team,
+  name,
+  quantity,
+  rate,
+  price,
+  discountedPrice,
+  totalProductAmount,
+  img
+) {
+  const orderProduct = document.createElement('div');
+  orderProduct.className = 'order-product';
+  orderProduct.innerHTML = `<div class="image-container">
+     <img src="${img}" />
+  </div>
+  <div class="product-information">
+    <div>
+    <span class="order-product-team">${team}</span>
+    <span class="order-product-title">${name}</span
+    ></div>
+    <div><span class="order-product-rate">${rate}%</span
+    ><span class="order-product-price">${price.toLocaleString()}원</span
+    ></div><div><span class="order-product-discounted-price">${discountedPrice.toLocaleString()}원 | </span
+    ><span class="order-product-count">${quantity}개</span></div>
+    <span class="order-product-total-amount">${totalProductAmount.toLocaleString()}원</span
+    >
+  </div>`;
+
+  if (rate === 0) {
+    document.querySelector('');
+  }
+  const orderListContainer = document.querySelector('.order-list-container');
+  orderListContainer.append(orderProduct);
+}
+function displayOrderList(products) {
+  products.forEach((product) => {
+    const {
+      team,
+      productName: name,
+      quantity,
+      rate,
+      originalPrice: price,
+      price: discountedPrice,
+      totalProductAmount,
+      img,
+    } = product;
+    renderOrderList(team, name, quantity, rate, price, discountedPrice, totalProductAmount, img);
+  });
+}
+displayOrderList(await getData());
+
+//주소찾기 기능 연결
 function findAndFillAddress(target) {
-  document.querySelectorAll(`.${target}-address`).forEach(input => {
+  document.querySelectorAll(`.${target}-address`).forEach((input) => {
     input.addEventListener('click', () => {
       new daum.Postcode({
         oncomplete(data) {
@@ -44,10 +124,10 @@ function findAndFillAddress(target) {
     });
   });
 }
-
 findAndFillAddress('user');
 findAndFillAddress('receiver');
 
+//유효성 검사
 function checkValidation(target) {
   const regex = {
     'user-email':
@@ -56,7 +136,6 @@ function checkValidation(target) {
   if (!target.value.match(regex[target.id])) return false;
   return true;
 }
-
 function isValid(event) {
   if (!checkValidation(event.target)) {
     event.target.classList.add('is-danger');
@@ -68,21 +147,13 @@ function isValid(event) {
     warning.style.display = 'none';
   }
 }
-
 $('.user-email').addEventListener('blur', isValid);
 
-function autoHyphen(target) {
-  const targetElement = $(target);
-  targetElement.addEventListener('input', () => {
-    targetElement.value = targetElement.value
-      .replace(/[^0-9]/g, '')
-      .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
-  });
-}
-
+//폰 번호 오토하이픈
 autoHyphen('.user-phone-number-back');
 autoHyphen('.receiver-phone-number-back');
 
+// 함수로 주문자와 동일한 정보 채우기 구현
 const $fillDeliveryInformationButton = $('.fill-delivery-information');
 $fillDeliveryInformationButton.addEventListener('click', () => {
   const userName = $('.user-name').value;
@@ -107,43 +178,37 @@ $fillDeliveryInformationButton.addEventListener('click', () => {
   $receiverAddressDetail.value = userAddressDetail;
 });
 
-const $checkOutButton = $('.check-out-button');
-$checkOutButton.addEventListener('click', () => {
-  const userName = $('.user-name').value;
-  const userEmail = $('.user-email').value;
-  const userPhoneNumberPro = $('.user-phone-number-pro').value;
-  const userPhoneNumberBack = $('.user-phone-number-back').value;
-  const userData = {
-    userName,
-    userEmail,
-    userPhoneNumber: `${userPhoneNumberPro}${userPhoneNumberBack}`,
-  };
+//전체선택 버튼 기능
+selectAllCheckbox('term-checkbox', 'select-all');
 
-  const receiver = $('.receiver').value;
-  const receiverPhoneNumberPro = $('.receiver-phone-number-pro').value;
-  const receiverPhoneNumberBack = $('.receiver-phone-number-back').value;
-  const receiverAddressZonecode = $('.receiver-address-zonecode').value;
-  const receiverAddressBase = $('.receiver-address-base').value;
-  const receiverAddressDetail = $('.receiver-address-detail').value;
-  const deliveryData = {
-    receiver,
-    receiverPhoneNumber: `${receiverPhoneNumberPro}${receiverPhoneNumberBack}`,
-    receiverAddressZonecode,
-    receiverAddressBase,
-    receiverAddressDetail,
-  };
+// 주문자 정보 가져오기
+function getOrdererData() {
+  const email = $('.user-email').value;
+  const name = $('.user-name').value;
+  const phoneNumber = `${$('.user-phone-number-pro').value}-${$('.user-phone-number-back').value}`;
+  return { email, name, phoneNumber };
+}
 
-  const $paymentMethods = document.getElementsByName('payment-method');
-  let paymentMethod = $paymentMethods[0];
-  for (const element of $paymentMethods) {
-    paymentMethod.checked ? (paymentMethod = element.className) : null;
-  }
+// 수령자 정보 가져오기
+function getRecipientData() {
+  const name = $('.receiver').value;
+  const address1 = $('.receiver-address-base').value;
+  const address2 = $('.receiver-address-detail').value;
+  const zipCode = $('.receiver-address-zonecode').value;
+  const phoneNumber = `${$('.receiver-phone-number-pro').value}-${
+    $('.receiver-phone-number-back').value
+  }`;
 
-  console.log(
-    cartListSelected,
-    orderPrice,
-    userData,
-    deliveryData,
-    paymentMethod
-  );
-});
+  return { name, address1, address2, zipCode, phoneNumber };
+}
+
+// 주문 데이터 전송
+async function postOrderData(event) {
+  event.preventDefault();
+  const products = await getData();
+  const orderer = getOrdererData();
+  const recipient = getRecipientData();
+  const data = { products, orderer, recipient };
+  const postedData = await postData('/orders', data);
+  window.location.href = `/order/complete?id=${postedData.createdOrder.orderId}`;
+}

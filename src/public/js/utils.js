@@ -10,12 +10,8 @@ export function $createElement(elementType, className) {
 
 //체크박스 전체선택 기능
 export function selectAllCheckbox(checkboxesClassName, selectAllClassName) {
-  const termCheckboxElements = document.querySelectorAll(
-    `.${checkboxesClassName}`
-  );
-  let selectAllCheckboxElement = document.querySelector(
-    `.${selectAllClassName}`
-  );
+  const termCheckboxElements = document.querySelectorAll(`.${checkboxesClassName}`);
+  let selectAllCheckboxElement = document.querySelector(`.${selectAllClassName}`);
   selectAllCheckboxElement.addEventListener('change', () => {
     if (selectAllCheckboxElement.checked) {
       for (let checkbox of termCheckboxElements) {
@@ -49,4 +45,8 @@ export function autoHyphen(target) {
       .replace(/[^0-9]/g, '')
       .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
   });
+}
+
+export function setDiscount(price, rate) {
+  return price * ((100 - rate) * 0.01);
 }

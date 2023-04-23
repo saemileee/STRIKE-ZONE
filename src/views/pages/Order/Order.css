@@ -6,18 +6,41 @@ body {
 .order-wrapper {
   max-width: 1136px;
   margin: 0 auto;
-  padding-bottom: 18rem;
+  padding-bottom: 10rem;
+}
+
+h3 {
+  padding-top: 2rem;
+}
+
+.order-wrapper form {
+  display: flex;
+}
+
+.order-wrapper form .left-side-container {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2rem;
+  width: 65%;
+}
+
+.order-wrapper form .right-side-container {
+  flex-grow: 1;
 }
 
 .order-wrapper section {
-  width: 50rem;
-  padding: 24px 36px 24px 36px;
+  padding: 24px 26px 24px 26px;
   background-color: rgb(255, 255, 255);
-  margin-bottom: 12px;
+  margin-bottom: 24px;
+  border-radius: 8px;
 }
 
 label {
   text-align: left;
+}
+
+div.field-body .button {
+  margin-right: 12px;
 }
 
 div.field-body > input[type='text'] {
@@ -33,10 +56,11 @@ select {
   padding: 12px;
   border: 1px solid rgb(232, 232, 232);
   border-radius: 6px;
+  margin-bottom: 12px;
 }
 .order-list-container .order-product .image-container {
-  width: 100px;
-  aspect-ratio: 1 / 1;
+  width: 120px;
+  height: 120px;
   margin-right: 18px;
   border: 1px solid rgb(232, 232, 232);
   border-radius: 4px;
@@ -47,9 +71,45 @@ select {
   flex-direction: column;
 }
 
+.order-list-container .order-product .product-information div {
+  margin-bottom: 4px;
+}
+
+.order-product-team {
+  background-color: rgb(179, 255, 14);
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.order-product-title {
+  font-weight: 500;
+}
+
+.order-product-rate {
+  font-size: 14px;
+  margin-right: 8px;
+  color: rgb(191, 191, 191);
+  font-weight: 600;
+}
+
+.order-product-price {
+  font-size: 14px;
+  color: rgb(191, 191, 191);
+  text-decoration: line-through;
+}
+
+.order-product-total-amount {
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .fill-delivery-information {
-  background-color: rgb(0, 132, 255);
-  color: rgb(0, 162, 255);
+  background-color: rgb(255, 95, 3);
+  color: rgb(255, 255, 255);
+  border: none;
   font-weight: 800;
   font-size: 16px;
   margin-bottom: 16px;
@@ -59,11 +119,78 @@ select {
   padding: 16px 32px 16px 32px;
   border: none;
   border-radius: 8px;
-  background-color: rgb(0, 132, 255);
   color: rgb(255, 255, 255);
   font-size: 16px;
 }
 
 .check-out-button:hover {
   cursor: pointer;
+}
+
+.receipt-information-container {
+  position: sticky;
+  top: 120px;
+}
+
+.receipt-information-container .payment-information {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.receipt-information-container .payment-information span {
+  line-height: 2rem;
+}
+
+.receipt-information-container .payment-information span.price {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.receipt-information-container .payment-information span.total-product-amount {
+  font-weight: 700;
+}
+
+.receipt-information-container .payment-information span.total-pay-amount {
+  font-size: 24px;
+  font-weight: 800;
+  color: rgb(255, 95, 3);
+}
+
+.term-checkboxes-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.term-checkboxes-container label {
+  margin-bottom: 12px;
+}
+
+.term-checkboxes-container label:first-child {
+  font-weight: 600;
+}
+
+.check-out-button {
+  width: 100%;
+  background-color: rgb(255, 95, 3);
+}
+
+@media screen and (max-width: 768px) {
+  div.field-body {
+    display: flex;
+    width: 100%;
+  }
+  div.field-body div.field {
+    flex-grow: 1;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .order-wrapper form {
+    flex-direction: column;
+  }
+
+  .order-wrapper form .left-side-container {
+    width: 100%;
+  }
 }
