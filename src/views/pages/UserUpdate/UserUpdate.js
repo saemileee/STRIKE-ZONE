@@ -1,24 +1,8 @@
-// eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
 
-function getUser() {
-  const { token } = JSON.parse(localStorage.getItem('user'));
-
-  fetch('/api/v1/users', {
-    method: 'GET',
-    headers: {
-      token,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data));
-}
-// getUser();
-
 const $userData = $('.user-data');
-
-const $form = $createElement('form', 'update-form');
-$form.innerHTML = `
+const userUpdateForm = $createElement('form', 'update-form');
+userUpdateForm.innerHTML = `
   <form class="update-form">
   <h4 class="title is-4">회원 정보 수정</h4>
   <div class="field is-horizontal">
@@ -33,7 +17,8 @@ $form.innerHTML = `
             class="input user-email"
             type="text"
             placeholder="이메일을 입력해 주세요."
-            required
+            readonly
+            onfocus="this.blur()"
             autocomplete="off"
           />
           <p class="email-warning" style="display: none;">이메일 형식이 올바르지 않습니다.</p>
@@ -201,43 +186,43 @@ $form.innerHTML = `
     <div class="field-body">
       <div class="field" id="cheerTeam">
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="SSG랜더스" />
+          <input type="radio" name="team" class="team" value="SSG 랜더스" />
           SSG 랜더스
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="키움히어로즈" />
+          <input type="radio" name="team" class="team" value="키움 히어로즈" />
           키움 히어로즈
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="LG트윈스" />
+          <input type="radio" name="team" class="team" value="LG 트윈스" />
           LG 트윈스
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="KT위즈" />
+          <input type="radio" name="team" class="team" value="KT 위즈" />
           KT 위즈
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="KIA타이거즈" />
+          <input type="radio" name="team" class="team" value="KIA 타이거즈" />
           KIA 타이거즈
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="NC다이노스" />
+          <input type="radio" name="team" class="team" value="NC 다이노스" />
           NC 다이노스
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="삼성라이온즈" />
+          <input type="radio" name="team" class="team" value="삼성 라이온즈" />
           삼성 라이온즈
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="롯데자이언츠" />
+          <input type="radio" name="team" class="team" value="롯데 자이언츠" />
           롯데 자이언츠
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="두산베어스" />
+          <input type="radio" name="team" class="team" value="두산 베어스" />
           두산 베어스
         </label>
         <label class="teams tag is-medium">
-          <input type="radio" name="team" class="team" value="한화이글스" />
+          <input type="radio" name="team" class="team" value="한화 이글스" />
           한화 이글스
         </label>
       </div>
@@ -250,193 +235,271 @@ $form.innerHTML = `
   </div>
   </form>
 `;
-
 const checkPasswordForm = $createElement('form', 'check-login-form');
 checkPasswordForm.innerHTML = `
 <section class="check-login-wrapper">
-  <h3 class="title is-3">로그인</h3>
-  <div class="login-form">
-    <div class="login-input">
-      <input
-        type="text"
-        placeholder="이메일"
-        class="input check-email"
-        id="loginId"
-        required
-      />
-      <input
-        type="password"
-        placeholder="비밀번호"
-        class="input check-password"
-        id="loginPassword"
-        required
-      />
-    </div>
-    <button type="submit" class="button is-info" id="login">로그인</button>
+  <h3 class="title is-3">비밀번호 확인</h3>
+  <div class="login-form-wrapper">
+    <div class="login-form">
+      <div class="login-input">
+        <input
+          type="password"
+          placeholder="비밀번호"
+          class="input check-password"
+          id="loginPassword"
+          required
+        />
+      </div>
+      <button type="submit" class="button is-info" id="login">확인</button>
+    </div>    
   </div>
-    </section>`;
-
+</section>
+`;
 $userData.append(checkPasswordForm);
+
+function showUpdateForm() {
+  checkPasswordForm.remove();
+
+  $userData.append(userUpdateForm);
+
+  const updateForm = $('.update-form');
+  const newUserEmail = $('#email');
+  const newUserPassword = $('#password');
+  const newUserPasswordVerify = $('#passwordVerify');
+  const newUserPhoneNumber = $('#phoneNumber');
+  const findAddress = document.querySelectorAll('.address');
+  const teams = document.getElementsByName('team');
+
+  function checkValidation(target) {
+    const regex = {
+      email:
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
+      password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
+    };
+    if (!target.value.match(regex[target.id])) return false;
+    return true;
+  }
+
+  function isValid(event) {
+    if (!checkValidation(event.target)) {
+      event.target.classList.add('is-danger');
+      const warning = $(`.${event.target.id}-warning`);
+      warning.style.display = '';
+    } else {
+      event.target.classList.remove('is-danger');
+      const warning = $(`.${event.target.id}-warning`);
+      warning.style.display = 'none';
+    }
+  }
+
+  function passwordVerify() {
+    const warning = $('.password-verify-warning');
+    if (
+      newUserPassword.value !== newUserPasswordVerify.value ||
+      newUserPasswordVerify.value === ''
+    ) {
+      newUserPasswordVerify.classList.add('is-danger');
+      warning.style.display = '';
+      return false;
+    }
+    newUserPasswordVerify.classList.remove('is-danger');
+    warning.style.display = 'none';
+    return true;
+  }
+
+  function checkAddress() {
+    if (findAddress[1].value) return true;
+    return false;
+  }
+
+  function userInfoComplete() {
+    if (!checkValidation(newUserEmail)) {
+      alert('이메일 형식이 올바르지 않습니다.');
+      return false;
+    }
+    if (!checkValidation(newUserPassword)) {
+      alert('비밀번호 형식이 올바르지 않습니다.');
+      return false;
+    }
+    if (!passwordVerify()) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
+    if (!checkAddress()) {
+      alert('주소를 입력해 주세요');
+      return false;
+    }
+    return true;
+  }
+
+  function autoHyphen() {
+    newUserPhoneNumber.value = newUserPhoneNumber.value
+      .replace(/[^0-9]/g, '')
+      .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
+  }
+
+  function getPhoneNumber() {
+    const firstNumber = $('#firstPhoneNumber');
+    return `${firstNumber.options[firstNumber.selectedIndex].text}-${
+      newUserPhoneNumber.value
+    }`;
+  }
+
+  function searchZipcode() {
+    new daum.Postcode({
+      oncomplete(data) {
+        const roadAddr = data.roadAddress;
+        document.getElementById('postCode').value = data.zonecode;
+        document.getElementById('roughAddress').value = roadAddr;
+      },
+    }).open();
+  }
+
+  function selectTeam() {
+    teams.forEach((team) =>
+      team.checked
+        ? team.parentNode.classList.add('is-info')
+        : team.parentNode.classList.remove('is-info')
+    );
+  }
+
+  function getCheerTeam() {
+    const teamID = {
+      '롯데 자이언츠': '644221ccead2ae1ca8f0c9d0',
+      'KIA 타이거즈': '644221deead2ae1ca8f0c9d2',
+      '삼성 라이온즈': '644221e4ead2ae1ca8f0c9d4',
+      'LG 트윈스': '644221ecead2ae1ca8f0c9d6',
+      '두산 베어스': '644221f4ead2ae1ca8f0c9d8',
+      '키움 히어로즈': '644221fcead2ae1ca8f0c9da',
+      'SSG 랜더스': '64422203ead2ae1ca8f0c9dc',
+      'KT 위즈': '64422209ead2ae1ca8f0c9de',
+      '한화 이글스': '64422210ead2ae1ca8f0c9e0',
+      'NC 다이노스': '64422215ead2ae1ca8f0c9e2',
+    };
+    const checkedTeam = Array.from(teams).find((team) => team.checked);
+    let selectedTeam;
+    checkedTeam === undefined
+      ? (selectedTeam = false)
+      : (selectedTeam = teamID[checkedTeam.value]);
+    return selectedTeam;
+  }
+
+  function onUpdateSubmit(e) {
+    e.preventDefault();
+    if (userInfoComplete()) {
+      const newUser = {};
+      const userInfoKey = [
+        'email',
+        'password',
+        'koreanName',
+        'phoneNumber',
+        'postCode',
+        'roughAddress',
+        'detailAddress',
+        'cheerTeam',
+      ];
+      userInfoKey.forEach((key) => {
+        const userInfo = $(`#${key}`);
+        if (key === 'phoneNumber') {
+          newUser[key] = getPhoneNumber();
+        } else if (key === 'cheerTeam') {
+          const isSelected = getCheerTeam();
+          if (isSelected) newUser[key] = isSelected;
+        } else newUser[key] = userInfo.value;
+      });
+      const { token } = JSON.parse(localStorage.getItem('user'));
+
+      fetch('/api/v1/users/email', {
+        method: 'PUT',
+        headers: {
+          token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      })
+        .then((response) => response.json())
+        .then(() => {
+          alert('회원정보를 수정하였습니다.');
+          window.location.href = '/user/mypage';
+        })
+        .catch(() => {
+          alert('입력한 정보를 다시 확인해주세요.');
+        });
+    }
+  }
+
+  updateForm.addEventListener('submit', onUpdateSubmit);
+  newUserEmail.addEventListener('blur', isValid);
+  newUserPassword.addEventListener('blur', isValid);
+  newUserPassword.addEventListener('blur', passwordVerify);
+  newUserPasswordVerify.addEventListener('blur', passwordVerify);
+  newUserPhoneNumber.addEventListener('input', autoHyphen);
+  for (let i = 0; i < 3; i++) {
+    findAddress[i].addEventListener('click', searchZipcode);
+  }
+  teams.forEach((node) => {
+    node.addEventListener('click', selectTeam);
+  });
+}
+
+function fillCheerTeam(userData) {
+  const teamName = userData.cheerTeam.teamName;
+  const teams = document.getElementsByName('team');
+  const checkedTeam = Array.from(teams).find((team) => team.value === teamName);
+  checkedTeam.checked = 'checked';
+  checkedTeam.parentNode.classList.add('is-info');
+}
+
+function fillUserInfo(userData) {
+  $('#email').value = userData.email;
+  $('#koreanName').value = userData.koreanName;
+  $('#phoneNumber').value = userData.phoneNumber.substring(4);
+  $('#postCode').value = userData.address.postCode;
+  $('#roughAddress').value = userData.address.roughAddress;
+  $('#detailAddress').value = userData.address.detailAddress;
+  fillCheerTeam(userData);
+}
+
+function getUserInfo() {
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  fetch('/api/v1/users/email', {
+    method: 'GET',
+    headers: {
+      token,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      fillUserInfo(data);
+    });
+}
 
 const checkForm = $('.check-login-form');
 checkForm.addEventListener('submit', (e) => {
   e.preventDefault();
-  const ckeckEmail = $('.check-email').value;
   const checkPassword = $('.check-password').value;
+  const { token } = JSON.parse(localStorage.getItem('user'));
 
-  if (ckeckEmail === 'qwer' && checkPassword === '1111') {
-    checkPasswordForm.remove();
-
-    // getUser();
-
-    $userData.append($form);
-
-    const updateForm = $('.update-form');
-    const newUserEmail = $('#email');
-    const newUserPassword = $('#password');
-    const newUserPasswordVerify = $('#passwordVerify');
-    const newUserPhoneNumber = $('#phoneNumber');
-    const findAddress = document.querySelectorAll('.address');
-    const teams = document.getElementsByName('team');
-
-    function checkValidation(target) {
-      const regex = {
-        email:
-          /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-        password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
-      };
-      if (!target.value.match(regex[target.id])) return false;
-      return true;
-    }
-
-    function isValid(event) {
-      if (!checkValidation(event.target)) {
-        event.target.classList.add('is-danger');
-        const warning = $(`.${event.target.id}-warning`);
-        warning.style.display = '';
-      } else {
-        event.target.classList.remove('is-danger');
-        const warning = $(`.${event.target.id}-warning`);
-        warning.style.display = 'none';
+  fetch('/api/v1/auth/check', {
+    method: 'POST',
+    headers: {
+      token,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ password: checkPassword }),
+  })
+    .then((response) => response.json())
+    .then(() => {
+      showUpdateForm();
+      getUserInfo();
+    })
+    .catch(() => {
+      const isloginWarning = $('.login-warning');
+      if (isloginWarning === null) {
+        const loginFormWrapper = $('.login-form-wrapper');
+        const loginWarning = $createElement('div', 'login-warning');
+        loginWarning.innerText = '비밀번호가 올바르지 않습니다.';
+        loginFormWrapper.appendChild(loginWarning);
       }
-    }
-
-    function passwordVerify() {
-      const warning = $('.password-verify-warning');
-      if (
-        newUserPassword.value !== newUserPasswordVerify.value ||
-        newUserPasswordVerify.value === ''
-      ) {
-        newUserPasswordVerify.classList.add('is-danger');
-        warning.style.display = '';
-        return false;
-      }
-      newUserPasswordVerify.classList.remove('is-danger');
-      warning.style.display = 'none';
-      return true;
-    }
-
-    function userInfoComplete() {
-      if (!checkValidation(newUserEmail)) {
-        alert('이메일 형식이 올바르지 않습니다.');
-        return false;
-      }
-      if (!checkValidation(newUserPassword)) {
-        alert('비밀번호 형식이 올바르지 않습니다.');
-        return false;
-      }
-      if (!passwordVerify()) {
-        alert('비밀번호가 일치하지 않습니다.');
-        return false;
-      }
-      return true;
-    }
-
-    function autoHyphen() {
-      newUserPhoneNumber.value = newUserPhoneNumber.value
-        .replace(/[^0-9]/g, '')
-        .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
-    }
-
-    function getPhoneNumber() {
-      const firstNumber = $('#firstPhoneNumber');
-      return `${firstNumber.options[firstNumber.selectedIndex].text}-${
-        newUserPhoneNumber.value
-      }`;
-    }
-
-    function searchZipcode() {
-      new daum.Postcode({
-        oncomplete(data) {
-          const roadAddr = data.roadAddress;
-          document.getElementById('postCode').value = data.zonecode;
-          document.getElementById('roughAddress').value = roadAddr;
-        },
-      }).open();
-    }
-
-    function selectTeam() {
-      for (let i = 0; i < teams.length; i++) {
-        if (teams[i].checked) {
-          teams[i].parentNode.classList.add('is-info');
-        } else {
-          teams[i].parentNode.classList.remove('is-info');
-        }
-      }
-    }
-
-    function getCheerTeam() {
-      for (let i = 0; i < teams.length; i++) {
-        if (teams[i].checked) return teams[i].value;
-      }
-    }
-
-    function onUpdateSubmit(e) {
-      e.preventDefault();
-      if (userInfoComplete()) {
-        const newUser = {};
-        const userInfoKey = [
-          'email',
-          'password',
-          'koreanName',
-          'phoneNumber',
-          'postCode',
-          'roughAddress',
-          'detailAddress',
-          'cheerTeam',
-        ];
-        for (let i = 0; i < userInfoKey.length; i++) {
-          const userInfo = $(`#${userInfoKey[i]}`);
-          if (userInfoKey[i] === 'phoneNumber') {
-            newUser[userInfoKey[i]] = getPhoneNumber();
-          } else if (userInfoKey[i] === 'cheerTeam') {
-            newUser[userInfoKey[i]] = getCheerTeam();
-          } else {
-            newUser[userInfoKey[i]] = userInfo.value;
-          }
-        }
-
-        fetch('/api/v1/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newUser),
-        }).then((user) => console.log(user));
-      }
-    }
-
-    updateForm.addEventListener('submit', onUpdateSubmit);
-    newUserEmail.addEventListener('blur', isValid);
-    newUserPassword.addEventListener('blur', isValid);
-    newUserPassword.addEventListener('blur', passwordVerify);
-    newUserPasswordVerify.addEventListener('blur', passwordVerify);
-    newUserPhoneNumber.addEventListener('input', autoHyphen);
-    for (let i = 0; i < 3; i++) {
-      findAddress[i].addEventListener('click', searchZipcode);
-    }
-    for (let i = 0; i < teams.length; i++) {
-      teams[i].addEventListener('click', selectTeam);
-    }
-  }
+    });
 });

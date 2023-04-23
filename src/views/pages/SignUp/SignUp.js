@@ -45,6 +45,11 @@ function passwordVerify() {
   return true;
 }
 
+function checkAddress() {
+  if (findAddress[1].value) return true;
+  return false;
+}
+
 function userInfoComplete() {
   if (!checkValidation(newUserEmail)) {
     alert('이메일 형식이 올바르지 않습니다.');
@@ -58,13 +63,17 @@ function userInfoComplete() {
     alert('비밀번호가 일치하지 않습니다.');
     return false;
   }
+  if (!checkAddress()) {
+    alert('주소를 입력해 주세요');
+    return false;
+  }
   return true;
 }
 
 function autoHyphen() {
   newUserPhoneNumber.value = newUserPhoneNumber.value
     .replace(/[^0-9]/g, '')
-    .replace(/^(\d{3,4})(\d{4})$/, `$1-$2`);
+    .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
 }
 
 function getPhoneNumber() {
@@ -85,33 +94,32 @@ function searchZipcode() {
 }
 
 function selectTeam() {
-  for (let i = 0; i < teams.length; i++) {
-    if (teams[i].checked) {
-      teams[i].parentNode.classList.add('is-info');
-    } else {
-      teams[i].parentNode.classList.remove('is-info');
-    }
-  }
+  teams.forEach((team) =>
+    team.checked
+      ? team.parentNode.classList.add('is-info')
+      : team.parentNode.classList.remove('is-info')
+  );
 }
 
 function getCheerTeam() {
   const teamID = {
-    롯데자이언츠: '6440ec92b1154c52aee0c4a7',
-    KIA타이거즈: '6440ee20be78f271d6821815',
-    삼성라이온즈: '6440ee2ebe78f271d6821817',
-    LG트윈스: '6440ee33be78f271d6821819',
-    두산베어스: '6440ee37be78f271d682181b',
-    키움히어로즈: '6440ee3cbe78f271d682181d',
-    SSG랜더스: '6440ee43be78f271d682181f',
-    KT위즈: '6440ee48be78f271d6821821',
-    한화이글스: '6440ee4dbe78f271d6821823',
-    NC다이노스: '6440ee51be78f271d6821825',
+    '롯데 자이언츠': '644221ccead2ae1ca8f0c9d0',
+    'KIA 타이거즈': '644221deead2ae1ca8f0c9d2',
+    '삼성 라이온즈': '644221e4ead2ae1ca8f0c9d4',
+    'LG 트윈스': '644221ecead2ae1ca8f0c9d6',
+    '두산 베어스': '644221f4ead2ae1ca8f0c9d8',
+    '키움 히어로즈': '644221fcead2ae1ca8f0c9da',
+    'SSG 랜더스': '64422203ead2ae1ca8f0c9dc',
+    'KT 위즈': '64422209ead2ae1ca8f0c9de',
+    '한화 이글스': '64422210ead2ae1ca8f0c9e0',
+    'NC 다이노스': '64422215ead2ae1ca8f0c9e2',
   };
-  for (let i = 0; i < teams.length; i++) {
-    if (teams[i].checked) {
-      return teamID[teams[i].value];
-    }
-  }
+  const checkedTeam = Array.from(teams).find((team) => team.checked);
+  let selectedTeam;
+  checkedTeam === undefined
+    ? (selectedTeam = false)
+    : (selectedTeam = teamID[checkedTeam.value]);
+  return selectedTeam;
 }
 
 function onSignUpSubmit(e) {
@@ -128,16 +136,15 @@ function onSignUpSubmit(e) {
       'detailAddress',
       'cheerTeam',
     ];
-    for (let i = 0; i < userInfoKey.length; i++) {
-      const userInfo = $(`#${userInfoKey[i]}`);
-      if (userInfoKey[i] === 'phoneNumber') {
-        newUser[userInfoKey[i]] = getPhoneNumber();
-      } else if (userInfoKey[i] === 'cheerTeam') {
-        newUser[userInfoKey[i]] = getCheerTeam();
-      } else {
-        newUser[userInfoKey[i]] = userInfo.value;
-      }
-    }
+    userInfoKey.forEach((key) => {
+      const userInfo = $(`#${key}`);
+      if (key === 'phoneNumber') {
+        newUser[key] = getPhoneNumber();
+      } else if (key === 'cheerTeam') {
+        const isSelected = getCheerTeam();
+        if (isSelected) newUser[key] = isSelected;
+      } else newUser[key] = userInfo.value;
+    });
 
     fetch('/api/v1/users', {
       method: 'POST',
@@ -145,7 +152,16 @@ function onSignUpSubmit(e) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(newUser),
-    }).then((user) => console.log(user));
+    })
+      .then((response) => response.json())
+      .then(() => {
+        confirm('회원가입에 성공하였습니다.\n로그인 하시겠습니까?')
+          ? (window.location.href = '/login')
+          : (window.location.href = '/');
+      })
+      .catch(() => {
+        alert('이미 존재하는 이메일입니다.');
+      });
   }
 }
 
@@ -158,6 +174,6 @@ newUserPhoneNumber.addEventListener('input', autoHyphen);
 for (let i = 0; i < 3; i++) {
   findAddress[i].addEventListener('click', searchZipcode);
 }
-for (let i = 0; i < teams.length; i++) {
-  teams[i].addEventListener('click', selectTeam);
-}
+teams.forEach((node) => {
+  node.addEventListener('click', selectTeam);
+});

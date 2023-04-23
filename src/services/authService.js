@@ -3,16 +3,18 @@ import jwt from 'jsonwebtoken';
 import { userDAO } from '../data-access';
 
 const authService = {
+  async getUserEmailByToken(token) {
+    const secretKey = process.env.SECRET_KEY || 'secret';
+
+    const decodedToken = jwt.verify(token, secretKey);
+
+    const { email } = decodedToken;
+
+    return email;
+  },
+
   async getUserToken(email, password) {
-    const user = await userDAO.findByEmail(email);
-
-    if (!user) {
-      throw new Error('해당 유저가 존재하지 않습니다.');
-    }
-
-    const correctPassword = user.password;
-
-    const isPasswordCorrect = await bcrypt.compare(password, correctPassword);
+    const isPasswordCorrect = await this.checkPasswordCorrect(email, password);
 
     if (!isPasswordCorrect) {
       throw new Error('비밀번호가 일치하지 않습니다.');
@@ -29,15 +31,15 @@ const authService = {
   async checkPasswordCorrect(email, password) {
     const user = await userDAO.findByEmail(email);
 
+    if (!user) {
+      throw new Error('해당 유저가 존재하지 않습니다.');
+    }
+
     const correctPassword = user.password;
 
     const isPasswordCorrect = await bcrypt.compare(password, correctPassword);
 
-    if (!isPasswordCorrect) {
-      throw new Error('비밀번호가 일치하지 않습니다.');
-    }
-
-    return user;
+    return isPasswordCorrect;
   },
 };
 

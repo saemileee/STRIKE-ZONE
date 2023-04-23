@@ -1,19 +1,21 @@
-import { authService } from "../services";
+import { authService } from '../services';
 
 const authController = {
+  async getEmailByToken(req, res, next) {
+    const token = req.headers['token'];
+
+    const email = await authService.getUserEmailByToken(token);
+
+    res.json({ email });
+  },
+
   async userLogin(req, res, next) {
     try {
       const { email, password } = req.body;
 
       const userToken = await authService.getUserToken(email, password);
 
-      if (!userToken) {
-        throw new Error('토큰 발급에 실패하였습니다.');
-      }
-
-      const result = JSON.stringify({ token: userToken });
-
-      res.json(result);
+      res.json({ token: userToken });
     } catch (err) {
       next(err);
     }
@@ -21,19 +23,29 @@ const authController = {
 
   async passwordCheck(req, res, next) {
     try {
-      const { email, password } = req.body;
+      const { email } = req;
 
-      const user = await authService.checkPasswordCorrect(email, password);
+      const { password } = req.body;
 
-      if (!user) {
+      const isPasswordCorrect = await authService.checkPasswordCorrect(email, password);
+
+      if (!isPasswordCorrect) {
         throw new Error('비밀번호가 일치하지 않습니다.');
       }
 
-      const result = JSON.stringify({ result: 'success' });
-
-      res.json(result);
+      res.json({ result: 'success' });
     } catch (err) {
-      next(err.message);
+      next(err);
+    }
+  },
+
+  async userLogout(req, res, next) {
+    try {
+      if (req.email) {
+        res.json({ result: 'success' });
+      }
+    } catch (err) {
+      next(err);
     }
   },
 };
