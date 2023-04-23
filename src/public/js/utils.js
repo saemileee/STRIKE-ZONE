@@ -50,3 +50,8 @@ export function autoHyphen(target) {
 export function setDiscount(price, rate) {
   return price * ((100 - rate) * 0.01);
 }
+
+export function getCookie(name) {
+  let matches = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  return matches ? decodeURIComponent(matches[2]) : undefined;
+}

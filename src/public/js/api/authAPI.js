@@ -1,6 +1,8 @@
+import { getCookie } from '/js/utils.js';
+
 // fetch의 토큰 옵션을 반환하는 함수, method 파라미터 미입력시 기본 값으로 "GET" 설정
 export function getAuthOption(method = 'GET') {
-  const { token } = JSON.parse(localStorage.getItem('user')) || '';
+  const { token } = JSON.parse(getCookie('userToken')) || '';
   const authOption = {
     method,
     headers: {

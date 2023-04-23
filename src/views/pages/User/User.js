@@ -15,7 +15,7 @@ const render = async () => {
 
   let userInfo;
   try {
-    const userData = await fetch(`/api/v1/users/${loginEmail}`, getAuthOption());
+    const userData = await fetch('/api/v1/users/me', getAuthOption());
     userInfo = await userData.json();
   } catch (err) {
     throw new Error({ messge: err });
@@ -23,13 +23,12 @@ const render = async () => {
 
   const {
     koreanName,
-    // cheerTeam: { title, teamId },
+    cheerTeam: { teamName, teamId },
     email,
     address: { postCode, roughAddress, detailAddress },
     phoneNumber,
     createdAt,
   } = userInfo;
-  const [title, teamId] = ['한화 이글스', 'hanhwa-eagles'];
 
   const currentDate = new Date();
   const convertedDate = new Date(createdAt);
@@ -54,7 +53,7 @@ const render = async () => {
     <div class="user-data-desc">
       <div class="info">
         <p>나의 응원팀</p>
-        <em>${title}</em>
+        <em>${teamName}</em>
       </div>
       <div class="info">
         <p>나의 주소지</p>
