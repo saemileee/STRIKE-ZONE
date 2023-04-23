@@ -26,11 +26,12 @@ viewsRouter.use('/products', serveStatic('Products'));
 viewsRouter.use('/products/:productId', serveStatic('ProductDetail'));
 viewsRouter.use('/cart', serveStatic('Cart'));
 viewsRouter.use('/order', serveStatic('Order'));
+viewsRouter.use('/order/complete', serveStatic('OrderComplete'));
 viewsRouter.use('/user/mypage', serveStatic('User'));
 viewsRouter.use('/user/update', serveStatic('UserUpdate'));
 viewsRouter.use('/user/delete', serveStatic('UserDelete'));
-viewsRouter.use('/user/orders', serveStatic('OrderList'));
-viewsRouter.use('/user/orders/:orderId', serveStatic('OrderComplete'));
+viewsRouter.use('/user/orders', serveStatic('Orders'));
+viewsRouter.use('/user/orders/:orderId', serveStatic('OrderDetail'));
 viewsRouter.use('/NotFound', serveStatic('NotFound'));
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
