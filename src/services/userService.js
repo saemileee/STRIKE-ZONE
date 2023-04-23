@@ -14,9 +14,8 @@ const userService = {
     if (!user) {
       throw new Error('해당 유저가 존재하지 않습니다.');
     }
-    const populatedUser = user.populate('cheerTeam');
 
-    return populatedUser;
+    return user;
   },
 
   async addUser(userInfo) {

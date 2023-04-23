@@ -2,13 +2,13 @@ import { User } from './model';
 
 const userDAO = {
   async findByEmail(email) {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate('cheerTeam');
 
     return user;
   },
 
   async findById(userId) {
-    const user = await User.findOne({ _id: userId });
+    const user = await User.findOne({ _id: userId }).populate('cheerTeam');
 
     return user;
   },
@@ -20,7 +20,7 @@ const userDAO = {
   },
 
   async findAll() {
-    const users = await User.find({});
+    const users = await User.find({}).populate('cheerTeam');
 
     return users;
   },
