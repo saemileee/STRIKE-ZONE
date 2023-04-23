@@ -1,6 +1,6 @@
 import { getAllProduct } from '/js/api/cartAPI.js';
-import { fetchData } from './api/api.js';
-import { isLogin } from './api/authAPI.js';
+import { fetchData, postData } from './api/api.js';
+import { isLogin, getAuthOption } from './api/authAPI.js';
 
 const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '유니폼', url: '#' },
@@ -62,8 +62,10 @@ myPageElement.addEventListener('click', () => {
 const logoutElement = document.createElement('button');
 logoutElement.className = 'logout';
 logoutElement.innerHTML = '로그아웃';
+
 logoutElement.addEventListener('click', () => {
-  window.location.href = '/logout';
+  deleteUserToken();
+  location.reload();
 });
 
 const rightSideElementsContainer = document.createElement('div');
@@ -170,3 +172,9 @@ productsContainerElement.addEventListener('mouseover', () => {
   productCategoryLiElement.style.color = 'rgb(179, 255, 14)';
 });
 productsContainerElement.addEventListener('mouseleave', hideProductsContainer);
+
+//로그아웃 시 userToken 삭제
+function deleteUserToken() {
+  document.cookie =
+    'userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
