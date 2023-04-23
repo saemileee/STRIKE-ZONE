@@ -103,16 +103,16 @@ function selectTeam() {
 
 function getCheerTeam() {
   const teamID = {
-    롯데자이언츠: '644221ccead2ae1ca8f0c9d0',
-    KIA타이거즈: '644221deead2ae1ca8f0c9d2',
-    삼성라이온즈: '644221e4ead2ae1ca8f0c9d4',
-    LG트윈스: '644221ecead2ae1ca8f0c9d6',
-    두산베어스: '644221f4ead2ae1ca8f0c9d8',
-    키움히어로즈: '644221fcead2ae1ca8f0c9da',
-    SSG랜더스: '64422203ead2ae1ca8f0c9dc',
-    KT위즈: '64422209ead2ae1ca8f0c9de',
-    한화이글스: '64422210ead2ae1ca8f0c9e0',
-    NC다이노스: '64422215ead2ae1ca8f0c9e2',
+    '롯데 자이언츠': '644221ccead2ae1ca8f0c9d0',
+    'KIA 타이거즈': '644221deead2ae1ca8f0c9d2',
+    '삼성 라이온즈': '644221e4ead2ae1ca8f0c9d4',
+    'LG 트윈스': '644221ecead2ae1ca8f0c9d6',
+    '두산 베어스': '644221f4ead2ae1ca8f0c9d8',
+    '키움 히어로즈': '644221fcead2ae1ca8f0c9da',
+    'SSG 랜더스': '64422203ead2ae1ca8f0c9dc',
+    'KT 위즈': '64422209ead2ae1ca8f0c9de',
+    '한화 이글스': '64422210ead2ae1ca8f0c9e0',
+    'NC 다이노스': '64422215ead2ae1ca8f0c9e2',
   };
   const checkedTeam = Array.from(teams).find((team) => team.checked);
   let selectedTeam;
