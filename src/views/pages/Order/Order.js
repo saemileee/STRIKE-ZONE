@@ -92,20 +92,22 @@ function renderOrderList(
     <span class="order-product-team">${team}</span>
     <span class="order-product-title">${name}</span
     ></div>
-    <div><span class="order-product-rate">${rate}%</span
+    ${
+      rate !== 0
+        ? `<div><span class="order-product-rate">${rate}%</span
     ><span class="order-product-price">${price.toLocaleString()}원</span
-    ></div><div><span class="order-product-discounted-price">${discountedPrice.toLocaleString()}원 | </span
+    ></div>`
+        : ''
+    }<div><span class="order-product-discounted-price">${discountedPrice.toLocaleString()}원 | </span
     ><span class="order-product-count">${quantity}개</span></div>
     <span class="order-product-total-amount">${totalProductAmount.toLocaleString()}원</span
     >
   </div>`;
 
-  if (rate === 0) {
-    document.querySelector('');
-  }
   const orderListContainer = document.querySelector('.order-list-container');
   orderListContainer.append(orderProduct);
 }
+
 function displayOrderList(products) {
   products.forEach(product => {
     const {
