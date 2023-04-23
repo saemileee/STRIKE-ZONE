@@ -1,8 +1,6 @@
 import { getAllProduct } from '/js/api/cartAPI.js';
-
-const DUMMY_USER_DATA = {
-  // userId: 'elice@elice.com',d
-};
+import { fetchData } from './api/api.js';
+import { isLogin } from './api/authAPI.js';
 
 const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '유니폼', url: '#' },
@@ -57,17 +55,24 @@ signUpElement.addEventListener('click', () => {
 const myPageElement = document.createElement('button');
 myPageElement.className = 'my-page';
 myPageElement.innerHTML = '마이페이지';
+myPageElement.addEventListener('click', () => {
+  window.location.href = '/user/mypage';
+});
 
 const logoutElement = document.createElement('button');
 logoutElement.className = 'logout';
 logoutElement.innerHTML = '로그아웃';
+logoutElement.addEventListener('click', () => {
+  window.location.href = '/logout';
+});
 
 const rightSideElementsContainer = document.createElement('div');
 rightSideElementsContainer.className = 'right-side-container';
 rightSideElementsContainer.prepend(cartElement);
-if (!DUMMY_USER_DATA.userId) {
+
+if (!(await isLogin())) {
   rightSideElementsContainer.append(loginElement, signUpElement);
-} else if (DUMMY_USER_DATA.userId) {
+} else if (await isLogin()) {
   rightSideElementsContainer.append(myPageElement, logoutElement);
 }
 
@@ -108,18 +113,8 @@ const teamsContainerElement = document.createElement('div');
 teamsContainerElement.classList.add('teams-container');
 const teamsUlElement = document.createElement('ul');
 
-async function fetchData(url) {
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
 async function renderTeamCategory() {
-  const data = await fetchData('/api/v1/teams');
+  const data = await fetchData('/teams');
   data.forEach(team => {
     const teamElement = createTeamElement(team);
     teamsUlElement.append(teamElement);
