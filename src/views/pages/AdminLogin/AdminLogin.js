@@ -1,4 +1,4 @@
-import { $, $createElement } from '/js/utils.js';
+import { $, $createElement, deleteCookie } from '/js/utils.js';
 import { isAdmin } from '/js/api/authAPI.js';
 
 const loginForm = $('.login-form');
@@ -27,8 +27,8 @@ const onLoginSubmit = (e) => {
       let tokenIsAdmin;
       try {
         tokenIsAdmin = await isAdmin();
-        console.log(tokenIsAdmin);
         if (!tokenIsAdmin) {
+          deleteCookie('userToken');
           alert('관리자 전용 페이지입니다!');
           location.href = '/login';
         } else {
