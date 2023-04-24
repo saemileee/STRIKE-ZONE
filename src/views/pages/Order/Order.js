@@ -5,6 +5,9 @@ import { isLogin, getUserInfo } from '/js/api/authAPI.js';
 
 const params = new URLSearchParams(window.location.search);
 
+//전체선택 버튼 기능
+selectAllCheckbox('term-checkbox', 'select-all');
+
 const {
   email: userEmail,
   koreanName: ordererName,
@@ -245,9 +248,6 @@ $fillDeliveryInformationButton.addEventListener('click', event => {
   $receiverAddressBase.value = userAddressBase;
   $receiverAddressDetail.value = userAddressDetail;
 });
-
-//전체선택 버튼 기능
-selectAllCheckbox('term-checkbox', 'select-all');
 
 // 주문자 정보 가져오기
 function getOrdererData() {
