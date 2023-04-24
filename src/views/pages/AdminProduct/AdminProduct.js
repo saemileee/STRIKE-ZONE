@@ -13,13 +13,11 @@ const updateTeamOptions = async () => {
   const options = teams
     .map(team => `<option value=${team.teamId}>${team.teamName}</option>`)
     .join('');
-  teamSelectBox.innerHTML = `<option selected>카테고리 전체</option>${options}`;
+  teamSelectBox.innerHTML = `<option selected>팀 전체</option>${options}`;
 };
-
 await updateTeamOptions();
 
 const categorySelectBox = document.querySelector('.select.category select');
-
 const updateCategoryOptions = async teamId => {
   const categories = await fetchData(`/teams/${teamId}/categories`);
   const options = categories
