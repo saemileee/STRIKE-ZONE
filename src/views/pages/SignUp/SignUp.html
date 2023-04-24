@@ -114,17 +114,19 @@
                 </select>
               </span>
             </p>
-            <p class="control is-expanded">
-              <input
-                id="phoneNumber"
-                class="input user-phone-number-back"
-                type="tel"
-                placeholder="나머지 번호를 입력해주세요."
-                maxlength="9"
-                required
-                autocomplete="off"
-              />
-            </p>
+            <div class="field phoneNumber">
+              <p class="control is-expanded">
+                <input
+                  id="phoneNumber"
+                  class="input user-phone-number-back"
+                  type="tel"
+                  placeholder="나머지 번호를 입력해주세요."
+                  maxlength="9"
+                  required
+                  autocomplete="off"
+                />
+              </p>
+            </div>
           </div>
         </div>
         <div class="field is-horizontal">
@@ -135,7 +137,7 @@
             <p class="control">
               <span id="findZipcode" class="button address">우편번호 찾기</span>
             </p>
-            <div class="field">
+            <div class="field zipcode">
               <p class="control is-expanded">
                 <input
                   id="postCode"
