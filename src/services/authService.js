@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { userDAO } from '../data-access';
+import { sendEmail } from './emailService';
 
 const authService = {
   async getUserEmailByToken(token) {
@@ -51,6 +52,18 @@ const authService = {
 
     if (isEmailValid !== 'valid') {
       return isEmailValid;
+    }
+
+    return true;
+  },
+
+  async sendValidEmail(email) {
+    const validCode = await this.checkEmailValid(email);
+
+    try {
+      await sendEmail(email, validCode);
+    } catch (err) {
+      return err;
     }
 
     return true;

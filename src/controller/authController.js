@@ -29,6 +29,18 @@ const authController = {
     }
   },
 
+  async sendValidationEmail(req, res, next) {
+    const { email } = req;
+
+    try {
+      await authService.sendValidEmail(email);
+
+      res.json({ result: 'success' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   async emailValidation(req, res, next) {
     try {
       const { email } = req;
