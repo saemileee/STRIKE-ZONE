@@ -52,6 +52,7 @@ const Product = (
       alert('품절된 상품입니다.');
       return;
     }
+    alert('장바구니에 상품이 추가되었습니다!');
     addItemCart(productId);
   });
 
