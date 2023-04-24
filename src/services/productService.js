@@ -1,4 +1,4 @@
-import { productDAO } from '../data-access';
+import { productDAO, categoryDAO } from '../data-access';
 
 import { NEW_PRODUCT_STANDARD_DAY } from '../constants';
 import { getMsToCheckNewProduct } from '../utils';
@@ -52,17 +52,52 @@ const productService = {
 
   // 상품 추가하기 (관리자)
   async postProduct(categoryId, productInfo) {
-    await productDAO.createProduct(categoryId, productInfo);
+    const category = await categoryDAO.getCategoryByCategoryId(categoryId);
+
+    const {
+      teamId, teamName, teamDescription, categoryName,
+    } = category;
+
+    // 할인율을 적용한 상품 가격 계산하기
+    const discountedPrice = this.calculateDiscountedPrice(productInfo);
+
+    // productId 구하기
+    const productId = await productDAO.createProductId();
+
+    const productInfoToBeCreated = {
+      ...productInfo,
+      productId,
+      teamId,
+      teamName,
+      teamDescription,
+      categoryId,
+      categoryName,
+      discountedPrice,
+    };
+
+    await productDAO.createProduct(productInfoToBeCreated);
   },
 
   // 상품 수정하기 (관리자)
   async updateProductByProductId(productId, updateInfo) {
-    await productDAO.updateProductByProductId(productId, updateInfo);
+    const discountedPrice = this.calculateDiscountedPrice(updateInfo);
+
+    const prodctInfoToBeUpdate = { ...updateInfo, discountedPrice };
+
+    await productDAO.updateProductByProductId(productId, prodctInfoToBeUpdate);
   },
 
   // 상품 삭제하기 (관리자)
   async deleteProductByProductId(productId) {
     await productDAO.deleteProductByProductId(productId);
+  },
+
+  // 할인된 가격을 구하는 함수
+  calculateDiscountedPrice(productInfo) {
+    const { price, rate } = productInfo;
+    const discountedPrice = rate === 0 ? price : price - (price * (rate / 100));
+
+    return discountedPrice;
   },
 
   // 조회한 상품 데이터에 신상품 여부(isNewProduct) 프로퍼티를 추가하는 함수
