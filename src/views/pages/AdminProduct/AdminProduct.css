@@ -40,3 +40,8 @@
 .diff-date strong {
   font-weight: 700;
 }
+
+tbody tr img {
+  width: 80px;
+  height: 80px;
+}

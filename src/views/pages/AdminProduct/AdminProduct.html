@@ -19,6 +19,38 @@
   </head>
   <body>
     <div class="content-container">
+      <section class="admin-data">
+        <h1 class="title is-2">상품 리스트</h1>
+        <div class="select team">
+          <select>
+            <option selected>팀 전체</option>
+          </select>
+        </div>
+        <div class="select category">
+          <select>
+            <option selected>카테고리 전체</option>
+          </select>
+        </div>
+        <span class="total-products"></span>
+        <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th><abbr title="createdAt">생성일</abbr></th>
+              <th><abbr title="updatedAt">수정일</abbr></th>
+              <th><abbr title="productId">상품ID</abbr></th>
+              <th><abbr title="team">소속팀</abbr></th>
+              <th><abbr title="category">카테고리</abbr></th>
+              <th><abbr title="name">상품명</abbr></th>
+              <th><abbr title="image">상품 이미지</abbr></th>
+              <th><abbr title="original-price">원가</abbr></th>
+              <th><abbr title="rate">할인률</abbr></th>
+              <th><abbr title="discounted-price">판매가</abbr></th>
+              <th><abbr title="inventory">남은 수량</abbr></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
     </div>
     <script src="/js/adminLayout.js" type="module"></script>
     <script src="./AdminProduct.js" type="module"></script>
