@@ -1,12 +1,4 @@
 import { $, $createElement } from '/js/utils.js';
-import { isAdmin } from '/js/api/authAPI.js';
-
-async function isAdmin() {
-  const isAdmin = await isAdmin();
-  console.log(isAdmin);
-}
-
-isAdmin();
 
 const AdminData = $createElement('section', 'admin-data');
 
