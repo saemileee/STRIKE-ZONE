@@ -1,38 +1,39 @@
 import { fetchData } from '/js/api/api.js';
 import { isLogin, getUserInfo } from '/js/api/authAPI.js';
-import renderProducts from '/js/components/Products.js';
+import Product from '/components/Product/Product.js';
 
 const mainBannerElement = document.querySelector('.main-banner');
 const bannerContentElement = document.querySelector('.banner-content');
+const productsContainer = document.querySelector('.product-contents-container');
 
 const DUMMY_DATA = [
   {
-    mainText: `NO LIMITS<br/>AMAZING LANDERS`,
+    mainText: 'NO LIMITS<br/>AMAZING LANDERS',
     subText: 'SSG 랜더스',
     teamPageURL: '/products/?team=ssg-landers&category=all',
     mainImage: '/assets/img/main/banner/ssg-landers.png',
-    backgroundText: `SSG LANDERS`,
+    backgroundText: 'SSG LANDERS',
   },
   {
-    mainText: `We go up,<br/>Win the championship`,
+    mainText: 'We go up,<br/>Win the championship',
     subText: '키움 히어로즈',
     teamPageURL: '/products/?team=kiwoom-heroes&category=all',
     mainImage: '/assets/img/main/banner/kiwoom.png',
-    backgroundText: `KIWOOM HEROES`,
+    backgroundText: 'KIWOOM HEROES',
   },
   {
-    mainText: `압도하라 Always<br/>KIA TIGERS`,
+    mainText: '압도하라 Always<br/>KIA TIGERS',
     subText: '기아 타이거즈',
     teamPageURL: '/products/?team=kia-tigers&category=all',
     mainImage: '/assets/img/main/banner/kia.png',
-    backgroundText: `KIA TIGERS`,
+    backgroundText: 'KIA TIGERS',
   },
   {
-    mainText: `Win or Wow`,
+    mainText: 'Win or Wow',
     subText: '삼성 라이온즈',
     teamPageURL: '/products/?team=samsung-lions&category=all',
     mainImage: '/assets/img/main/banner/samsung.png',
-    backgroundText: `SAMSUNG LIONS`,
+    backgroundText: 'SAMSUNG LIONS',
   },
 ];
 
@@ -40,17 +41,14 @@ const arrowButtonsElement = document.createElement('div');
 arrowButtonsElement.className = 'arrow-buttons';
 const prevArrowButtonElement = document.createElement('button');
 prevArrowButtonElement.className = 'prev-button';
-prevArrowButtonElement.innerHTML = `<i class="fa fa-chevron-left" style="font-size: 36px"></i>`;
+prevArrowButtonElement.innerHTML = '<i class="fa fa-chevron-left" style="font-size: 36px"></i>';
 const nextArrowButtonElement = document.createElement('button');
-nextArrowButtonElement.innerHTML = `<i class="fa fa-chevron-right" style="font-size: 36px"></i>`;
+nextArrowButtonElement.innerHTML = '<i class="fa fa-chevron-right" style="font-size: 36px"></i>';
 nextArrowButtonElement.className = 'next-button';
 
 function renderSlideBanner() {
   const SLIDE_AUTO_PLAY_TIME = 5000;
-  let slideAutoPlayTimer = setInterval(
-    () => nextArrowButtonClickHandler(),
-    SLIDE_AUTO_PLAY_TIME
-  );
+  let slideAutoPlayTimer = setInterval(() => nextArrowButtonClickHandler(), SLIDE_AUTO_PLAY_TIME);
   let currentBannerIndex = 0;
 
   function renderBannerContents() {
@@ -88,9 +86,9 @@ function renderSlideBanner() {
         .join('');
     }
 
-    backgroundTextElement.innerHTML = `${backgroundTextElements(
-      0
-    )}<br /> ${backgroundTextElements(1)}`;
+    backgroundTextElement.innerHTML = `${backgroundTextElements(0)}<br /> ${backgroundTextElements(
+      1
+    )}`;
 
     bannerContentElement.innerHTML = '';
     bannerContentElement.append(
@@ -143,20 +141,17 @@ function renderSlideBanner() {
 }
 renderSlideBanner();
 
-//상품 콘텐츠
+// 상품 콘텐츠
 const products = await fetchData('/products');
 const userData = await getUserInfo();
 const loginStatus = await isLogin();
 
-//관련 상품 렌더링
+// 관련 상품 렌더링
 function renderRelatedProducts() {
   const { koreanName, cheerTeam } = userData;
-  const productsContainer = document.querySelector(
-    '.product-contents-container'
-  );
 
   const filteringRelatedProducts = products.filter(
-    product => product.teamId === cheerTeam.teamId
+    (product) => product.teamId === cheerTeam.teamId
   );
   filteringRelatedProducts.length > 3 ? paintDocuments() : null;
 
@@ -167,49 +162,53 @@ function renderRelatedProducts() {
   <div class="products"></div>`;
     productsContainer.prepend(productsContents);
 
-    function renderProductsBySort() {
+    function ProductBySort() {
       const filteringNewProductsSorting = filteringRelatedProducts.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
 
       for (let i = 0; i < 4; i++) {
-        renderProducts(
-          document.querySelector('.related .products'),
-          filteringNewProductsSorting[i]
-        );
+        Product(document.querySelector('.related .products'), filteringNewProductsSorting[i]);
       }
     }
-    renderProductsBySort();
+    ProductBySort();
   }
 }
 
-//로그인 여부 확인하여 관련 상품 띄우기
+// 로그인 여부 확인하여 관련 상품 띄우기
 loginStatus ? renderRelatedProducts() : null;
 
-//신상품 렌더링
+productsContainer.insertAdjacentHTML(
+  'beforeend',
+  `
+  <section class="product-list-container new">
+    <h3 class="title">따끈따끈한 신상 굿즈</h3>
+    <div class="products"></div>
+  </section>
+  <section class="product-list-container discounted">
+    <h3 class="title">놓치기 아쉬운 할인 굿즈</h3>
+    <div class="products"></div>
+  </section>
+
+`
+);
+
+// 신상품 렌더링
 function renderNewProducts() {
-  const newProductsSorting = products.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-  );
+  const newProductsSorting = products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   for (let i = 0; i < 4; i++) {
-    renderProducts(
-      document.querySelector('.new .products'),
-      newProductsSorting[i]
-    );
+    Product(document.querySelector('.new .products'), newProductsSorting[i]);
   }
 }
 renderNewProducts();
 
-//할인률 순 렌더링
+// 할인률 순 렌더링
 function renderDiscountProducts() {
   const newProductsSorting = products.sort((a, b) => b.rate - a.rate);
 
   for (let i = 0; i < 4; i++) {
-    renderProducts(
-      document.querySelector('.discounted .products'),
-      newProductsSorting[i]
-    );
+    Product(document.querySelector('.discounted .products'), newProductsSorting[i]);
   }
 }
 renderDiscountProducts();
