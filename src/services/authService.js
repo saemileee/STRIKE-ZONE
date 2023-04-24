@@ -43,6 +43,24 @@ const authService = {
 
     return { isPasswordCorrect, isAdmin };
   },
+  
+  async checkEmailValid(email) {
+    const user = await userDAO.findByEmail(email);
+
+    const isEmailValid = user.isValid;
+
+    if (isEmailValid !== 'valid') {
+      return isEmailValid;
+    }
+
+    return true;
+  },
+
+  async makeEmailValid(email) {
+    const { isValid } = await userDAO.update(email, { isValid: 'valid' });
+
+    return isValid;
+  },
 };
 
 export { authService };

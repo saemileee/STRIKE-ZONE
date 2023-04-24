@@ -42,6 +42,11 @@ const UserSchema = new Schema(
       required: true,
       default: false,
     },
+    isValid: {
+      type: String,
+      required: true,
+      default: 'invalid',
+    },
   },
   {
     collection: 'users',
