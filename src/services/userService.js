@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import { userDAO } from '../data-access';
+import { sendEmail } from './emailService';
 
 const userService = {
   async getAllUsers() {
@@ -29,6 +30,8 @@ const userService = {
       const isValid = Math.floor(Math.random() * 1000).toString().padStart(4, '0');
 
       let newUser = { email, password: hashedPassword, isValid, ...restUserInfo };
+
+      await sendEmail(email, isValid);
 
       newUser = await userDAO.create(newUser);
 
