@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="./ProductDetail.css" />
+    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/footer.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+    <title>홈런볼 마켓</title>
+  </head>
+  <body>
+    <div class="product-detail-wrapper">
+      <div class="product-basic-information-container">
+        <section class="product-image-view-contianer">
+          <section class="product-image-view">
+            <div class="product-image-slider"></div>
+            <div class="product-image-big"></div>
+          </section>
+        </section>
+        <section class="product-basic-description-container">
+          <p class="product-team"></p>
+          <p class="product-title"></p>
+          <hr />
+          <p class="product-short-description"></p>
+          <hr />
+          <div class="product-price-inforamtion-container">
+            <span class="product-discount-rate"></span>
+            <span class="product-price"></span>
+            <p class="product-selling-price"></p>
+          </div>
+          <hr />
+          <div class="product-count-container">
+            <label for="product-count">수량</label>
+            <input
+              id="product-count"
+              class="product-count input is-info"
+              type="number"
+              min="1"
+              value="1"
+            />
+          </div>
+          <hr />
+          <div class="total-amount-container">
+            <label for="total-amount">주문금액</label>
+            <span class="total-amount"></span>
+          </div>
+          <div class="buttons-container">
+            <button class="cart-button button">장바구니</button>
+            <button class="order-button button is-info">바로구매</button>
+          </div>
+        </section>
+      </div>
+      <div class="detail-description-container">
+        <div class="tabs is-large">
+          <ul>
+            <li class="is-active"><a>상품정보</a></li>
+          </ul>
+        </div>
+        <section class="detail-description-container">
+          <article class="product-detail-description"></article>
+        </section>
+      </div>
+    </div>
+    <script src="/js/header.js" type="module"></script>
+    <script src="./ProductDetail.js" type="module"></script>
+    <script src="/js/footer.js" type="module"></script>
+  </body>
+</html>

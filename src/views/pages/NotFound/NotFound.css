@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(241, 241, 241);
+}
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 60vw;
+  height: 70vh;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  overflow: hidden;
+}
+
+.not-found h1 {
+  width: 100%;
+  font-size: 160px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.not-found img {
+  width: 120px;
+  margin-left: 12px;
+}
+
+.not-found h2 {
+  font-size: 34px;
+  font-weight: 500;
+}
+
+.not-found p {
+  display: none;
+  font-size: 20px;
+  text-align: center;
+}
+
+.not-found .previous {
+  position: absolute;
+  bottom: 100px;
+  width: 120px;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 31px;
+  transition: background-color 1s;
+  background-color: #fff;
+}
+
+.not-found .previous:hover {
+  cursor: pointer;
+  background-color: rgb(241, 241, 241);
+}

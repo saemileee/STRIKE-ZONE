@@ -1,0 +1,64 @@
+body {
+  background-color: #F1F1F1;
+}
+
+.content-container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 40px;
+  width: 1153px;
+  margin: 50px auto 100px auto;
+}
+
+.user-nav {
+  height: fit-content;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+}
+
+.user-nav .user-nav-list {
+  width: 100%;  
+}
+
+.user-nav .user-nav-list .nav-list-item {
+  width: 100%;
+  height: 50px;
+  font-size: 24px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.user-nav .user-nav-list .nav-list-item:hover {
+  background-color: #F1F1F1;
+}
+
+.user-nav .user-nav-list .nav-list-item.selected {
+  background-color: #F1F1F1;
+}
+
+.user-nav .user-nav-list .nav-list-item a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-weight: 600;
+}
+
+.user-nav .user-nav-list .nav-list-item:last-child {
+  margin-bottom: 0;
+}
+
+.user-data {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  padding: 30px
+}

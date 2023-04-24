@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="./cart.css">
+  <link rel="stylesheet" href="/css/reset.css">
+  <link rel="stylesheet" href="/css/header.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+  <title>Document</title>
+</head>
+<body>
+  <section class="order-wrapper">
+    <h3 class="title is-3">장바구니</h3>
+    <header class="cart-header">
+      <div class="cart-select-all">
+        <label class="checkbox">
+          <input type="checkbox" class="cart-select-all-checkbox">
+          모두 선택
+        </label>
+      </div>
+      <span class="delete-all">
+        모두 지우기
+      </span>
+    </header>
+    <div class="cart-container">
+      <ul class="cart-list">
+      </ul>
+    </div>
+    <div class="price"></div>
+  </section>
+  <script src="https://kit.fontawesome.com/a14c558b32.js" crossorigin="anonymous"></script>
+  <!-- <script src="./app.js" type="module"></script> -->
+  <script src="./cart.js" type="module"></script>
+  <script src="/js/header.js" type="module"></script>
+  <script src="/js/footer.js" type="module"></script>
+</body>
+</html>

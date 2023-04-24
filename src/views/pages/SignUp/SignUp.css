@@ -1,0 +1,37 @@
+body {
+  background-color: #f1f1f1;
+}
+.user-info {
+  max-width: 1136px;
+  margin: 100px auto;
+  padding: 30px 30px 70px 30px;
+  width: 700px;
+  height: auto;
+  border-radius: 10px;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
+}
+label {
+  text-align: left;
+}
+#cheerTeam {
+  display: flex;
+  flex-flow: wrap;
+}
+#cheerTeam > label {
+  width: 25%;
+}
+.teams {
+  border: solid 1px #b4b4b4;
+}
+.teams > input[type='radio'] {
+  display: none;
+}
+.email-warning,
+.password-warning,
+.password-verify-warning {
+  margin-top: 10px;
+}

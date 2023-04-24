@@ -1,0 +1,33 @@
+.check-login-form {
+  margin: 60px 40px 40px 100px;
+}
+.login-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.login-input {
+  width: 50%;
+}
+.login-input > input {
+  margin: 5px 0 5px 0;
+}
+#login {
+  margin-left: 20px;
+}
+.login-warning {
+  margin: 10px;
+  color: red;
+  font-weight: bold;
+}
+#userDelete {
+  width: 150px;
+  height: 90px;
+}
+.delete-confirm {
+  margin: 50px 40px 40px 70px;
+}
+.delete-confirm-wrapper > p {
+  margin-bottom: 20px;
+  font-weight: bold;
+}
