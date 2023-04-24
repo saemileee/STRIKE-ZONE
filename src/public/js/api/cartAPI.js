@@ -1,5 +1,9 @@
 import { setDiscount } from '../utils.js';
 
+function changeCartAmount() {
+  document.querySelector('.cart-amount').innerHTML = getAllProduct();
+}
+
 function getCartFromLocal() {
   const existsCart = localStorage.getItem('cart');
   const cartList = JSON.parse(existsCart) || {};
@@ -8,10 +12,11 @@ function getCartFromLocal() {
 
 function setCartToLocal(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
+  changeCartAmount();
 }
 
 async function getItemById(id) {
-  return await fetch(`/api/v1/products/${id}`).then(res => res.json());
+  return await fetch(`/api/v1/products/${id}`).then((res) => res.json());
 }
 
 export function getCartList() {
@@ -75,14 +80,13 @@ export async function addItemCart(id, requestAmount = 1) {
       rate,
       img: img[0],
       price,
-      discountedPrice: discountedPrice,
+      discountedPrice,
       amount: Number(requestAmount),
       total: discountedPrice,
       selected: true,
     };
   }
   setCartToLocal(cartList);
-  document.querySelector('.cart-amount').innerHTML = getAllProduct();
 }
 
 export async function decreaseItemOfCart(id) {
@@ -122,7 +126,7 @@ export function toggleAllItemOfCart(boolean) {
   const cartList = getCartFromLocal();
   const cartListKeys = Object.keys(cartList);
 
-  cartListKeys.forEach(key => {
+  cartListKeys.forEach((key) => {
     cartList[key].selected = !boolean;
   });
   setCartToLocal(cartList);
@@ -132,5 +136,5 @@ export function getIsAllSelected() {
   const cartList = getCartFromLocal();
   const cartListKeys = Object.keys(cartList);
 
-  return cartListKeys.every(key => cartList[key].selected);
+  return cartListKeys.every((key) => cartList[key].selected);
 }
