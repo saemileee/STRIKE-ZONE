@@ -83,7 +83,7 @@ function renderBuyButtons(productId, inventory) {
   const $cartButton = document.querySelector('.cart-button');
   $cartButton.addEventListener('click', () => {
     const quantity = $productCountInput.value;
-    if (quantity < inventory) {
+    if (quantity < inventory && quantity > 0) {
       addItemCart(productId, quantity);
       if (
         confirm(
@@ -93,17 +93,21 @@ function renderBuyButtons(productId, inventory) {
         window.location.href = '/cart';
       }
     } else {
-      alert('주문 가능한 최소 수량을 초과하였습니다.');
+      quantity > inventory && quantity > 0
+        ? alert('주문 가능한 최소 수량을 초과하였습니다.')
+        : alert('최소 1개 이상의 수량을 선택해 주세요.');
     }
   });
 
   const orderButton = document.querySelector('.order-button');
   orderButton.addEventListener('click', () => {
     const quantity = $productCountInput.value;
-    if (quantity < inventory) {
+    if (quantity < inventory && quantity > 0) {
       window.location.href = `/order?cart=false&id=${productId}&quantity=${quantity}`;
     } else {
-      alert('주문 가능한 최소 수량을 초과하였습니다.');
+      quantity > inventory && quantity > 0
+        ? alert('주문 가능한 최소 수량을 초과하였습니다.')
+        : alert('최소 1개 이상의 수량을 선택해 주세요.');
     }
   });
 }
