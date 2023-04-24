@@ -48,10 +48,12 @@ nextArrowButtonElement.className = 'next-button';
 
 function renderSlideBanner() {
   const SLIDE_AUTO_PLAY_TIME = 5000;
-  let slideAutoPlayTimer = setInterval(() => nextArrowButtonClickHandler(), SLIDE_AUTO_PLAY_TIME);
   let currentBannerIndex = 0;
+  let slideAutoPlayTimer;
 
   function renderBannerContents() {
+    clearInterval(slideAutoPlayTimer);
+    slideAutoPlayTimer = setInterval(() => nextArrowButtonClickHandler(), SLIDE_AUTO_PLAY_TIME);
     const { mainText, subText, teamPageURL, mainImage, backgroundText } =
       DUMMY_DATA[currentBannerIndex];
 
@@ -122,17 +124,17 @@ function renderSlideBanner() {
   });
 
   mainBannerElement.addEventListener('mouseleave', () => {
+    clearInterval(slideAutoPlayTimer);
     slideAutoPlayTimer = setInterval(() => {
       nextArrowButtonClickHandler();
     }, SLIDE_AUTO_PLAY_TIME);
   });
 
   prevArrowButtonElement.addEventListener('click', () => {
-    clearInterval(slideAutoPlayTimer);
     prevArrowButtonClickHandler();
   });
+
   nextArrowButtonElement.addEventListener('click', () => {
-    clearInterval(slideAutoPlayTimer);
     nextArrowButtonClickHandler();
   });
 
