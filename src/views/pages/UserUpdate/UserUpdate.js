@@ -484,7 +484,7 @@ const render = async () => {
     const checkPassword = $('.check-password').value;
     const { token } = JSON.parse(getCookie('userToken'));
 
-    fetch('/api/v1/auth/check', {
+    fetch('/api/v1/auth/password', {
       method: 'POST',
       headers: {
         token,
