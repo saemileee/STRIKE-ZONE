@@ -25,11 +25,23 @@ function emailAuthPopUp() {
   // </div>
   // `;
   // loginFormWrapper.append(emailAuthForm);
-  const url = '/login/auth';
-  const name = 'Email Authentication';
-  const option =
-    'width = 600, height = 300, top = 100, left = 200, location = no';
-  window.open(url, name, option);
+
+  const userEmail = document.querySelector('#loginId').value;
+  fetch('/api/v1/auth/email', {
+    method: 'GET',
+    headers: { email: userEmail },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const url = '/login/auth';
+      const name = 'Email Authentication';
+      const option =
+        'width = 600, height = 300, top = 100, left = 200, location = no';
+      window.open(url, name, option);
+    })
+    .catch(() => {
+      alert('문제가 발생하였습니다.\n다시 시도해 주세요.');
+    });
 }
 
 const onLoginSubmit = (e) => {
