@@ -13,9 +13,7 @@ const userController = {
 
   async getUser(req, res, next) {
     try {
-      const { isAdmin } = req;
-
-      const { email } = isAdmin ? req.params : req;
+      const { email } = req;
 
       const user = await userService.getUser(email);
 
