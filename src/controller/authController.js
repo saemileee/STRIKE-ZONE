@@ -30,7 +30,7 @@ const authController = {
   },
 
   async sendValidationEmail(req, res, next) {
-    const { email } = req;
+    const { email } = req.body;
 
     try {
       await authService.sendValidEmail(email);
@@ -43,9 +43,7 @@ const authController = {
 
   async emailValidation(req, res, next) {
     try {
-      const { email } = req;
-
-      const { inputCode } = req.body;
+      const { email, inputCode } = req.body;
 
       const validCode = await authService.checkEmailValid(email);
 

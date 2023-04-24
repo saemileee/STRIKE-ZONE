@@ -6,9 +6,9 @@ const authRouter = Router();
 
 authRouter.get('/', loginRequired, authController.getEmailByToken);
 
-authRouter.get('/email', loginRequired, authController.sendValidationEmail);
+authRouter.get('/email', authController.sendValidationEmail);
 
-authRouter.post('/email', loginRequired, authController.emailValidation);
+authRouter.post('/email', authController.emailValidation);
 
 authRouter.post('/login', authController.userLogin);
 
