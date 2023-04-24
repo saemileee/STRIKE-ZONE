@@ -1,4 +1,15 @@
-import { $, $createElement } from '/js/utils.js';
+import { $, $createElement, deleteCookie } from '/js/utils.js';
+import { getUserInfo } from '/js/api/authAPI.js';
+
+async function isAdminAccount() {
+  const { isAdmin } = await getUserInfo();
+  if (!isAdmin) {
+    alert('관리자 전용 페이지입니다!');
+    location.href = '/admin/login';
+  }
+}
+
+isAdminAccount();
 
 const AdminData = $createElement('section', 'admin-data');
 
@@ -43,7 +54,8 @@ AdminData.innerHTML = `
 
 const $logoutButton = AdminNav.querySelector('.logout');
 $logoutButton.addEventListener('click', (event) => {
-  console.log('Logout');
+  deleteCookie('userToken');
+  location.href = '/admin/login';
 });
 
 const $contentContainer = $('.content-container');

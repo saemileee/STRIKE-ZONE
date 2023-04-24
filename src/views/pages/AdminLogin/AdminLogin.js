@@ -33,7 +33,7 @@ const onLoginSubmit = (e) => {
           location.href = '/login';
         } else {
           alert('관리자 로그인 성공');
-          window.location.href = '/user/mypage';
+          window.location.href = '/admin/user-management';
         }
       } catch (err) {
         throw new Error({ messge: err });
