@@ -41,3 +41,7 @@ label {
   color: red;
   font-weight: bold;
 }
+.phone-number,
+.zipcode {
+  margin-left: 10px;
+}

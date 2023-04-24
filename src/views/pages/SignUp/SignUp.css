@@ -35,3 +35,7 @@ label {
 .password-verify-warning {
   margin-top: 10px;
 }
+.phone-number,
+.zipcode {
+  margin-left: 10px;
+}

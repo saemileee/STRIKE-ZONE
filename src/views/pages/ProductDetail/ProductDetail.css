@@ -160,3 +160,7 @@
 .buttons-container > .order-button {
   flex-grow: 2;
 }
+
+.buttons-container > .soldout-button {
+  flex-grow: 1;
+}
