@@ -67,8 +67,8 @@ function readerBasicDescription(
   const $productSellingPrice = document.querySelector('.product-selling-price');
   $productSellingPrice.innerHTML = `${productSellingPrice.toLocaleString()}원`;
 }
-function renderPrice(price, inventory, productSellingPrice) {
-  let totalAmountValue = price;
+function renderPrice(inventory, productSellingPrice) {
+  let totalAmountValue = productSellingPrice;
   const $productCountInput = document.querySelector('.product-count');
   $productCountInput.setAttribute('max', `${inventory}`);
   const $totalAmountValue = document.querySelector('.total-amount');
@@ -142,7 +142,7 @@ async function getProductData() {
     rate,
     productSellingPrice
   );
-  renderPrice(price, inventory, productSellingPrice);
+  renderPrice(inventory, productSellingPrice);
   renderBuyButtons(productId, inventory);
   renderProductDetailDescription(detailDescription);
 }
