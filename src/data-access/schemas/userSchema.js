@@ -35,12 +35,17 @@ const UserSchema = new Schema(
     cheerTeam: {
       type: Schema.Types.ObjectId,
       ref: 'teams',
-      required: false,
+      required: true,
     },
     isAdmin: {
       type: Boolean,
       required: true,
       default: false,
+    },
+    isValid: {
+      type: String,
+      required: false,
+      default: 'invalid',
     },
   },
   {

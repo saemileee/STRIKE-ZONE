@@ -26,11 +26,13 @@ const userService = {
     if (!user) {
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      let newUser = { email, password: hashedPassword, ...restUserInfo };
+      const isValid = Math.floor(Math.random() * 1000).toString().padStart(4, '0');
+
+      let newUser = { email, password: hashedPassword, isValid, ...restUserInfo };
 
       newUser = await userDAO.create(newUser);
 
-      return newUser; 
+      return newUser;
     }
 
     throw new Error('이미 존재하는 email입니다.');
