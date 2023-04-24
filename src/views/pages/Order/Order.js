@@ -3,6 +3,8 @@ import { getCartListSelected } from '/js/api/cartAPI.js';
 import { fetchData, postData } from '/js/api/api.js';
 import { isLogin, getUserInfo } from '/js/api/authAPI.js';
 
+const params = new URLSearchParams(window.location.search);
+
 const {
   email: userEmail,
   koreanName: ordererName,
@@ -42,8 +44,9 @@ async function getData() {
   let products = [];
   let totalAmount = 0;
 
-  for (let cartList of cartListSelected) {
-    const { id: productId, amount: quantity } = cartList;
+  if (params.get('cart') === 'false') {
+    const productId = Number(params.get('id'));
+    const quantity = Number(params.get('quantity'));
     const { discountedPrice, name, teamName, price, rate, img } =
       await fetchData(`/products/${productId}`);
 
@@ -61,8 +64,28 @@ async function getData() {
       rate,
       totalProductAmount,
     });
-  }
+  } else {
+    for (let cartList of cartListSelected) {
+      const { id: productId, amount: quantity } = cartList;
+      const { discountedPrice, name, teamName, price, rate, img } =
+        await fetchData(`/products/${productId}`);
 
+      const totalProductAmount = discountedPrice * quantity;
+      totalAmount += totalProductAmount;
+
+      products.push({
+        productId,
+        productName: name,
+        quantity,
+        price: discountedPrice,
+        img: img[0],
+        team: teamName,
+        originalPrice: price,
+        rate,
+        totalProductAmount,
+      });
+    }
+  }
   const deliveryChargeAmount = await deliveryCharge;
   const totalPaymentAmount = totalAmount + deliveryChargeAmount;
   updateCheckoutButton(totalPaymentAmount);
