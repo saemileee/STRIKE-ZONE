@@ -1,0 +1,42 @@
+.user-data {
+  position: relative;
+  overflow: hidden;
+}
+
+.user-data .user-data-desc {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-data .user-data-desc .info {
+  display: flex;
+  font-size: 20px;
+  margin-bottom: 20px;
+  z-index: 100;
+}
+
+.user-data .user-data-desc .info p {
+  display: block;
+  width: 150px;
+  font-weight: 600;
+}
+
+.user-data .user-data-desc .info em {
+}
+
+.user-data .cheer-team {
+  position: absolute;
+  width: 500px;
+  bottom: -150px;
+  right: -100px;
+  z-index: 2;
+  opacity: 0.2;
+}
+
+.diff-date {
+  font-weight: 400;
+}
+
+.diff-date strong {
+  font-weight: 700;
+}

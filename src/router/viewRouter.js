@@ -32,6 +32,11 @@ viewsRouter.use('/user/update', serveStatic('UserUpdate'));
 viewsRouter.use('/user/delete', serveStatic('UserDelete'));
 viewsRouter.use('/user/orders', serveStatic('Orders'));
 viewsRouter.use('/user/orders/:orderId', serveStatic('OrderDetail'));
+viewsRouter.use('/admin/user-management', serveStatic('AdminUser'));
+viewsRouter.use('/admin/product-management', serveStatic('AdminProduct'));
+viewsRouter.use('/admin/order-management', serveStatic('AdminOrder'));
+viewsRouter.use('/admin/team-management', serveStatic('AdminTeam'));
+viewsRouter.use('/admin/category-management', serveStatic('AdminCategory'));
 viewsRouter.use('/NotFound', serveStatic('NotFound'));
 
 // views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
