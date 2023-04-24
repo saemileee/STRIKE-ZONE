@@ -20,6 +20,7 @@ viewsRouter.use('/', serveStatic(''));
 
 viewsRouter.use('/', serveStatic('Main'));
 viewsRouter.use('/login', serveStatic('Login'));
+viewsRouter.use('/login/auth', serveStatic('EmailAuth'));
 viewsRouter.use('/find-password', serveStatic('FindPassword'));
 viewsRouter.use('/signup', serveStatic('SignUp'));
 viewsRouter.use('/products', serveStatic('Products'));
