@@ -116,17 +116,19 @@ const render = async () => {
           </select>
         </span>
       </p>
-      <p class="control is-expanded">
-        <input
-          id="phoneNumber"
-          class="input user-phone-number-back"
-          type="tel"
-          placeholder="나머지 번호를 입력해주세요."
-          maxlength="9"
-          required
-          autocomplete="off"
-        />
-      </p>
+      <div class="field">
+        <p class="control is-expanded">
+          <input
+            id="phoneNumber"
+            class="input user-phone-number-back"
+            type="tel"
+            placeholder="나머지 번호를 입력해주세요."
+            maxlength="9"
+            required
+            autocomplete="off"
+          />
+        </p>
+      </div>
     </div>
   </div>
   <div class="field is-horizontal">
