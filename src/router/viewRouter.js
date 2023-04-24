@@ -32,6 +32,7 @@ viewsRouter.use('/user/update', serveStatic('UserUpdate'));
 viewsRouter.use('/user/delete', serveStatic('UserDelete'));
 viewsRouter.use('/user/orders', serveStatic('Orders'));
 viewsRouter.use('/user/orders/:orderId', serveStatic('OrderDetail'));
+viewsRouter.use('/admin/login', serveStatic('AdminLogin'));
 viewsRouter.use('/admin/user-management', serveStatic('AdminUser'));
 viewsRouter.use('/admin/product-management', serveStatic('AdminProduct'));
 viewsRouter.use('/admin/order-management', serveStatic('AdminOrder'));
