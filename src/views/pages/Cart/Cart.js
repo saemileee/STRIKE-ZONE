@@ -63,19 +63,28 @@ const CartItem = (target, { productID, name, price, total, img, amount, selected
   });
 
   const $amountIncreaseButton = $cartItem.querySelector('.amount-plus');
-  $amountIncreaseButton.addEventListener('click', async (event) => {
-    await addItemCart(productID);
-    render();
-  });
+  $amountIncreaseButton.addEventListener(
+    'click',
+    async (event) => {
+      await addItemCart(productID);
+      render();
+    },
+    { once: true }
+  );
 
   const $amountDecreaseButton = $cartItem.querySelector('.amount-minus');
-  $amountDecreaseButton.addEventListener('click', async (event) => {
-    await decreaseItemOfCart(productID);
-    render();
-  });
+  $amountDecreaseButton.addEventListener(
+    'click',
+    async (event) => {
+      await decreaseItemOfCart(productID);
+      render();
+    },
+    { once: true }
+  );
 
   const $deleteButton = $cartItem.querySelector('.cart-delete-button');
   $deleteButton.addEventListener('click', () => {
+    if (!confirm('정말로 장바구니에서 해당 상품을 제거하시겠습니까?')) return;
     deleteItemOfCart(productID);
     render();
   });
@@ -128,6 +137,7 @@ const toggleHandler = () => {
 const deleteAllHandler = () => {
   const $deleteAll = $('.delete-all');
   $deleteAll.addEventListener('click', (event) => {
+    if (!confirm('정말로 장바구니를 전부 제거하시겠습니까?')) return;
     deleteAllOfCart();
     render();
   });
@@ -141,8 +151,6 @@ async function render() {
   $checkAll.checked = isAllSelceted;
 
   const currentCart = getCartList();
-
-  console.log(currentCart);
 
   currentCart.forEach(({ amount, id, img, name, price, total, selected, rate }) => {
     CartItem($cartList, {
