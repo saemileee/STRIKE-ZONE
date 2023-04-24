@@ -39,6 +39,10 @@ viewsRouter.use(
   '/admin/product-management/post',
   serveStatic('AdminPostProduct')
 );
+viewsRouter.use(
+  '/admin/product-management/:productId',
+  serveStatic('AdminEditProduct')
+);
 viewsRouter.use('/admin/order-management', serveStatic('AdminOrder'));
 viewsRouter.use('/admin/team-management', serveStatic('AdminTeam'));
 viewsRouter.use('/admin/category-management', serveStatic('AdminCategory'));

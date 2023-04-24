@@ -100,5 +100,10 @@ function renderProductList(products) {
   });
 }
 
+const addProductButton = document.querySelector('.add-product');
+addProductButton.addEventListener('click', () => {
+  window.location.href = '/admin/product-management/post';
+});
+
 renderProductList(products);
 renderTotalProducts(products);
