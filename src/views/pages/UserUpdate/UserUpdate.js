@@ -116,7 +116,7 @@ const render = async () => {
           </select>
         </span>
       </p>
-      <div class="field">
+      <div class="field phone-number">
         <p class="control is-expanded">
           <input
             id="phoneNumber"
@@ -139,7 +139,7 @@ const render = async () => {
       <p class="control">
         <span id="findZipcode" class="button address">우편번호 찾기</span>
       </p>
-      <div class="field">
+      <div class="field zipcode">
         <p class="control is-expanded">
           <input
             id="postCode"
