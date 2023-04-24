@@ -147,8 +147,24 @@ async function getProductData() {
     productSellingPrice
   );
   renderPrice(inventory, productSellingPrice);
-  renderBuyButtons(productId, inventory);
-  renderProductDetailDescription(detailDescription);
+
+  if (inventory > 0) {
+    renderBuyButtons(productId, inventory);
+    renderProductDetailDescription(detailDescription);
+  } else if (inventory === 0) {
+    const buttonsContainer = document.querySelector('.buttons-container');
+    buttonsContainer.innerHTML = '';
+    const soldoutButton = renderSoldoutButtons();
+    buttonsContainer.append(soldoutButton);
+  }
+}
+
+function renderSoldoutButtons() {
+  const soldoutButton = document.createElement('button');
+  soldoutButton.innerHTML = '품절 된 상품입니다.';
+  soldoutButton.className = 'soldout-button Disabled button';
+  soldoutButton.setAttribute('disabled', '');
+  return soldoutButton;
 }
 
 getProductData();
