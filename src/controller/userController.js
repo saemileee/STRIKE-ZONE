@@ -58,7 +58,11 @@ const userController = {
     try {
       const { isAdmin } = req;
 
-      const { email } = isAdmin ? req.params : req;
+      let { email } = req;
+
+      if (isAdmin && req.params.email) {
+        email = req.params.email;
+      }
 
       const { postCode, roughAddress, detailAddress, ...restUpdateInfo } =
         req.body;
@@ -87,7 +91,11 @@ const userController = {
     try {
       const { isAdmin } = req;
 
-      const { email } = isAdmin ? req.params : req;
+      let { email } = req;
+
+      if (isAdmin && req.params.email) {
+        email = req.params.email;
+      }
 
       const { deletedCount } = await userService.deleteUser(email);
 
