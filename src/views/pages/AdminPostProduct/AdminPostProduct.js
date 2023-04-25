@@ -28,7 +28,6 @@ teamSelectBox.addEventListener('input', async () => {
 
 const priceInput = document.querySelector('.price');
 const rateInput = document.querySelector('.rate');
-
 const discountedPriceInput = document.querySelector('.discounted-price');
 
 function renderDiscountedPrice() {
@@ -36,34 +35,99 @@ function renderDiscountedPrice() {
   discountedPriceInput.value = discountedPrice;
 }
 
+// const fileInputs = document.querySelectorAll('.file-input');
+// for (const input of fileInputs) {
+//   input.addEventListener('input', event => {
+//     event.preventDefault();
+//     const fileName = document.querySelector(`.file-name .${input.dataset.for}`);
+//     fileName.innerHTML = input.files[0].name;
+//   });
+// }
+
+// const fileDeleteButtons = document.querySelectorAll('.file-delete-button');
+// for (const button of fileDeleteButtons) {
+//   button.addEventListener('click', event => {
+//     event.preventDefault();
+//     const linkFor = button.dataset.for;
+//     const fileInput = document.querySelector(`.file-input.${linkFor}`);
+//     fileInput.value = '';
+//   });
+// }
+
 priceInput.addEventListener('input', renderDiscountedPrice);
 rateInput.addEventListener('input', renderDiscountedPrice);
 
 const postButton = document.querySelector('.post');
 postButton.addEventListener('click', async event => {
   event.preventDefault();
+  const team = document.querySelector('.team select').value;
+  const category = document.querySelector('.category select').value;
+  const name = document.querySelector('.name').value;
+  const inventory = document.querySelector('.inventory').value;
+  const price = document.querySelector('.price').value;
+  const rate = document.querySelector('.rate').value;
+  const shortDescription = document.querySelector('.shortDescription').value;
 
-  const img1 = document.querySelector('.productThumbnail').files[0];
-  const img2 = document.querySelector('.productDetailImages').files[0];
-  const detailDescription = document.querySelector('.productDetailImages')
-    .files[0];
+  const detailDescription =
+    document.querySelector('.detailDescription').files[0];
+  const thumbnail = document.querySelector('.thumbnail').files[0];
+  const subThumbnailsInputs = document.querySelector('.subThumbnails');
+
+  const form = {
+    team,
+    category,
+    name,
+    inventory,
+    price,
+    rate,
+    shortDescription,
+  };
+
+  console.log(form);
+
+  //이미지 업로드
   const formData = new FormData();
-  formData.append('name', 'testName');
-  formData.append('inventory', 100);
-  formData.append('price', 1000);
-  formData.append('rate', 20);
-  formData.append('shortDescription', 'testShort');
-  formData.append('img1', img1);
-  formData.append('img2', img2);
+  formData.append('name', name);
+  formData.append('inventory', inventory);
+  formData.append('price', price);
+  formData.append('rate', rate);
+  formData.append('shortDescription', shortDescription);
+  formData.append('thumbnail', thumbnail);
+  // formData.append('subThumbnails', img2);
   formData.append('detailDescription', detailDescription);
+  for (const subThumbnail of subThumbnailsInputs.files) {
+    formData.append('subThumbnails', subThumbnail);
+  }
+
   try {
-    const response = await postData(
-      '/categories/ssg-landers-uniform/products/uploads',
-      formData
+    const response = await fetch(
+      '//34.64.244.53/api/v1/categories/ssg-landers-uniform/products/uploads',
+      { method: 'POST', body: formData }
     );
 
     console.log('Uploaded successfully', response);
   } catch (error) {
     console.error('Upload failed', error);
   }
+
+  //상품 업로드
+  // const formData2 = new FormData();
+  // formData2.append('name', name);
+  // formData2.append('inventory', inventory);
+  // formData2.append('price', price);
+  // formData2.append('rate', rate);
+  // formData2.append('shortDescription', shortDescription);
+  // formData2.append('img', [`/assets/img/product/${img1.name}`,`/assets/img/product/${img2.name}`]);
+  // formData2.append('detailDescription', `/assets/img/product/${detailDescription.name}`);
+
+  // try {
+  //   const response = await fetch(
+  //     '/api/v1/categories/ssg-landers-uniform/products',
+  //     { method: 'POST', body: formData2 }
+  //   );
+
+  //   console.log('Uploaded successfully', response);
+  // } catch (error) {
+  //   console.error('Upload failed', error);
+  // }
 });
