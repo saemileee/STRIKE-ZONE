@@ -1,4 +1,5 @@
 import { fetchData, deleteData } from '/js/api/api.js';
+import { selectAllCheckbox } from '/js/utils.js';
 
 const render = async () => {};
 
@@ -87,7 +88,7 @@ function renderProductList(products) {
     } = product;
     const trElement = document.createElement('tr');
     trElement.innerHTML = `
-    <th><input type="checkbox" data-product="${productId}"/></th>
+    <th><input type="checkbox" data-product="${productId}" class="product-checkbox"/></th>
     <th>${new Date(createdAt).toLocaleString()}</th>
     <td>${new Date(updatedAt).toLocaleString()}</td>
     <td>${productId}</td>
@@ -132,6 +133,12 @@ function renderProductList(products) {
   });
 }
 
+const checkedDeleteButton = document.querySelector('.checked-delete-button');
+checkedDeleteButton.addEventListener('click', async () => {
+  const checkboxes = document.querySelectorAll('product-checkbox');
+  checkboxes.filter(checkbox => checkbox.checked);
+});
+
 const addProductButton = document.querySelector('.add-product');
 addProductButton.addEventListener('click', () => {
   window.location.href = '/admin/product-management/post';
@@ -139,3 +146,5 @@ addProductButton.addEventListener('click', () => {
 
 renderProductList(products);
 renderTotalProducts(products);
+
+selectAllCheckbox('product-checkbox', 'product-checkbox-all');
