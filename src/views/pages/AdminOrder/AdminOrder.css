@@ -6,14 +6,23 @@
 }
 
 .search-box {
+  width: fit-content;
+  border: 1px solid #e9e9e9;
   display: flex;
+  flex-direction: column;
+  padding: 20px;
   margin-bottom: 20px;
 }
 
-.search-box .dropdown {
+.search-box .shipping-options {
+  margin-bottom: 10px;
 }
 
-.search-box .input {
+.search-box .search-form {
+  display: flex;
+}
+
+.search-box .search-form .input {
   max-width: 300px;
   margin: 0 10px;
 }
@@ -58,7 +67,6 @@
 .order-table {
   width: 100%;
   border-radius: 10px;
-  overflow: hidden;
 }
 
 table {
@@ -77,6 +85,10 @@ table th {
 table tr {
   font-size: 20px;
   text-align: center;
+}
+
+table tr {
+  transition: background-color 0.3s;
 }
 
 table tr:nth-child(2n) {
@@ -115,7 +127,6 @@ table input:hover {
 
 .order-info-square .order-id a {
   color: #474747;
-  margin-left: 6px;
 }
 
 .order-info-square .order-id em:hover {
@@ -126,6 +137,27 @@ table input:hover {
 .order-info-square .order-date {
   font-weight: 500;
   color: #a0a0a0;
+}
+
+.order-orderer-square {
+  width: 250px;
+}
+
+.order-orderer-square .order-orderer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.orderer-email {
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.orderer-email:hover {
+  cursor: pointer;
 }
 
 .order-product-square {
@@ -157,12 +189,53 @@ table input:hover {
   font-weight: 600;
 }
 
-.order-edit {
+.order-status-square {
   display: flex;
   flex-direction: column;
 }
 
-.order-edit span:hover {
+.order-edit-square {
+  width: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-status-square .dropdown {
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.order-status-square .dropdown-menu {
+  width: 125px;
+}
+
+.order-status-square .dropdown-content {
+  width: fit-content;
+}
+
+.order-status-square .dropdown-item {
+  width: 125px;
+  padding: 10px;
+}
+
+.order-status-square .edit-status-one {
+  width: 125px;
+  margin: 0 auto;
+}
+
+.order-edit {
+  display: flex;
+  width: min-content;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.order-edit .button {
+  width: 125px;
+}
+
+.order-edit .button:hover {
   cursor: pointer;
   font-weight: 600;
 }
