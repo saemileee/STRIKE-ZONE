@@ -14,10 +14,13 @@ const render = async () => {
     totalPayment,
     recipient,
     orderer: { email },
+    status,
+    paymentMethod,
   } = orderData;
 
   try {
     const userEmail = await isLogin();
+    console.log(email, userEmail);
     if (email !== userEmail) {
       alert('본인의 주문 정보만 확인 할 수 있습니다!');
       return (location.href = '/NotFound');
@@ -110,6 +113,16 @@ const render = async () => {
           <em>${recipient.phoneNumber}</em>
         </div>
       </div>
+    </div>
+    <hr>
+    <div class="status">
+      <h4 h4 class="title is-3">배송 상태</h4>
+      <em>${status}</em>
+    </div>
+    <hr>
+    <div class="payment">
+      <h4 h4 class="title is-3">결제 수단</h4>
+      <em>${paymentMethod}</em>
     </div>
   </section>
   `;

@@ -473,13 +473,80 @@ function EditButtons() {
   TableEditButtons.innerHTML = `
     <button class="delete-selected button is-dark">선택 항목 삭제</button>
     <button class="edit-selected button is-dark">선택 항목 배송 상태 수정</button>
+    <div class="dropdown">
+    <div class="dropdown-trigger">
+      <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+        <span class="current-shipping-type">${BEFOREPAYMENT}</span>
+        <span class="icon is-small">
+          <i class="fas fa-angle-down" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+      <div class="dropdown-content">
+        <a class="dropdown-item" id=${BEFOREPAYMENT}>
+          ${BEFOREPAYMENT}
+        </a>
+        <a class="dropdown-item" id=${PREPARING}>
+          ${PREPARING}
+        </a>
+        <a href="#" class="dropdown-item" id=${SHIPPING}>
+          ${SHIPPING}
+        </a>
+        <a class="dropdown-item" id=${COMPLETE}>
+          ${COMPLETE}
+        </a>
+      </div>
+    </div>
+  </div>
   `;
   TableEditButtons.addEventListener('click', async (event) => {
     if (event.target.closest('.delete-selected')) {
-      alert(selectedIds);
+      try {
+        if (!confirm('정말로 해당 주문 내역들을 삭제하시겠습니까?')) return;
+        const result = await fetch('/api/v1/orders', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            orderIds: selectedIds,
+          }),
+        });
+        location.reload();
+      } catch (err) {
+        throw new Error({ message: err });
+      }
     }
+    if (event.target.closest('.dropdown')) {
+      const dropbox = event.target.closest('.dropdown');
+      dropbox.classList.toggle('is-active');
+    }
+
+    if (event.target.closest('.dropdown-item')) {
+      const shippingType = event.target.closest('.dropdown-item').id;
+      const dropbox = event.target.closest('.dropdown');
+      dropbox.querySelector('.current-shipping-type').textContent = shippingType;
+    }
+
     if (event.target.closest('.edit-selected')) {
-      alert(selectedIds);
+      const status = TableEditButtons.querySelector('.current-shipping-type').textContent;
+      try {
+        if (!confirm(`정말로 해당 주문 내역들의 배송상태를 ${status}로 변경 하시겠습니까?`)) return;
+        const result = await fetch('/api/v1/orders/status', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            orderIds: selectedIds,
+            status,
+          }),
+        });
+        location.reload();
+      } catch (err) {
+        throw new Error({ message: err });
+      }
     }
   });
   return TableEditButtons;
