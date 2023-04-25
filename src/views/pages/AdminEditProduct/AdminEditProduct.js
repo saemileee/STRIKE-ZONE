@@ -1,5 +1,13 @@
 import { fetchData } from '/js/api/api.js';
 import { setDiscount } from '/js/utils.js';
+import {
+  updateTeamOptions,
+  updateCategoryOptions,
+} from '/components/Product/CategorySelectbox.js';
+
+const render = async () => {};
+
+render();
 
 const productId = Number(window.location.pathname.split('/')[3]);
 const product = await fetchData(`/products/${productId}`);
@@ -18,39 +26,25 @@ const {
 
 const category = categoryId.split('-').pop();
 
-console.log(product);
-
 //카테고리 선택 렌더링
 const teamSelectBox = document.querySelector('.select.team select');
-const updateTeamOptions = async () => {
-  const teams = await fetchData('/teams');
-  const options = teams
-    .map(team => `<option value=${team.teamId}>${team.teamName}</option>`)
-    .join('');
-  teamSelectBox.innerHTML = `<option selected>팀 전체</option>${options}`;
-  teamSelectBox.value = teamId;
-};
-await updateTeamOptions();
+await updateTeamOptions(teamSelectBox);
+teamSelectBox.value = teamId;
 
 const categorySelectBox = document.querySelector('.select.category select');
-const updateCategoryOptions = async teamId => {
-  const categories = await fetchData(`/teams/${teamId}/categories`);
-  const options = categories
-    .map(
-      category =>
-        `<option value=${category.categoryName}>${category.categoryName}</option>`
-    )
-    .join('');
-  categorySelectBox.innerHTML = `<option selected>카테고리 전체</option>${options}`;
-};
-async function renderCategoryOptions() {
+async function renderCategoryOptions(teamSelectBox, categorySelectBox) {
   const teamId = teamSelectBox.value;
-  await updateCategoryOptions(teamId);
+  await updateCategoryOptions(teamId, categorySelectBox);
+}
+
+async function renderCategoryOptionsFirst() {
+  const teamId = teamSelectBox.value;
+  await updateCategoryOptions(teamId, categorySelectBox);
   categorySelectBox.value = category;
 }
 
 teamSelectBox.addEventListener('input', renderCategoryOptions);
-renderCategoryOptions();
+renderCategoryOptionsFirst();
 
 //상품명
 const nameInput = document.querySelector('input.name');

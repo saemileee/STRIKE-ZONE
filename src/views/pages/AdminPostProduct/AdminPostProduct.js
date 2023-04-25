@@ -1,29 +1,18 @@
 import { fetchData, postData } from '/js/api/api.js';
 import { setDiscount } from '/js/utils.js';
+import {
+  updateTeamOptions,
+  updateCategoryOptions,
+} from '/components/Product/CategorySelectbox.js';
 
 //카테고리 선택 렌더링
 const teamSelectBox = document.querySelector('.select.team select');
-const updateTeamOptions = async () => {
-  const teams = await fetchData('/teams');
-  const options = teams
-    .map(team => `<option value=${team.teamId}>${team.teamName}</option>`)
-    .join('');
-  teamSelectBox.innerHTML = `<option selected>팀을 선택해 주세요.</option>${options}`;
-};
-await updateTeamOptions();
+await updateTeamOptions(teamSelectBox);
 
 const categorySelectBox = document.querySelector('.select.category select');
-const updateCategoryOptions = async teamId => {
-  const categories = await fetchData(`/teams/${teamId}/categories`);
-  const options = categories
-    .map(category => `<option>${category.categoryName}</option>`)
-    .join('');
-  categorySelectBox.innerHTML = `<option selected>카테고리를 선택해 주세요.</option>${options}`;
-};
-
 teamSelectBox.addEventListener('input', async () => {
   const teamId = teamSelectBox.value;
-  await updateCategoryOptions(teamId);
+  await updateCategoryOptions(teamId, categorySelectBox);
 });
 
 const priceInput = document.querySelector('.price');
