@@ -6,7 +6,7 @@ import { EMAIL_VALID } from '../constants';
 
 const authService = {
   async getUserEmailByToken(token) {
-    const secretKey = process.env.SECRET_KEY || 'secret';
+    const secretKey = process.env.SECRET_KEY || null;
 
     const decodedToken = jwt.verify(token, secretKey);
 
@@ -25,7 +25,7 @@ const authService = {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
 
-    const secretKey = process.env.SECRET_KEY || 'secret';
+    const secretKey = process.env.SECRET_KEY || null;
 
     const userToken = jwt.sign({ email, isAdmin }, secretKey);
 

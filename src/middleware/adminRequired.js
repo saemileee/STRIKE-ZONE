@@ -8,7 +8,7 @@ function adminRequired(req, res, next) {
       throw new Error('로그인 정보가 없습니다.');
     }
 
-    const secretKey = process.env.SECRET_KEY || 'secret';
+    const secretKey = process.env.SECRET_KEY || null;
 
     const decodedToken = jwt.verify(token, secretKey);
 
