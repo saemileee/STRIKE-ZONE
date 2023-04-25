@@ -31,28 +31,11 @@ const rateInput = document.querySelector('.rate');
 const discountedPriceInput = document.querySelector('.discounted-price');
 
 function renderDiscountedPrice() {
-  const discountedPrice = setDiscount(priceInput.value, rateInput.value);
+  const discountedPrice = Math.ceil(
+    setDiscount(priceInput.value, rateInput.value)
+  );
   discountedPriceInput.value = discountedPrice;
 }
-
-// const fileInputs = document.querySelectorAll('.file-input');
-// for (const input of fileInputs) {
-//   input.addEventListener('input', event => {
-//     event.preventDefault();
-//     const fileName = document.querySelector(`.file-name .${input.dataset.for}`);
-//     fileName.innerHTML = input.files[0].name;
-//   });
-// }
-
-// const fileDeleteButtons = document.querySelectorAll('.file-delete-button');
-// for (const button of fileDeleteButtons) {
-//   button.addEventListener('click', event => {
-//     event.preventDefault();
-//     const linkFor = button.dataset.for;
-//     const fileInput = document.querySelector(`.file-input.${linkFor}`);
-//     fileInput.value = '';
-//   });
-// }
 
 priceInput.addEventListener('input', renderDiscountedPrice);
 rateInput.addEventListener('input', renderDiscountedPrice);
@@ -85,7 +68,6 @@ postButton.addEventListener('click', async event => {
 
   console.log(form);
 
-  //이미지 업로드
   const formData = new FormData();
   formData.append('name', name);
   formData.append('inventory', inventory);
@@ -101,10 +83,11 @@ postButton.addEventListener('click', async event => {
 
   try {
     const response = await fetch(
-      '//34.64.244.53/api/v1/categories/ssg-landers-uniform/products/uploads',
+      `//34.64.244.53/api/v1/categories/${team}-${category}/products/uploads`,
       { method: 'POST', body: formData }
     );
-
+    alert('상품이 성공적으로 추가되었습니다.');
+    window.location.href = '/admin/product-management';
     console.log('Uploaded successfully', response);
   } catch (error) {
     console.error('Upload failed', error);
