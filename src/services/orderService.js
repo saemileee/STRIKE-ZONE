@@ -67,6 +67,19 @@ const orderService = {
     await orderDAO.updateStatusByOrderId(orderId, status);
   },
 
+  // 다수의 orderId 에 해당하는 배송 상태 정보 수정
+  async updateStatus(orderIds, status) {
+    let modifiedCount = 0;
+    const promises = orderIds.map(async (orderId) => {
+      const result = await orderDAO.updateStatusByOrderId(orderId, status);
+      modifiedCount += result;
+    });
+
+    await Promise.all(promises);
+
+    return modifiedCount;
+  },
+
   // 특정 orderId 에 해당하는 주문 정보 삭제하기
   async deleteOrderByOrderId(orderId) {
     await orderDAO.deleteOrderByOrderId(orderId);
