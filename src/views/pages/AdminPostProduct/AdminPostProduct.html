@@ -118,6 +118,8 @@
                         min="0"
                         max="99"
                         maxlength="2"
+                        onkeydown="return event.key !== '-'"
+                        onpaste="return !clipboardData.getData('Text').includes('-')"
                         required
                       />
                     </p>

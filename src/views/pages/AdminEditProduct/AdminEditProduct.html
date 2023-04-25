@@ -119,6 +119,8 @@
                           min="0"
                           max="99"
                           maxlength="2"
+                          onkeydown="return event.key !== '-'"
+                          onpaste="return !clipboardData.getData('Text').includes('-')"
                           required
                         />
                       </p>
@@ -205,7 +207,7 @@
                 </div>
               </section>
             </div>
-            <button class="post">상품 추가</button>
+            <button class="post">상품 수정</button>
           </form>
         </section>
       </section>

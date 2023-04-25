@@ -19,6 +19,12 @@ const priceInput = document.querySelector('.price');
 const rateInput = document.querySelector('.rate');
 const discountedPriceInput = document.querySelector('.discounted-price');
 
+rateInput.addEventListener('input', function () {
+  if (this.value.length > 2) {
+    this.value = this.value.slice(0, 2);
+  }
+});
+
 function renderDiscountedPrice() {
   const discountedPrice = Math.ceil(
     setDiscount(priceInput.value, rateInput.value)
@@ -30,7 +36,7 @@ priceInput.addEventListener('input', renderDiscountedPrice);
 rateInput.addEventListener('input', renderDiscountedPrice);
 
 const postButton = document.querySelector('.post');
-postButton.addEventListener('click', async event => {
+postButton.addEventListener('submit', async event => {
   event.preventDefault();
   const team = document.querySelector('.team select').value;
   const category = document.querySelector('.category select').value;
@@ -45,18 +51,6 @@ postButton.addEventListener('click', async event => {
   const thumbnail = document.querySelector('.thumbnail').files[0];
   const subThumbnailsInputs = document.querySelector('.subThumbnails');
 
-  const form = {
-    team,
-    category,
-    name,
-    inventory,
-    price,
-    rate,
-    shortDescription,
-  };
-
-  console.log(form);
-
   const formData = new FormData();
   formData.append('name', name);
   formData.append('inventory', inventory);
@@ -64,7 +58,6 @@ postButton.addEventListener('click', async event => {
   formData.append('rate', rate);
   formData.append('shortDescription', shortDescription);
   formData.append('thumbnail', thumbnail);
-  // formData.append('subThumbnails', img2);
   formData.append('detailDescription', detailDescription);
   for (const subThumbnail of subThumbnailsInputs.files) {
     formData.append('subThumbnails', subThumbnail);
