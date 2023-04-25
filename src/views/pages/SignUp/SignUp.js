@@ -22,11 +22,11 @@ function isValid(event) {
   if (!checkValidation(event.target)) {
     event.target.classList.add('is-danger');
     const warning = $(`.${event.target.id}-warning`);
-    warning.style.display = '';
+    warning.classList.remove('hidden');
   } else {
     event.target.classList.remove('is-danger');
     const warning = $(`.${event.target.id}-warning`);
-    warning.style.display = 'none';
+    warning.classList.add('hidden');
   }
 }
 
@@ -37,11 +37,11 @@ function passwordVerify() {
     newUserPasswordVerify.value === ''
   ) {
     newUserPasswordVerify.classList.add('is-danger');
-    warning.style.display = '';
+    warning.classList.remove('hidden');
     return false;
   }
   newUserPasswordVerify.classList.remove('is-danger');
-  warning.style.display = 'none';
+  warning.classList.add('hidden');
   return true;
 }
 
