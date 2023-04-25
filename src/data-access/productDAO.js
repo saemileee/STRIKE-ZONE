@@ -39,7 +39,9 @@ const productDAO = {
 
   // 상품 삭제
   async deleteProductByProductId(productId) {
-    await Product.deleteOne({ productId });
+    const { deletedCount } = await Product.deleteOne({ productId });
+
+    return deletedCount;
   },
 
   async createProductId() {

@@ -22,7 +22,13 @@ orderRouter.put('/orders/:orderId/recipient', orderController.updateRecipientByO
 // 특정 orderId 의 배송 상태(ex. "배송중") (관리자)
 orderRouter.put('/orders/:orderId/status', orderController.updateStatusByOrderId);
 
+// 다수 orderId 들의 배송 상태(ex. "배송중") (관리자)
+orderRouter.put('/orders/status', orderController.updateStatus);
+
 // 특정 orderId 의 주문 취소
 orderRouter.delete('/orders/:orderId', orderController.deleteOrderByOrderId);
+
+// 다수의 orderId 들의 주문 취소
+orderRouter.delete('/orders', orderController.deleteOrders);
 
 export { orderRouter };

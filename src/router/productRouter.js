@@ -4,6 +4,8 @@ import { productController } from '../controller';
 
 import { upload } from '../image-uploader';
 
+import { PRODUCT_IMG_PATH } from '../constants';
+
 const productRouter = Router();
 
 // 상품 목록 조회
@@ -14,9 +16,6 @@ productRouter.get('/products/:productId', productController.getProductByProductI
 
 // 상품 수정 (productId)
 productRouter.put('/products/:productId', productController.updateProductByProductId);
-
-// 상품 삭제 (productId)
-productRouter.delete('/products/:productId', productController.deleteProductByProductId);
 
 // 특정 카테고리의 상품 목록 조회
 productRouter.get('/categories/:categoryId/products', productController.getProductsByCategoryId);
@@ -29,7 +28,52 @@ productRouter.post('/categories/:categoryId/products', productController.postPro
 
 // 상품 추가하기 업데이트
 productRouter.post('/categories/:categoryId/products/uploads', upload.fields(
-  [{ name: 'img1' }, { name: 'img2' }, { name: 'detailDescription' }],
+  [{ name: 'thumbnail' }, { name: 'subThumbnails' }, { name: 'detailDescription' }],
 ), productController.postProductWithImage);
+
+// 상품 삭제 (productId)
+productRouter.delete('/products/:productId', productController.deleteProductByProductId);
+
+// 다수의 상품 일괄 삭제 (productId 배열을 받아 처리)
+productRouter.delete('/products', productController.deleteProductsByProductIds);
+
+// 썸네일 업로드만 처리
+productRouter.post(
+  '/products/thumbnail',
+  upload.single('thumbnail'),
+  async (req, res) => {
+    const filenameOfThumbnail = req.file.filename;
+
+    res.json({ thumbnail: PRODUCT_IMG_PATH + filenameOfThumbnail });
+  },
+);
+
+// 서브 썸네일 업로드만 처리
+productRouter.post(
+  '/products/sub-thumbnails',
+  upload.array('subThumbnails'),
+  async (req, res) => {
+    const subThumbnails = req.files;
+
+    console.log(req.files);
+
+    const filenamesOfSubthumbnail = subThumbnails.map(
+      (subThumbnail) => PRODUCT_IMG_PATH + subThumbnail.filename,
+    );
+
+    res.json({ subThumbnails: filenamesOfSubthumbnail });
+  },
+);
+
+// 상품 상세 정보 이미지 업로드만 처리
+productRouter.post(
+  '/products/detail-description',
+  upload.single('detailDescription'),
+  async (req, res) => {
+    const filenameOfDetail = req.file.filename;
+
+    res.json({ detailDescription: PRODUCT_IMG_PATH + filenameOfDetail });
+  },
+);
 
 export { productRouter };
