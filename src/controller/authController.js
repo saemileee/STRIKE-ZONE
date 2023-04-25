@@ -43,7 +43,7 @@ const authController = {
     }
   },
 
-  async emailValidation(req, res, next) {
+  async validateEmail(req, res, next) {
     try {
       const { email, inputCode } = req.body;
 
@@ -65,7 +65,7 @@ const authController = {
     }
   },
 
-  async passwordReset(req, res, next) {
+  async resetPassword(req, res, next) {
     try {
       const { email, koreanName } = req.body;
 
@@ -81,7 +81,7 @@ const authController = {
     }
   },
 
-  async passwordCheck(req, res, next) {
+  async checkPassword(req, res, next) {
     try {
       const { email } = req;
 

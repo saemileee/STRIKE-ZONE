@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { userDAO } from '../data-access';
+import { userDAO } from '../data-access/model';
 import { sendEmail } from './emailService';
 
 const authService = {

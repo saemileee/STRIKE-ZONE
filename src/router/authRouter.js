@@ -8,13 +8,13 @@ authRouter.get('/', loginRequired, authController.getEmailByToken);
 
 authRouter.get('/email', authController.sendValidationEmail);
 
-authRouter.post('/email', authController.emailValidation);
+authRouter.post('/email', authController.validateEmail);
 
 authRouter.post('/login', authController.userLogin);
 
-authRouter.patch('/password', authController.passwordReset);
+authRouter.patch('/password', authController.resetPassword);
 
-authRouter.post('/password', loginRequired, authController.passwordCheck);
+authRouter.post('/password', loginRequired, authController.checkPassword);
 
 authRouter.post('/logout', loginRequired, authController.userLogout);
 
