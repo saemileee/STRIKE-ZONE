@@ -104,6 +104,8 @@ const productController = {
     try {
       const result = await productService.postProductWithImage(req);
 
+      console.log(`result: ${result}`);
+
       res.status(200).json(result);
     } catch (error) {
       next(error);
