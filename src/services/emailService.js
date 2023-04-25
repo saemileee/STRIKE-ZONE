@@ -11,13 +11,13 @@ const transport = nodemailer.createTransport({
   },
 });
 
-function sendEmail(email, validCode) {
+function sendEmail(email, subject, text) {
   return new Promise((resolve, reject) => {
     const message = {
       from: process.env.GMAIL_USERNAME,
       to: email,
-      subject: '스트라이크존 이메일 인증 코드입니다.',
-      text: `이메일 인증 코드는 ${validCode}입니다.`,
+      subject,
+      text,
     };
 
     transport.sendMail(message, (err, info) => {

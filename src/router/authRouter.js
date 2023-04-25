@@ -8,6 +8,8 @@ authRouter.get('/', loginRequired, authController.getEmailByToken);
 
 authRouter.get('/email', authController.sendValidationEmail);
 
+authRouter.patch('/reset-password', authController.passwordReset);
+
 authRouter.post('/email', authController.emailValidation);
 
 authRouter.post('/login', authController.userLogin);

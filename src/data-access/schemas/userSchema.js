@@ -47,6 +47,11 @@ const UserSchema = new Schema(
       required: false,
       default: 'invalid',
     },
+    isPasswordReset: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   {
     collection: 'users',
