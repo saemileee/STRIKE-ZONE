@@ -4,7 +4,10 @@ const render = async () => {};
 
 render();
 
-const products = await fetchData('/products');
+let products = await fetchData('/products');
+products = products.sort(
+  (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+);
 const tbodyElement = document.querySelector('tbody');
 
 const teamSelectBox = document.querySelector('.select.team select');
