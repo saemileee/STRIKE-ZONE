@@ -12,7 +12,7 @@ authRouter.post('/email', authController.emailValidation);
 
 authRouter.post('/login', authController.userLogin);
 
-authRouter.patch('/reset-password', authController.passwordReset);
+authRouter.patch('/password', authController.passwordReset);
 
 authRouter.post('/password', loginRequired, authController.passwordCheck);
 
