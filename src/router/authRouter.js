@@ -12,6 +12,8 @@ authRouter.post('/email', authController.emailValidation);
 
 authRouter.post('/login', authController.userLogin);
 
+authRouter.patch('/password', authController.passwordReset);
+
 authRouter.post('/password', loginRequired, authController.passwordCheck);
 
 authRouter.post('/logout', loginRequired, authController.userLogout);
