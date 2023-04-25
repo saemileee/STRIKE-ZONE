@@ -28,4 +28,7 @@ orderRouter.put('/orders/status', orderController.updateStatus);
 // 특정 orderId 의 주문 취소
 orderRouter.delete('/orders/:orderId', orderController.deleteOrderByOrderId);
 
+// 다수의 orderId 들의 주문 취소
+orderRouter.delete('/orders', orderController.deleteOrders);
+
 export { orderRouter };

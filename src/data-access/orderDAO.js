@@ -37,7 +37,8 @@ const orderDAO = {
   },
 
   async deleteOrderByOrderId(orderId) {
-    await Order.deleteOne({ orderId });
+    const { deletedCount } = await Order.deleteOne({ orderId });
+    return deletedCount;
   },
 
   async createOrderId() {
