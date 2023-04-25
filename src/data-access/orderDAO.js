@@ -39,11 +39,8 @@ const orderDAO = {
   },
 
   async createOrderId() {
-    // 가장 마지막에 등록된 주문의 orderId + 1 해서 새 주문의 orderId 로 사용한다.
-    const lastOrder = await Order.find({}).sort({ createdAt: -1 }).limit(1);
-    const lastOrderId = lastOrder.length === 0 ? 0 : lastOrder[0].orderId;
-    const nextOrderId = lastOrderId + 1;
-
+    const currentDocumentsCount = await Order.countDocuments();
+    const nextOrderId = currentDocumentsCount === 0 ? 1 : currentDocumentsCount + 1;
     return nextOrderId;
   },
 

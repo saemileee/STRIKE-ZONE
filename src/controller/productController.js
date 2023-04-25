@@ -99,6 +99,17 @@ const productController = {
     }
   },
 
+  // 상품 추가 API : 이미지 업로드 포함
+  async postProductWithImage(req, res, next) {
+    try {
+      const result = await productService.postProductWithImage(req);
+
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  },
+
 };
 
 export { productController };
