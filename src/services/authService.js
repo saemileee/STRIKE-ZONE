@@ -1,7 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { userDAO } from '../data-access';
-import { sendEmail } from './emailService';
+import { userDAO } from '../data-access/model';
+import { sendValidEmail, sendPasswordEmail } from './emailService';
+import { EMAIL_VALID } from '../constants';
 
 const authService = {
   async getUserEmailByToken(token) {
@@ -31,7 +32,6 @@ const authService = {
     return userToken;
   },
 
-  // 유저 정보 수정 시, 패스워드를 한번 더 요구할 때 사용하기 위함
   async checkPasswordAndAdmin(email, password) {
     const user = await userDAO.findByEmail(email);
 
@@ -53,7 +53,7 @@ const authService = {
 
     const isEmailValid = user.isValid;
 
-    if (isEmailValid !== 'valid') {
+    if (isEmailValid !== EMAIL_VALID) {
       return isEmailValid;
     }
 
@@ -63,17 +63,13 @@ const authService = {
   async sendValidEmail(email) {
     const validCode = await this.checkEmailValid(email);
 
-    await sendEmail(
-      email,
-      '스트라이크존 이메일 인증 코드입니다.',
-      `이메일 인증 코드는 ${validCode}입니다.`
-    );
+    await sendValidEmail(email, validCode);
 
     return true;
   },
 
   async makeEmailValid(email) {
-    const { isValid } = await userDAO.update(email, { isValid: 'valid' });
+    const { isValid } = await userDAO.update(email, { isValid: EMAIL_VALID });
 
     return isValid;
   },
@@ -116,11 +112,7 @@ const authService = {
       throw new Error('비밀번호 초기화에 실패하였습니다.');
     }
 
-    await sendEmail(
-      email,
-      `${koreanName} 회원님의 비밀번호가 초기화되었습니다.`,
-      `초기화된 비밀번호는 ${randomPassword}입니다.\n초기화된 비밀번호로 로그인 후 반드시 비밀번호를 변경해주십시오.`
-    );
+    await sendPasswordEmail(email, koreanName, randomPassword);
 
     return true;
   },

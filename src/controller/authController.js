@@ -1,4 +1,5 @@
 import { authService } from '../services';
+import { EMAIL_VALID } from '../constants';
 
 const authController = {
   async getEmailByToken(req, res, next) {
@@ -43,7 +44,7 @@ const authController = {
     }
   },
 
-  async emailValidation(req, res, next) {
+  async validateEmail(req, res, next) {
     try {
       const { email, inputCode } = req.body;
 
@@ -55,7 +56,7 @@ const authController = {
 
       const result = await authService.makeEmailValid(email);
 
-      if (result !== 'valid') {
+      if (result !== EMAIL_VALID) {
         throw new Error('이메일 인증에 실패하였습니다.');
       }
 
@@ -65,7 +66,7 @@ const authController = {
     }
   },
 
-  async passwordReset(req, res, next) {
+  async resetPassword(req, res, next) {
     try {
       const { email, koreanName } = req.body;
 
@@ -81,7 +82,7 @@ const authController = {
     }
   },
 
-  async passwordCheck(req, res, next) {
+  async checkPassword(req, res, next) {
     try {
       const { email } = req;
 

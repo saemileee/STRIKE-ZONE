@@ -11,13 +11,13 @@ const transport = nodemailer.createTransport({
   },
 });
 
-function sendEmail(email, subject, text) {
+function sendValidEmail(email, validCode) {
   return new Promise((resolve, reject) => {
     const message = {
       from: process.env.GMAIL_USERNAME,
       to: email,
-      subject,
-      text,
+      subject: '[스트라이크존] 이메일 인증 코드입니다.',
+      text: `이메일 인증 코드는 ${validCode}입니다.`
     };
 
     transport.sendMail(message, (err, info) => {
@@ -30,4 +30,23 @@ function sendEmail(email, subject, text) {
   });
 }
 
-export { sendEmail };
+function sendPasswordEmail(email, userName, resetPassword) {
+  return new Promise((resolve, reject) => {
+    const message = {
+      from: process.env.GMAIL_USERNAME,
+      to: email,
+      subject: `[스트라이크존] ${userName} 회원님의 비밀번호가 초기화되었습니다.`,
+      text: `초기화된 비밀번호는 ${resetPassword}입니다.\n\n초기화된 비밀번호로 로그인 후 반드시 비밀번호를 변경해주십시오.`,
+    };
+
+    transport.sendMail(message, (err, info) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(info);
+    });
+  });
+}
+
+export { sendValidEmail, sendPasswordEmail };
