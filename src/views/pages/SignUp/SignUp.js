@@ -46,7 +46,9 @@ function passwordVerify() {
 }
 
 function checkAddress() {
-  if (findAddress[1].value) return true;
+  if (findAddress[0].value && findAddress[2].value && findAddress[3].value) {
+    return true;
+  }
   return false;
 }
 

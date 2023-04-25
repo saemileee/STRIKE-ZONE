@@ -55,7 +55,7 @@ const render = async () => {
             required
             autocomplete="off"
           />
-          <p class="password-warning" style="display: none;">영문, 숫자, 특수문자를 포함한 8 ~ 16자의 비밀번호를 입력하세요</p>
+          <p class="password-warning" style="display: none;">영문, 숫자, 특수문자를 포함한 8 ~ 16자의 비밀번호를 입력하세요.</p>
         </p>
       </div>
     </div>
@@ -324,7 +324,13 @@ const render = async () => {
     }
 
     function checkAddress() {
-      if (findAddress[1].value) return true;
+      if (
+        findAddress[0].value &&
+        findAddress[2].value &&
+        findAddress[3].value
+      ) {
+        return true;
+      }
       return false;
     }
 
