@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { userDAO } from '../data-access/model';
 import { sendValidEmail, sendPasswordEmail } from './emailService';
+import { EMAIL_VALID } from '../constants';
 
 const authService = {
   async getUserEmailByToken(token) {
@@ -52,7 +53,7 @@ const authService = {
 
     const isEmailValid = user.isValid;
 
-    if (isEmailValid !== 'valid') {
+    if (isEmailValid !== EMAIL_VALID) {
       return isEmailValid;
     }
 
@@ -68,7 +69,7 @@ const authService = {
   },
 
   async makeEmailValid(email) {
-    const { isValid } = await userDAO.update(email, { isValid: 'valid' });
+    const { isValid } = await userDAO.update(email, { isValid: EMAIL_VALID });
 
     return isValid;
   },
