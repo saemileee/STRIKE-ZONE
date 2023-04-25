@@ -87,6 +87,24 @@ const userController = {
     }
   },
 
+  async setUserPassword(req, res, next) {
+    try {
+      const { email } = req;
+
+      const { password } = req.body;
+
+      const isPasswordSet = await userService.setUserPassword(email, password);
+
+      if (!isPasswordSet) {
+        throw new Error('비밀번호 변경에 실패하였습니다.');
+      }
+
+      res.json({ result: 'success' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
   async deleteUser(req, res, next) {
     try {
       const { isAdmin } = req;

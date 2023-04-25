@@ -17,13 +17,15 @@ const authController = {
 
       const isEmailValid = await authService.checkEmailValid(email);
 
+      const isPasswordReset = await authService.checkPasswordReset(email);
+
       if (isEmailValid !== true) {
-        res.json({ token: userToken, isEmailValid: false });
+        res.json({ token: userToken, isEmailValid: false, isPasswordReset });
 
         return;
       }
 
-      res.json({ token: userToken, isEmailValid });
+      res.json({ token: userToken, isEmailValid, isPasswordReset });
     } catch (err) {
       next(err);
     }
@@ -58,6 +60,22 @@ const authController = {
       }
 
       res.json({ result: 'success' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async passwordReset(req, res, next) {
+    try {
+      const { email, koreanName } = req.body;
+
+      const isPasswordReset = await authService.resetUserPassword(email, koreanName);
+
+      if (!isPasswordReset) {
+        throw new Error('비밀번호 초기화에 실패하였습니다.');
+      }
+
+      res.json({ result: 'sucess' });
     } catch (err) {
       next(err);
     }
