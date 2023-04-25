@@ -196,6 +196,59 @@ const productService = {
 
     return true;
   },
+
+  // 상품 추가하기 with 이미지 업로드
+  async postProductWithImage2(req) {
+    const {
+      name, inventory, price, rate, shortDescription,
+    } = req.body;
+
+    // 이미지는 각각 배열로 넘어온다.
+    const { thumbnail, subThumbnails, detailDescription } = req.files;
+
+    // 상품 정보에 등록할 img 배열을 만들어야한다.
+    const imgArray = [];
+    imgArray.push(PRODUCT_IMG_PATH + thumbnail[0].filename); // 썸네일
+    subThumbnails.forEach((subThumbnail) => {
+      imgArray.push(PRODUCT_IMG_PATH + subThumbnail.filename);
+    });
+    const detailImg = PRODUCT_IMG_PATH + detailDescription[0].filename;
+
+    // categoryId 로 소속 team 및 category 정보 조회하기
+    const { categoryId } = req.params;
+    const category = await categoryDAO.getCategoryByCategoryId(categoryId);
+    const {
+      teamId, teamName, teamDescription, categoryName,
+    } = category;
+
+    // 할인율을 적용한 상품 가격 계산하기
+    const discountedPrice = this.calculateDiscountedPrice({ price, rate });
+
+    // 새 상품의 productId 구하기
+    const productId = await productDAO.createProductId();
+
+    const productInfoToBeCreated = {
+      productId,
+      teamId,
+      teamName,
+      teamDescription,
+      categoryId,
+      categoryName,
+      discountedPrice,
+      name,
+      inventory: Number(inventory),
+      price: Number(price),
+      rate: Number(rate),
+      shortDescription,
+      detailDescription: detailImg,
+      img: imgArray,
+    };
+
+    const result = await productDAO.createProduct(productInfoToBeCreated);
+    const postedProduct = await productDAO.findProductByProductId(productId);
+
+    return postedProduct;
+  },
 };
 
 export { productService };
