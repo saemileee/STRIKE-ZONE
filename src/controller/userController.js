@@ -89,9 +89,7 @@ const userController = {
 
   async setUserPassword(req, res, next) {
     try {
-      const { email } = req;
-
-      const { password } = req.body;
+      const { email, password } = req.body;
 
       const isPasswordSet = await userService.setUserPassword(email, password);
 

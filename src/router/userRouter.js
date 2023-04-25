@@ -12,7 +12,7 @@ userRouter.get('/me', loginRequired, userController.getUser);
 
 userRouter.put('/me', loginRequired, userController.setUser);
 
-userRouter.patch('/password', loginRequired, userController.setUserPassword);
+userRouter.patch('/password', userController.setUserPassword);
 
 userRouter.delete('/me', loginRequired, userController.deleteUser);
 
