@@ -1,0 +1,35 @@
+.modal {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-backdrop {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #000;
+  opacity: 0.4;
+}
+
+.modal-layout {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 800px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 40px 70px 40px 30px;
+}
