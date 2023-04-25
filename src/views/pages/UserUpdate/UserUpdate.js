@@ -136,9 +136,6 @@ const render = async () => {
       <label class="label">주소</label>
     </div>
     <div class="field-body">
-      <p class="control">
-        <span id="findZipcode" class="button address">우편번호 찾기</span>
-      </p>
       <div class="field zipcode">
         <p class="control is-expanded">
           <input
@@ -153,6 +150,9 @@ const render = async () => {
           />
         </p>
       </div>
+      <p class="control">
+        <span id="findZipcode" class="button address">우편번호 찾기</span>
+      </p>
     </div>
   </div>
   <div class="field is-horizontal">
