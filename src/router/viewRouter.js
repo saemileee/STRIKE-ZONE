@@ -37,6 +37,14 @@ viewsRouter.use('/user/orders/:orderId', serveStatic('OrderDetail'));
 viewsRouter.use('/admin/login', serveStatic('AdminLogin'));
 viewsRouter.use('/admin/user-management', serveStatic('AdminUser'));
 viewsRouter.use('/admin/product-management', serveStatic('AdminProduct'));
+viewsRouter.use(
+  '/admin/product-management/post',
+  serveStatic('AdminPostProduct')
+);
+viewsRouter.use(
+  '/admin/product-management/:productId',
+  serveStatic('AdminEditProduct')
+);
 viewsRouter.use('/admin/order-management', serveStatic('AdminOrder'));
 viewsRouter.use('/admin/order-management/:orderId', serveStatic('AdminOrderDetail'));
 viewsRouter.use('/admin/team-management', serveStatic('AdminTeam'));
