@@ -8,7 +8,7 @@ const updateTeamOptions = async () => {
   const options = teams
     .map(team => `<option value=${team.teamId}>${team.teamName}</option>`)
     .join('');
-  teamSelectBox.innerHTML = `<option selected>팀 전체</option>${options}`;
+  teamSelectBox.innerHTML = `<option selected>팀을 선택해 주세요.</option>${options}`;
 };
 await updateTeamOptions();
 
@@ -18,7 +18,7 @@ const updateCategoryOptions = async teamId => {
   const options = categories
     .map(category => `<option>${category.categoryName}</option>`)
     .join('');
-  categorySelectBox.innerHTML = `<option selected>카테고리 전체</option>${options}`;
+  categorySelectBox.innerHTML = `<option selected>카테고리를 선택해 주세요.</option>${options}`;
 };
 
 teamSelectBox.addEventListener('input', async () => {
@@ -109,25 +109,4 @@ postButton.addEventListener('click', async event => {
   } catch (error) {
     console.error('Upload failed', error);
   }
-
-  //상품 업로드
-  // const formData2 = new FormData();
-  // formData2.append('name', name);
-  // formData2.append('inventory', inventory);
-  // formData2.append('price', price);
-  // formData2.append('rate', rate);
-  // formData2.append('shortDescription', shortDescription);
-  // formData2.append('img', [`/assets/img/product/${img1.name}`,`/assets/img/product/${img2.name}`]);
-  // formData2.append('detailDescription', `/assets/img/product/${detailDescription.name}`);
-
-  // try {
-  //   const response = await fetch(
-  //     '/api/v1/categories/ssg-landers-uniform/products',
-  //     { method: 'POST', body: formData2 }
-  //   );
-
-  //   console.log('Uploaded successfully', response);
-  // } catch (error) {
-  //   console.error('Upload failed', error);
-  // }
 });

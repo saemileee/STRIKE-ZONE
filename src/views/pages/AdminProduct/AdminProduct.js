@@ -1,10 +1,14 @@
-import { fetchData } from '/js/api/api.js';
+import { fetchData, deleteData } from '/js/api/api.js';
+import { selectAllCheckbox } from '/js/utils.js';
 
 const render = async () => {};
 
 render();
 
-const products = await fetchData('/products');
+let products = await fetchData('/products');
+products = products.sort(
+  (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+);
 const tbodyElement = document.querySelector('tbody');
 
 const teamSelectBox = document.querySelector('.select.team select');
@@ -84,6 +88,7 @@ function renderProductList(products) {
     } = product;
     const trElement = document.createElement('tr');
     trElement.innerHTML = `
+    <th><input type="checkbox" data-product="${productId}" class="product-checkbox"/></th>
     <th>${new Date(createdAt).toLocaleString()}</th>
     <td>${new Date(updatedAt).toLocaleString()}</td>
     <td>${productId}</td>
@@ -96,12 +101,43 @@ function renderProductList(products) {
     <td>${discountedPrice.toLocaleString()}원</td>
     <td>${inventory}개</td>
     `;
-    trElement.addEventListener('click', () => {
+
+    const tdElement = document.createElement('td');
+
+    const editButton = document.createElement('button');
+    editButton.className = 'edit-product button is-small';
+    editButton.innerHTML = '수정';
+
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'delete-product button is-danger is-small';
+    deleteButton.innerHTML = '삭제';
+
+    tdElement.append(editButton, deleteButton);
+    trElement.append(tdElement);
+
+    tbodyElement.append(trElement);
+
+    editButton.addEventListener('click', () => {
       window.location.href = `/admin/product-management/${productId}`;
     });
-    tbodyElement.append(trElement);
+
+    deleteButton.addEventListener('click', async () => {
+      if (
+        confirm(`삭제한 상품 정보는 되돌릴 수 없습니다.
+정말 지우시겠습니까?`)
+      ) {
+        await deleteData(`/products/${productId}`);
+        window.location.reload();
+      }
+    });
   });
 }
+
+const checkedDeleteButton = document.querySelector('.checked-delete-button');
+checkedDeleteButton.addEventListener('click', async () => {
+  const checkboxes = document.querySelectorAll('product-checkbox');
+  checkboxes.filter(checkbox => checkbox.checked);
+});
 
 const addProductButton = document.querySelector('.add-product');
 addProductButton.addEventListener('click', () => {
@@ -110,3 +146,5 @@ addProductButton.addEventListener('click', () => {
 
 renderProductList(products);
 renderTotalProducts(products);
+
+selectAllCheckbox('product-checkbox', 'product-checkbox-all');

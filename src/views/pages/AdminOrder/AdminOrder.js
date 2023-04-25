@@ -1,4 +1,4 @@
-import { $, $createElement } from '/js/utils.js';
+import { $, $createElement, autoHyphen } from '/js/utils.js';
 
 const [RECENT, LONGEST, ID_ASC, ID_DES, PRICE_ASC, PRICE_DES] = [
   'recent',
@@ -233,117 +233,195 @@ function OrderTable(orders) {
     if (event.target.closest('.edit-one')) {
       const modal = document.querySelector('.modal');
       modal.classList.add('active');
+      const backdrop = $('.modal-backdrop');
+      backdrop.addEventListener('click', () => {
+        modal.classList.remove('active');
+      });
       const modalLayout = modal.querySelector('.modal-layout');
       modalLayout.innerHTML = `
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">받는 사람</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input receiver"
-                  type="text"
-                  placeholder="받는 사람을 입력해 주세요."
-                  required
-                />
-              </p>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">받는 사람</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input receiver"
+                    type="text"
+                    placeholder="받는 사람을 입력해 주세요."
+                    required
+                  />
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">연락처</label>
-          </div>
-          <div class="field-body">
-            <p class="control">
-              <span class="select">
-                <select class="receiver-phone-number-pro">
-                  <option>010</option>
-                  <option>011</option>
-                  <option>016</option>
-                  <option>017</option>
-                  <option>018</option>
-                  <option>019</option>
-                </select>
-              </span>
-            </p>
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input receiver-phone-number-back"
-                  type="tel"
-                  placeholder="나머지 번호를 입력해 주세요."
-                  maxlength="9"
-                  required
-                />
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">연락처</label>
+            </div>
+            <div class="field-body">
+              <p class="control">
+                <span class="select">
+                  <select class="receiver-phone-number-pro">
+                    <option>010</option>
+                    <option>011</option>
+                    <option>016</option>
+                    <option>017</option>
+                    <option>018</option>
+                    <option>019</option>
+                  </select>
+                </span>
               </p>
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input receiver-phone-number-back"
+                    type="tel"
+                    placeholder="나머지 번호를 입력해 주세요."
+                    minlength="6"
+                    maxlength="9"
+                    required
+                  />
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">주소</label>
-          </div>
-          <div class="field-body">
-            <p class="control">
-              <span
-                id="receiver-address-button"
-                class="button receiver-address"
-                >주소찾기</span
-              >
-            </p>
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input receiver-address receiver-address-zonecode"
-                  type="text"
-                  placeholder="우편번호"
-                  readonly
-                  required
-                />
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">주소</label>
+            </div>
+            <div class="field-body">
+              <p class="control">
+                <span
+                  id="receiver-address-button"
+                  class="button receiver-address"
+                  >주소찾기</span
+                >
               </p>
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input receiver-address receiver-address-zonecode"
+                    type="text"
+                    placeholder="우편번호"
+                    readonly
+                    required
+                  />
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"></label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  id="address-base"
-                  class="input receiver-address receiver-address-base"
-                  type="text"
-                  placeholder="주소"
-                  readonly
-                  required
-                />
-              </p>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label"></label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    id="address-base"
+                    class="input receiver-address receiver-address-base"
+                    type="text"
+                    placeholder="주소"
+                    readonly
+                    required
+                  />
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label"></label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control is-expanded">
-                <input
-                  class="input receiver-address-detail"
-                  type="text"
-                  placeholder="상세주소를 입력해 주세요."
-                  required
-                />
-              </p>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label"></label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    class="input receiver-address-detail"
+                    type="text"
+                    placeholder="상세주소를 입력해 주세요."
+                    required
+                  />
+                </p>
+              </div>
             </div>
           </div>
-        </div>
+          <button class="send-change-data button is-dark">배송 정보 변경</button>
       `;
+      autoHyphen('.receiver-phone-number-back');
+
+      const { id } = event.target.closest('tr');
+      const { recipient } = await fetch(`/api/v1/orders/${id}`).then((res) => res.json());
+      const [, phoneNumber] = recipient.phoneNumber.split('-');
+
+      $('.input.receiver').value = recipient.name;
+      $('.input.receiver-phone-number-back').value = phoneNumber;
+      $('.input.receiver').value = recipient.name;
+      $('.receiver-address-zonecode').value = recipient.zipCode;
+      $('.receiver-address-base').value = recipient.address1;
+      $('.receiver-address-detail').value = recipient.address2;
+
+      modal.addEventListener('click', async (event) => {
+        if (event.target.closest('#receiver-address-button')) {
+          const userData = new daum.Postcode({
+            oncomplete(data) {
+              $('.receiver-address-zonecode').value = data.zonecode;
+              $('.receiver-address-base').value = data.address;
+              $('.receiver-address-detail').value = '';
+              $('.receiver-address-detail').focus();
+            },
+          }).open();
+        }
+
+        if (event.target.closest('.send-change-data')) {
+          event.preventDefault();
+
+          const name = $('.receiver').value;
+          if (!name) {
+            alert('이름을 입력해주세요!');
+            return;
+          }
+          const address1 = $('.receiver-address-base').value;
+          const address2 = $('.receiver-address-detail').value;
+          const zipCode = $('.receiver-address-zonecode').value;
+          const phoneNumber = `${$('.receiver-phone-number-pro').value}-${
+            $('.receiver-phone-number-back').value
+          }`;
+          if (phoneNumber.length < 12) {
+            alert('유효한 전화번호를 입력해주세요!');
+            return;
+          }
+
+          try {
+            await fetch(`/api/v1/orders/${id}/recipient`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                name,
+                address1,
+                address2,
+                zipCode,
+                phoneNumber,
+              }),
+            });
+            modalLayout.innerHTML = `
+              <p class="edit-complete">
+                변경이 완료되었습니다!
+              </p>
+              <button class="edit-complete-button button is-dark">닫기</button>
+            `;
+          } catch (err) {
+            throw new Error(err);
+          }
+        }
+        if (event.target.closest('.edit-complete-button')) {
+          modal.classList.remove('active');
+        }
+      });
     }
   });
 
@@ -396,7 +474,7 @@ function EditButtons() {
     <button class="delete-selected button is-dark">선택 항목 삭제</button>
     <button class="edit-selected button is-dark">선택 항목 배송 상태 수정</button>
   `;
-  TableEditButtons.addEventListener('click', (event) => {
+  TableEditButtons.addEventListener('click', async (event) => {
     if (event.target.closest('.delete-selected')) {
       alert(selectedIds);
     }

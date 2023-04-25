@@ -1,4 +1,4 @@
-const BASE_URL = '/api/v1';
+const BASE_URL = '//34.64.244.53/api/v1';
 
 export async function fetchData(url) {
   try {

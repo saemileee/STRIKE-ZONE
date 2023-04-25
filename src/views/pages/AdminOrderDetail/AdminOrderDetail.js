@@ -42,7 +42,7 @@ const render = async () => {
         ${products
           .map(
             ({ productName, img, price, quantity, productId }) => `
-            <a href="/products/${productId}">
+            <a href="/admin/product-management/${productId}">
               <li class="order-item-product"">
                 <img class="product-img" src=${img}>
                 <div class="order-item-product-desc">
