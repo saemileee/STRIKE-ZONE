@@ -9,7 +9,9 @@ async function isAdminAccount() {
   }
 }
 
-isAdminAccount();
+window.onload = function () {
+  isAdminAccount();
+};
 
 const AdminData = $createElement('section', 'admin-data');
 
