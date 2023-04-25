@@ -140,15 +140,16 @@ table input:hover {
 }
 
 .order-orderer-square {
-  width: 250px;
+  padding: 20px 0;
 }
 
 .order-orderer-square .order-orderer {
   display: flex;
-  width: 100%;
+  width: fit-content;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 }
 
 .orderer-email {
@@ -161,8 +162,7 @@ table input:hover {
 }
 
 .order-product-square {
-  display: flex;
-  min-width: 500px;
+  width: fit-content;
 }
 
 .order-product-square .order-product {
@@ -171,6 +171,7 @@ table input:hover {
 
 .order-product-square .order-product img {
   width: 120px;
+  aspect-ratio: 1 / 1;
   box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, 
               rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
 }
@@ -193,13 +194,6 @@ table input:hover {
   display: flex;
   flex-direction: column;
 }
-
-.order-edit-square {
-  width: 200px;
-  justify-content: center;
-  align-items: center;
-}
-
 .order-status-square .dropdown {
   margin: 0 auto;
   margin-bottom: 10px;
@@ -223,6 +217,11 @@ table input:hover {
   margin: 0 auto;
 }
 
+.order-edit-square {
+  justify-content: center;
+  align-items: center;
+}
+
 .order-edit {
   display: flex;
   width: min-content;
@@ -232,7 +231,7 @@ table input:hover {
 }
 
 .order-edit .button {
-  width: 125px;
+  width: 60px;
 }
 
 .order-edit .button:hover {
@@ -242,4 +241,21 @@ table input:hover {
 
 .order-edit .edit-one {
   margin-bottom: 20px;
+}
+
+.send-change-data {
+  position: absolute;
+  bottom: 40px;
+  right: 70px;
+  width: 200px;
+}
+
+.edit-complete {
+  margin: 200px auto;
+  padding-left: 40px;
+  font-size: 40px;
+}
+
+.edit-complete-button {
+  margin-left: 40px;
 }
