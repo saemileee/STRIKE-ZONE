@@ -26,7 +26,7 @@ productRouter.post('/categories/:categoryId/products', productController.postPro
 
 // 상품 추가하기 업데이트
 productRouter.post('/categories/:categoryId/products/uploads', upload.fields(
-  [{ name: 'img1' }, { name: 'img2' }, { name: 'detailDescription' }],
+  [{ name: 'thumbnail' }, { name: 'subThumbnails' }, { name: 'subThumbnails' }, { name: 'detailDescription' }],
 ), productController.postProductWithImage);
 
 // 상품 삭제 (productId)
