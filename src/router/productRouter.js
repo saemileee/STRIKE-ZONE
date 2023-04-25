@@ -2,6 +2,8 @@ import { Router } from 'express';
 
 import { productController } from '../controller';
 
+import { upload } from '../image-uploader';
+
 const productRouter = Router();
 
 // 상품 목록 조회
@@ -24,5 +26,10 @@ productRouter.get('/categories/:categoryName', productController.getProductsByCa
 
 // 상품 추가 (관리자)
 productRouter.post('/categories/:categoryId/products', productController.postProduct);
+
+// 상품 추가하기 업데이트
+productRouter.post('/categories/:categoryId/products/uploads', upload.fields(
+  [{ name: 'img1' }, { name: 'img2' }, { name: 'detailDescription' }],
+), productController.postProductWithImage);
 
 export { productRouter };
