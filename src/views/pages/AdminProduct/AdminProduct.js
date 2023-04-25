@@ -135,8 +135,29 @@ function renderProductList(products) {
 
 const checkedDeleteButton = document.querySelector('.checked-delete-button');
 checkedDeleteButton.addEventListener('click', async () => {
-  const checkboxes = document.querySelectorAll('product-checkbox');
-  checkboxes.filter(checkbox => checkbox.checked);
+  const checkboxes = document.querySelectorAll('.product-checkbox');
+  const checkedBoxes = Array.from(checkboxes).filter(
+    checkbox => checkbox.checked
+  );
+  const checkedProducts = checkedBoxes.map(checkbox => {
+    const productId = checkbox.dataset.product;
+    return productId;
+  });
+  if (
+    confirm(`삭제한 상품 정보는 되돌릴 수 없습니다.
+선택한 상품 ${checkedProducts.length}개를 정말 지우시겠습니까?`)
+  ) {
+    try {
+      const response = await fetch(`//34.64.244.53/api/v1/products`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productIds: checkedProducts }),
+      });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 });
 
 const addProductButton = document.querySelector('.add-product');
