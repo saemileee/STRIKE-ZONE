@@ -68,7 +68,7 @@ productRouter.post(
 // 상품 상세 정보 이미지 업로드만 처리
 productRouter.post(
   '/products/detail-description',
-  upload.array('detailDescription'),
+  upload.single('detailDescription'),
   async (req, res) => {
     const filenameOfDetail = req.file.filename;
 
