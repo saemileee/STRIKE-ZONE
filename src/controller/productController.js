@@ -115,13 +115,14 @@ const productController = {
     try {
       const { productIds } = req.body;
 
-      const deleteCount = await productService.deleteProductsByProductIds(productIds);
+      const deletedCount = await productService.deleteProductsByProductIds(productIds);
 
-      if (deleteCount <= 0) {
-        res.status(500).json({ result: '다수의 상품 삭제에 문제가 발생했습니다.' });
+      if (deletedCount <= 0) {
+        res.status(200).json({ result: '다수의 상품 삭제에 문제가 발생했습니다.' });
+        return;
       }
 
-      res.status(200).json({ result: `${deleteCount}개의 상품이 제거되었습니다.` });
+      res.status(200).json({ result: `${deletedCount}개의 상품이 제거되었습니다.` });
     } catch (error) {
       next(error);
     }

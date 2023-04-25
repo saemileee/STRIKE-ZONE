@@ -147,10 +147,12 @@ const productService = {
   async deleteProductsByProductIds(productIds) {
     let deletedCount = 0;
 
-    productIds.forEach(async (productId) => {
-      await productDAO.deleteProductByProductId(productId);
-      deletedCount += 1;
+    const promises = productIds.map(async (productId) => {
+      const result = await productDAO.deleteProductByProductId(productId);
+      deletedCount += result;
     });
+
+    await Promise.all(promises);
 
     return deletedCount;
   },
