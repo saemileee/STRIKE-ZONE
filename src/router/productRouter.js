@@ -15,9 +15,6 @@ productRouter.get('/products/:productId', productController.getProductByProductI
 // 상품 수정 (productId)
 productRouter.put('/products/:productId', productController.updateProductByProductId);
 
-// 상품 삭제 (productId)
-productRouter.delete('/products/:productId', productController.deleteProductByProductId);
-
 // 특정 카테고리의 상품 목록 조회
 productRouter.get('/categories/:categoryId/products', productController.getProductsByCategoryId);
 
@@ -31,5 +28,11 @@ productRouter.post('/categories/:categoryId/products', productController.postPro
 productRouter.post('/categories/:categoryId/products/uploads', upload.fields(
   [{ name: 'img1' }, { name: 'img2' }, { name: 'detailDescription' }],
 ), productController.postProductWithImage);
+
+// 상품 삭제 (productId)
+productRouter.delete('/products/:productId', productController.deleteProductByProductId);
+
+// 다수의 상품 일괄 삭제 (productId 배열을 받아 처리)
+productRouter.delete('/products', productController.deleteProductsByProductIds);
 
 export { productRouter };

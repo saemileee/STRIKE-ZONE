@@ -143,6 +143,18 @@ const productService = {
     await productDAO.deleteProductByProductId(productId);
   },
 
+  // 다수의 상품 삭제하기 (관리자)
+  async deleteProductsByProductIds(productIds) {
+    let deletedCount = 0;
+
+    productIds.forEach(async (productId) => {
+      await productDAO.deleteProductByProductId(productId);
+      deletedCount += 1;
+    });
+
+    return deletedCount;
+  },
+
   // 할인된 가격을 구하는 함수
   calculateDiscountedPrice(productInfo) {
     const { price, rate } = productInfo;
