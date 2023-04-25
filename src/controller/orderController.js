@@ -80,6 +80,19 @@ const orderController = {
     }
   },
 
+  // 다수의 orderId 에 해당하는 배송 상태 수정하기
+  async updateStatus(req, res, next) {
+    try {
+      const { orderIds, status } = req.body;
+
+      const updatedCount = await orderService.updateStatus(orderIds, status);
+
+      res.status(200).json({ result: `${updatedCount}개 주문의 배송 상태가 '${status}'로 변경되었습니다.` });
+    } catch (error) {
+      next(error);
+    }
+  },
+
   // 특정 orderId 에 해당하는 주문 정보 삭제하기
   async deleteOrderByOrderId(req, res, next) {
     try {
@@ -88,6 +101,19 @@ const orderController = {
       await orderService.deleteOrderByOrderId(orderId);
 
       res.status(200).json({ result: 'order deleted successfully' });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // 다수의 orderId 들에 해당하는 주문 정보들을 삭제하기
+  async deleteOrders(req, res, next) {
+    try {
+      const { orderIds } = req.body;
+
+      const deleteCount = await orderService.deleteOrders(orderIds);
+
+      res.status(200).json({ result: `${deleteCount}개의 주문이 삭제되었습니다.` });
     } catch (error) {
       next(error);
     }

@@ -67,9 +67,35 @@ const orderService = {
     await orderDAO.updateStatusByOrderId(orderId, status);
   },
 
+  // 다수의 orderId 에 해당하는 배송 상태 정보 수정
+  async updateStatus(orderIds, status) {
+    let modifiedCount = 0;
+    const promises = orderIds.map(async (orderId) => {
+      const result = await orderDAO.updateStatusByOrderId(orderId, status);
+      modifiedCount += result;
+    });
+
+    await Promise.all(promises);
+
+    return modifiedCount;
+  },
+
   // 특정 orderId 에 해당하는 주문 정보 삭제하기
   async deleteOrderByOrderId(orderId) {
     await orderDAO.deleteOrderByOrderId(orderId);
+  },
+
+  // 다수의 orderId 에 해당하는 주문 정보들을 삭제하기
+  async deleteOrders(orderIds) {
+    let deletedCount = 0;
+    const promises = orderIds.map(async (orderId) => {
+      const result = await orderDAO.deleteOrderByOrderId(orderId);
+      deletedCount += result;
+    });
+
+    await Promise.all(promises);
+
+    return deletedCount;
   },
 
   // 결제 수단에 따라 기본 배송 상태를 정하기 ('결제전' or '상품준비중')

@@ -31,11 +31,14 @@ const orderDAO = {
 
   // 특정 주문의 배송 상태 수정
   async updateStatusByOrderId(orderId, status) {
-    await Order.updateOne({ orderId }, { status });
+    const { modifiedCount } = await Order.updateOne({ orderId }, { status });
+
+    return modifiedCount;
   },
 
   async deleteOrderByOrderId(orderId) {
-    await Order.deleteOne({ orderId });
+    const { deletedCount } = await Order.deleteOne({ orderId });
+    return deletedCount;
   },
 
   async createOrderId() {
