@@ -4,15 +4,25 @@ import { isLogin, getAuthOption } from '/js/api/authAPI.js';
 const render = async () => {
   const [, , , orderIdByPath] = location.pathname.split('/');
   const orderData = await fetch(`/api/v1/orders/${orderIdByPath}`).then((res) => res.json());
+  console.log(orderData);
   const {
     orderId,
     createdAt,
-    products,
+    orderer: { email: ordererEmail, name: ordererName, phoneNumber: ordererPhoneNumber },
+    recipient: {
+      address1,
+      address2,
+      name: recipientName,
+      phoneNumber: recipientPhoneNumber,
+      zipCode,
+    },
+    requirement,
     productsPayment,
+    products,
     deliveryCharge,
     totalPayment,
-    recipient,
-    orderer: { email },
+    paymentMethod,
+    status,
   } = orderData;
 
   const convertedDate = new Date(createdAt);
@@ -87,17 +97,27 @@ const render = async () => {
       <div class="user-data-box">
         <div class="user-name">
           <p>받는 사람</p>
-          <em>${recipient.name}</em>
+          <em>${recipientName}</em>
         </div>
         <div class="user-phone-number">
           <p>주소</p>
-          <em>${recipient.address1} ${recipient.address2} [${recipient.zipCode}]</em>
+          <em>${address1} ${address2} [${zipCode}]</em>
         </div>
         <div class="user-address">
           <p>연락처</p>
-          <em>${recipient.phoneNumber}</em>
+          <em>${recipientPhoneNumber}</em>
         </div>
       </div>
+    </div>
+    <hr>
+    <div class="status">
+      <h4 h4 class="title is-3">배송 상태</h4>
+      <em>${status}</em>
+    </div>
+    <hr>
+    <div class="payment">
+      <h4 h4 class="title is-3">결제 수단</h4>
+      <em>${paymentMethod}</em>
     </div>
   </section>
   `;

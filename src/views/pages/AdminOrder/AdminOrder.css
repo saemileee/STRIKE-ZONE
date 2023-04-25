@@ -32,6 +32,10 @@
   margin-right: 10px;
 }
 
+.edit-buttons .dropdown .button {
+  margin-bottom: 0;
+}
+
 .sort-list {
   display: flex;
   margin-bottom: 20px;
@@ -233,7 +237,6 @@ table input:hover {
 .order-edit .button {
   width: 60px;
 }
-
 .order-edit .button:hover {
   cursor: pointer;
   font-weight: 600;
