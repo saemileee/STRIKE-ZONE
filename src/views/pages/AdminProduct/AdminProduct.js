@@ -96,6 +96,9 @@ function renderProductList(products) {
     <td>${discountedPrice.toLocaleString()}원</td>
     <td>${inventory}개</td>
     `;
+    trElement.addEventListener('click', () => {
+      window.location.href = `/admin/product-management/${productId}`;
+    });
     tbodyElement.append(trElement);
   });
 }

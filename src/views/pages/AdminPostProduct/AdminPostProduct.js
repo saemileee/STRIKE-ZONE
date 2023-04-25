@@ -1,4 +1,4 @@
-import { fetchData } from '/js/api/api.js';
+import { fetchData, postData } from '/js/api/api.js';
 import { setDiscount } from '/js/utils.js';
 
 //카테고리 선택 렌더링
@@ -43,6 +43,27 @@ const postButton = document.querySelector('.post');
 postButton.addEventListener('click', async event => {
   event.preventDefault();
 
-  const productThumbnail = document.querySelector('.productThumbnail').files[0];
+  const img1 = document.querySelector('.productThumbnail').files[0];
+  const img2 = document.querySelector('.productDetailImages').files[0];
+  const detailDescription = document.querySelector('.productDetailImages')
+    .files[0];
   const formData = new FormData();
+  formData.append('name', 'testName');
+  formData.append('inventory', 100);
+  formData.append('price', 1000);
+  formData.append('rate', 20);
+  formData.append('shortDescription', 'testShort');
+  formData.append('img1', img1);
+  formData.append('img2', img2);
+  formData.append('detailDescription', detailDescription);
+  try {
+    const response = await postData(
+      '/categories/ssg-landers-uniform/products/uploads',
+      formData
+    );
+
+    console.log('Uploaded successfully', response);
+  } catch (error) {
+    console.error('Upload failed', error);
+  }
 });
