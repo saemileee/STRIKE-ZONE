@@ -30,7 +30,7 @@ const authController = {
   },
 
   async sendValidationEmail(req, res, next) {
-    const { email } = req.body;
+    const { email } = req.headers;
 
     try {
       await authService.sendValidEmail(email);

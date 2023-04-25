@@ -26,7 +26,7 @@ const userService = {
     if (!user) {
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const isValid = Math.floor(Math.random() * 1000).toString().padStart(4, '0');
+      const isValid = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
 
       let newUser = { email, password: hashedPassword, isValid, ...restUserInfo };
 
