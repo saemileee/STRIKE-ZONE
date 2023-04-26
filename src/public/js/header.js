@@ -142,18 +142,23 @@ teamsContainerElement.style.display = 'none';
 productsContainerElement.style.display = 'none';
 
 teamCategoryLiElement.addEventListener('mouseover', () => {
+  categoryContainerElement.style.transform = 'translateY(0)';
   productsContainerElement.style.display = 'none';
   teamsContainerElement.style.display = 'block';
 });
 
 productCategoryLiElement.addEventListener('mouseover', () => {
+  categoryContainerElement.style.transform = 'translateY(0)';
   teamsContainerElement.style.display = 'none';
   productsContainerElement.style.display = 'block';
 });
 
 const hideTeamsContainer = () => {
-  teamsContainerElement.style.display = 'none';
-  teamCategoryLiElement.removeAttribute('style');
+  categoryContainerElement.style.transform = 'translateY(-150%)';
+  setTimeout(() => {
+    teamsContainerElement.style.display = 'none';
+    teamCategoryLiElement.removeAttribute('style');
+  }, 300);
 };
 
 teamsContainerElement.addEventListener('mouseover', () => {
@@ -162,8 +167,11 @@ teamsContainerElement.addEventListener('mouseover', () => {
 teamsContainerElement.addEventListener('mouseleave', hideTeamsContainer);
 
 const hideProductsContainer = () => {
-  productsContainerElement.style.display = 'none';
-  productCategoryLiElement.removeAttribute('style');
+  categoryContainerElement.style.transform = 'translateY(-150%)';
+  setTimeout(() => {
+    productsContainerElement.style.display = 'none';
+    productCategoryLiElement.removeAttribute('style');
+  }, 300);
 };
 productsContainerElement.addEventListener('mouseover', () => {
   productCategoryLiElement.style.color = 'rgb(179, 255, 14)';

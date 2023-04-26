@@ -76,7 +76,6 @@ function SortList(target) {
 
 const sortProducts = (base, products) => {
   let result;
-  console.log(base);
   switch (base) {
     case RECENT:
       result = products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -121,14 +120,20 @@ const render = async () => {
   SearchBox($productsWrapper);
   try {
     let products;
-    if (!CURRENT_CATEGORY === 'all') {
+    if (TEAM !== 'all' && CURRENT_CATEGORY !== 'all') {
       products = await fetch(`/api/v1/categories/${TEAM}-${CURRENT_CATEGORY}/products`);
+    } else if (TEAM === 'all' && CURRENT_CATEGORY === 'all') {
+      products = await fetch('/api/v1/products');
     } else if (TEAM === 'all') {
       products = await fetch(`/api/v1/categories/${CURRENT_CATEGORY}`);
-    } else {
-      products = await fetch(`/api/v1/categories/${TEAM}-${CURRENT_CATEGORY}/products`);
+    } else if (CURRENT_CATEGORY === 'all') {
+      products = await fetch(`/api/v1/teams/${TEAM}/products`);
     }
     const productsList = await products.json();
+    if (productsList.length === 0) {
+      $products.innerHTML = '<p class="no-item">상품이 존재하지 않습니다!</p>';
+      return;
+    }
     const sortedList = sortProducts(SORT, productsList);
     if (SEARCH_VALUE) {
       const filterdList = sortedList.filter((product) => product.name.includes(SEARCH_VALUE));

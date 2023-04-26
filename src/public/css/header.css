@@ -102,8 +102,10 @@ header .header-container .right-side-container .my-page {
 header .category-container {
   width: 100%;
   position: absolute;
+  transform: translateY(-100%);
   z-index: 999;
   height: inherit;
+  transition: transform 0.3s ease-out;
 }
 
 header .category-container {
