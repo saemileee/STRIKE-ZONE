@@ -25,7 +25,7 @@ const categorySelectBox = document.querySelector('.select.category select');
 const updateCategoryOptions = async teamId => {
   const categories = await fetchData(`/teams/${teamId}/categories`);
   const options = categories
-    .map(category => `<option>${category.categoryName}</option>`)
+    .map(category => `<option value="${category}">${category}</option>`)
     .join('');
   categorySelectBox.innerHTML = `<option selected>카테고리 전체</option>${options}`;
 };
