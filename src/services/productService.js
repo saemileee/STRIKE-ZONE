@@ -20,6 +20,17 @@ const productService = {
     return updatedProducts;
   },
 
+  // 특정 팀의 전체 상품 목록 조회
+  async getAllProductsByTeamId(teamId) {
+    const products = await productDAO.findAllProductsByTeamId(teamId);
+    // 신상품 여부를 추가하기
+    const updatedProducts = products.map(
+      (product) => this.addIsNewInProduct(product),
+    );
+
+    return updatedProducts;
+  },
+
   // 특정 팀의 카테고리에 해당하는 상품 목록 조회
   async getProductsByCategoryId(categoryId) {
     const products = await productDAO.findProductsByCategoryId(categoryId);
