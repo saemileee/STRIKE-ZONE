@@ -8,6 +8,11 @@ const [RECENT, LONGEST, NAME_ASC, NAME_DES] = [
   'name-des',
 ];
 
+const urlParams = new URL(location.href).searchParams;
+const SORT = urlParams.get('sort');
+const SEARCH_TYPE = urlParams.get('search-type');
+const SEARCH_VALUE = urlParams.get('search-value');
+
 const userTable = async () => {
   let users;
   try {
@@ -17,8 +22,17 @@ const userTable = async () => {
     throw new Error({ message: err });
   }
 
-  const urlParams = new URL(location.href).searchParams;
-  const SORT = urlParams.get('sort');
+  if (SEARCH_TYPE && SEARCH_VALUE) {
+    users = users.filter((user) => {
+      if (
+        SEARCH_TYPE === 'phoneNumber' &&
+        user[SEARCH_TYPE].split('-').join('').includes(SEARCH_VALUE)
+      ) {
+        return true;
+      } else if (user[SEARCH_TYPE].includes(SEARCH_VALUE)) return true;
+      return false;
+    });
+  }
 
   if (!SORT) location.href = `/admin/user-management/?sort=${RECENT}`;
 
@@ -77,13 +91,13 @@ const userTable = async () => {
         </div>
         <div class="dropdown-menu" id="dropdown-menu" role="menu">
           <div class="dropdown-content">
-            <a href="#" class="dropdown-item" id="이름">
+            <a href="#" class="dropdown-item" id="koreanName" name="이름">
               이름
             </a>
-            <a class="dropdown-item" id="이메일">
+            <a class="dropdown-item" id="email" name="이메일">
               이메일
             </a>
-            <a class="dropdown-item" id="휴대폰 번호">
+            <a class="dropdown-item" id="phoneNumber" name="휴대폰 번호">
               휴대폰 번호
             </a>
           </div>
@@ -93,7 +107,7 @@ const userTable = async () => {
       <button class="search-start-button button is-dark">검색</button>
   `;
 
-  let searchType;
+  let searchType, searchTypeName;
 
   SearchBox.addEventListener('click', (event) => {
     if (event.target.closest('.dropdown')) {
@@ -103,11 +117,14 @@ const userTable = async () => {
 
     if (event.target.closest('.dropdown-item')) {
       searchType = event.target.id;
-      SearchBox.querySelector('.current-search-type').innerText = searchType;
+      searchTypeName = event.target.name;
+      SearchBox.querySelector('.current-search-type').innerText =
+        searchTypeName;
     }
 
     if (event.target.closest('.search-start-button')) {
       const inputValue = SearchBox.querySelector('.search-content').value;
+      if (!searchType) searchType = SEARCH_TYPE;
       location.href = `/admin/user-management/?sort=recent&search-type=${searchType}&search-value=${inputValue}`;
     }
   });
@@ -202,8 +219,6 @@ const userTable = async () => {
 
 async function render() {
   await userTable();
-  const urlParams = new URL(location.href).searchParams;
-  const SORT = urlParams.get('sort');
   const userNumbers = document.querySelectorAll('.user-number');
   if (SORT === 'longest' || SORT === 'name-asc') {
     userNumbers.forEach((node, index) => {
@@ -213,6 +228,18 @@ async function render() {
     userNumbers.forEach((node, index) => {
       node.innerHTML = `${userNumbers.length - index}`;
     });
+  }
+
+  const searchOption = {
+    koreanName: '이름',
+    email: '이메일',
+    phoneNumber: '휴대폰 번호',
+  };
+  if (SEARCH_TYPE && SEARCH_VALUE) {
+    const searchBox = $('.search-box');
+    searchBox.querySelector('.current-search-type').innerText =
+      searchOption[SEARCH_TYPE];
+    searchBox.querySelector('.search-content').value = SEARCH_VALUE;
   }
 }
 
