@@ -7,7 +7,7 @@ const CURRENT_CATEGORY = urlParams.get('category');
 const SORT = urlParams.get('sort');
 const SEARCH_VALUE = urlParams.get('search');
 
-const [RECENT, RATE_DES, PRICE_ASC, PRICE_DES] = ['recent', 'price-asc', 'price-des', 'rate-des'];
+const [RECENT, PRICE_ASC, PRICE_DES, RATE_DES] = ['recent', 'price-asc', 'price-des', 'rate-des'];
 
 if (!SORT) location.href = `/products/?team=${TEAM}&category=${CURRENT_CATEGORY}&sort=${RECENT}`;
 
@@ -31,21 +31,22 @@ const ProductHeader = async (target) => {
   CATEGORIES.push({
     categoryName: 'all',
   });
-  console.log(CATEGORIES);
 
   const $CategoryList = Header.querySelector('.products-category-list');
 
-  CATEGORIES.filter(({ categoryName }) => categoryName !== CURRENT_CATEGORY).forEach(
-    ({ categoryName }) => {
-      const CategoryItem = $createElement('li', 'products-category-item');
-      CategoryItem.innerHTML = `
+  if (TEAM !== 'all') {
+    CATEGORIES.filter(({ categoryName }) => categoryName !== CURRENT_CATEGORY).forEach(
+      ({ categoryName }) => {
+        const CategoryItem = $createElement('li', 'products-category-item');
+        CategoryItem.innerHTML = `
       <a href="/products?team=${TEAM}&category=${categoryName}">
         ${categoryName.toUpperCase()}
       </a>
     `;
-      $CategoryList.append(CategoryItem);
-    }
-  );
+        $CategoryList.append(CategoryItem);
+      }
+    );
+  }
   target.insertAdjacentElement('afterbegin', Header);
 };
 
@@ -75,15 +76,16 @@ function SortList(target) {
 
 const sortProducts = (base, products) => {
   let result;
+  console.log(base);
   switch (base) {
     case RECENT:
       result = products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       break;
     case PRICE_ASC:
-      result = products.sort((a, b) => new Date(b.discountedPrice) - new Date(a.discountedPrice));
+      result = products.sort((a, b) => new Date(a.discountedPrice) - new Date(b.discountedPrice));
       break;
     case PRICE_DES:
-      result = products.sort((a, b) => new Date(a.discountedPrice) - new Date(b.discountedPrice));
+      result = products.sort((a, b) => new Date(b.discountedPrice) - new Date(a.discountedPrice));
       break;
     case RATE_DES:
       result = products.sort((a, b) => new Date(b.rate) - new Date(a.rate));
@@ -121,6 +123,8 @@ const render = async () => {
     let products;
     if (!CURRENT_CATEGORY === 'all') {
       products = await fetch(`/api/v1/categories/${TEAM}-${CURRENT_CATEGORY}/products`);
+    } else if (TEAM === 'all') {
+      products = await fetch(`/api/v1/categories/${CURRENT_CATEGORY}`);
     } else {
       products = await fetch(`/api/v1/categories/${TEAM}-${CURRENT_CATEGORY}/products`);
     }
