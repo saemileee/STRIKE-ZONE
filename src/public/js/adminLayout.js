@@ -36,6 +36,7 @@ AdminNav.innerHTML = `
     </li>
   </ul>
   <span class="logout">로그아웃</span>
+  <span class="homepage">홈페이지로</span>
 `;
 
 const [, , currentAdminCategory] = location.pathname.split('/');
@@ -50,6 +51,11 @@ const $logoutButton = AdminNav.querySelector('.logout');
 $logoutButton.addEventListener('click', (event) => {
   deleteCookie('userToken');
   location.href = '/admin/login';
+});
+
+const $homepageButton = AdminNav.querySelector('.homepage');
+$homepageButton.addEventListener('click', (event) => {
+  location.href = '/';
 });
 
 const $contentContainer = $('.content-container');

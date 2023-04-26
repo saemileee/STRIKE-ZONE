@@ -71,3 +71,13 @@ body {
 .logout:hover {
   cursor: pointer;
 }
+
+.homepage {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+.homepage:hover {
+  cursor: pointer;
+}
