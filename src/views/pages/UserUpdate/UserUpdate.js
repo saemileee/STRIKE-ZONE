@@ -340,6 +340,10 @@ const render = async () => {
         alert('주소를 입력해 주세요');
         return false;
       }
+      if (!getCheerTeam()) {
+        alert('응원하는 팀을 선택해 주세요.');
+        return false;
+      }
       return true;
     }
 
@@ -414,8 +418,7 @@ const render = async () => {
           if (key === 'phoneNumber') {
             newUser[key] = getPhoneNumber();
           } else if (key === 'cheerTeam') {
-            const isSelected = getCheerTeam();
-            if (isSelected) newUser[key] = isSelected;
+            newUser[key] = getCheerTeam();
           } else newUser[key] = userInfo.value;
         });
         const { token } = JSON.parse(getCookie('userToken'));
