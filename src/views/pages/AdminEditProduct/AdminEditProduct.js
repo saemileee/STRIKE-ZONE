@@ -113,3 +113,5 @@ formElement.addEventListener('submit', async event => {
     console.error('Upload failed', error);
   }
 });
+
+document.querySelectorAll('.admin-data')[1].remove();

@@ -1,3 +1,12 @@
+.top-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-container span {
+  vertical-align: bottom;
+}
+
 table {
   margin-top: 22px;
 }

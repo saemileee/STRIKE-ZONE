@@ -169,3 +169,5 @@ renderProductList(products);
 renderTotalProducts(products);
 
 selectAllCheckbox('product-checkbox', 'product-checkbox-all');
+
+document.querySelectorAll('.admin-data')[1].remove();
