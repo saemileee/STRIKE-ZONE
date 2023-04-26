@@ -244,7 +244,7 @@ const render = async () => {
     </div>
   </div>
   <div class="buttons">
-    <button type="submit" class="button is-info" id="update">
+    <button type="submit" class="button is-dark" id="update">
       수정하기
     </button>
   </div>
@@ -265,7 +265,7 @@ const render = async () => {
           required
         />
       </div>
-      <button type="submit" class="button is-info" id="login">확인</button>
+      <button type="submit" class="button is-dark" id="login">확인</button>
     </div>    
   </div>
 </section>
@@ -373,8 +373,8 @@ const render = async () => {
     function selectTeam() {
       teams.forEach((team) =>
         team.checked
-          ? team.parentNode.classList.add('is-info')
-          : team.parentNode.classList.remove('is-info')
+          ? team.parentNode.classList.add('is-dark')
+          : team.parentNode.classList.remove('is-dark')
       );
     }
 
@@ -462,7 +462,7 @@ const render = async () => {
       (team) => team.value === teamName
     );
     checkedTeam.checked = 'checked';
-    checkedTeam.parentNode.classList.add('is-info');
+    checkedTeam.parentNode.classList.add('is-dark');
   }
 
   function fillUserInfo(userData) {

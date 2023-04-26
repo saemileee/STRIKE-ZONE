@@ -102,8 +102,8 @@ function searchZipcode() {
 function selectTeam() {
   teams.forEach((team) =>
     team.checked
-      ? team.parentNode.classList.add('is-info')
-      : team.parentNode.classList.remove('is-info')
+      ? team.parentNode.classList.add('is-dark')
+      : team.parentNode.classList.remove('is-dark')
   );
 }
 
