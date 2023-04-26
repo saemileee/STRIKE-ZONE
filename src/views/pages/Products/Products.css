@@ -14,7 +14,7 @@ a {
 .products-list-header {
   display: flex;
   flex-direction: column;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   animation: leftAppear 0.5s ease-out;
 }
 
@@ -72,6 +72,50 @@ a {
   grid-gap: 40px;
   max-width: 1136px;
   color: #000;
+  margin-bottom: 100px;
+}
+
+.sort-list {
+  display: flex;
+  margin-bottom: 20px;
+  animation: leftAppear 1s ease-out;
+}
+
+.sort-list .selected-sort {
+  font-weight: 700;
+}
+
+.sort-list .sort-list-item {
+  font-size: 20px;
+  color: #a0a0a0;
+}
+
+.sort-list .sort-list-item:hover {
+  cursor: pointer;
+}
+
+.sort-list .sort-list-item::after {
+  cursor: default;
+  content: " | ";
+  margin-right: 6px;
+}
+
+.sort-list .sort-list-item::after:hover {
+  cursor: alias;
+}
+
+.sort-list .sort-list-item:last-child:after {
+  content: "";
+}
+
+.search-form {
+  display: flex;
+  animation: leftAppear 0.75s ease-out;
+}
+
+.search-form input {
+  width: 200px;
+  margin: 0 10px 20px 0;
 }
 
 @keyframes leftAppear {
