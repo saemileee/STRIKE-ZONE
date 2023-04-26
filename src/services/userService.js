@@ -53,11 +53,15 @@ const userService = {
       throw new Error('해당 유저가 존재하지 않습니다.');
     }
 
-    const { password } = toUpdate;
+    const updatePassword = toUpdate.password;
 
-    const newHashedPassword = await bcrypt.hash(password, 10);
+    if (updatePassword) {
+      const newHashedPassword = await bcrypt.hash(updatePassword, 10);
 
-    toUpdate.password = newHashedPassword;
+      toUpdate.password = newHashedPassword;
+    } else {
+      toUpdate.password = user.password;
+    }
 
     const updatedUser = await userDAO.update(email, toUpdate);
 
