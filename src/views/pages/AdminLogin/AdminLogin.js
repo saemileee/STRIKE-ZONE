@@ -2,9 +2,9 @@ import { $, $createElement, deleteCookie } from '/js/utils.js';
 import { isAdmin } from '/js/api/authAPI.js';
 
 const loginForm = $('.login-form');
-
 const loginId = $('#loginId');
 const loginPassword = $('#loginPassword');
+const homeButton = $('#home');
 
 const onLoginSubmit = (e) => {
   e.preventDefault();
@@ -50,4 +50,10 @@ const onLoginSubmit = (e) => {
     });
 };
 
+function goToHome(e) {
+  e.preventDefault();
+  window.location.href = '/';
+}
+
 loginForm.addEventListener('submit', onLoginSubmit);
+homeButton.addEventListener('click', goToHome);

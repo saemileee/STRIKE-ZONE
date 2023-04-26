@@ -34,8 +34,8 @@ body {
 #loginId {
   margin-bottom: 10px;
 }
-#login {
-  margin-left: 20px;
-  width: 150px;
+#login,
+#home {
+  margin-left: 10px;
   height: 90px;
 }
