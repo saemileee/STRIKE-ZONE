@@ -7,7 +7,6 @@ const render = async () => {
     `/api/v1/users/${userEmail}`,
     getAuthOption()
   ).then((res) => res.json());
-  console.log(userInfo);
 
   const managementContainer = $('.management-container');
   const userUpdateForm = $createElement('form', 'update-form');
@@ -261,8 +260,8 @@ const render = async () => {
     function selectTeam() {
       teams.forEach((team) =>
         team.checked
-          ? team.parentNode.classList.add('is-info')
-          : team.parentNode.classList.remove('is-info')
+          ? team.parentNode.classList.add('is-dark')
+          : team.parentNode.classList.remove('is-dark')
       );
     }
 
@@ -348,7 +347,7 @@ const render = async () => {
       (team) => team.value === teamName
     );
     checkedTeam.checked = 'checked';
-    checkedTeam.parentNode.classList.add('is-info');
+    checkedTeam.parentNode.classList.add('is-dark');
   }
 
   function fillUserInfo(userData) {
