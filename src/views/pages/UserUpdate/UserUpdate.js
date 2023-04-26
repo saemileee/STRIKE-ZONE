@@ -35,7 +35,6 @@ const render = async () => {
             onfocus="this.blur()"
             autocomplete="off"
           />
-          <p class="email-warning" style="display: none;">이메일 형식이 올바르지 않습니다.</p>
         </p>
       </div>
     </div>
@@ -55,7 +54,7 @@ const render = async () => {
             required
             autocomplete="off"
           />
-          <p class="password-warning" style="display: none;">영문, 숫자, 특수문자를 포함한 8 ~ 16자의 비밀번호를 입력하세요.</p>
+          <p class="password-warning hidden">영문, 숫자, 특수문자를 포함한 8 ~ 16자의 비밀번호를 입력하세요.</p>
         </p>
       </div>
     </div>
@@ -75,7 +74,7 @@ const render = async () => {
             required
             autocomplete="off"
           />
-          <p class="password-verify-warning" style="display: none;">비밀번호가 일치하지 않습니다.</p>
+          <p class="password-verify-warning hidden">비밀번호가 일치하지 않습니다.</p>
         </p>
       </div>
     </div>
@@ -279,32 +278,26 @@ const render = async () => {
     $userData.append(userUpdateForm);
 
     const updateForm = $('.update-form');
-    const newUserEmail = $('#email');
     const newUserPassword = $('#password');
     const newUserPasswordVerify = $('#passwordVerify');
     const newUserPhoneNumber = $('#phoneNumber');
     const findAddress = document.querySelectorAll('.address');
     const teams = document.getElementsByName('team');
 
-    function checkValidation(target) {
-      const regex = {
-        email:
-          /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-        password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
-      };
-      if (!target.value.match(regex[target.id])) return false;
+    function checkValidation() {
+      const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
+      if (!newUserPassword.value.match(regex)) return false;
       return true;
     }
 
-    function isValid(event) {
-      if (!checkValidation(event.target)) {
-        event.target.classList.add('is-danger');
-        const warning = $(`.${event.target.id}-warning`);
-        warning.style.display = '';
+    function isValid() {
+      const warning = $('.password-warning');
+      if (!checkValidation(newUserPassword)) {
+        newUserPassword.classList.add('is-danger');
+        warning.classList.remove('hidden');
       } else {
-        event.target.classList.remove('is-danger');
-        const warning = $(`.${event.target.id}-warning`);
-        warning.style.display = 'none';
+        newUserPassword.classList.remove('is-danger');
+        warning.classList.add('hidden');
       }
     }
 
@@ -315,11 +308,11 @@ const render = async () => {
         newUserPasswordVerify.value === ''
       ) {
         newUserPasswordVerify.classList.add('is-danger');
-        warning.style.display = '';
+        warning.classList.remove('hidden');
         return false;
       }
       newUserPasswordVerify.classList.remove('is-danger');
-      warning.style.display = 'none';
+      warning.classList.add('hidden');
       return true;
     }
 
@@ -335,10 +328,6 @@ const render = async () => {
     }
 
     function userInfoComplete() {
-      if (!checkValidation(newUserEmail)) {
-        alert('이메일 형식이 올바르지 않습니다.');
-        return false;
-      }
       if (!checkValidation(newUserPassword)) {
         alert('비밀번호 형식이 올바르지 않습니다.');
         return false;
@@ -451,7 +440,6 @@ const render = async () => {
     }
 
     updateForm.addEventListener('submit', onUpdateSubmit);
-    newUserEmail.addEventListener('blur', isValid);
     newUserPassword.addEventListener('blur', isValid);
     newUserPassword.addEventListener('blur', passwordVerify);
     newUserPasswordVerify.addEventListener('blur', passwordVerify);
