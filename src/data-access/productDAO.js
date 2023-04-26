@@ -7,6 +7,12 @@ const productDAO = {
     return products;
   },
 
+  // 특정 팀의 모든 상품 조회
+  async findAllProductsByTeamId(teamId) {
+    const products = await Product.find({ teamId });
+    return products;
+  },
+
   // 특정 팀의 카테고리에 속한 상품 목록 조회
   async findProductsByCategoryId(categoryId) {
     const products = await Product.find({ categoryId });

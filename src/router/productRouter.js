@@ -11,6 +11,9 @@ const productRouter = Router();
 // 상품 목록 조회
 productRouter.get('/products', productController.getAllProducts);
 
+// 특정 팀의 전체 상품 조회
+productRouter.get('/teams/:teamId/products', productController.getAllProductsByTeamId);
+
 // 상품 단일 조회 (productId)
 productRouter.get('/products/:productId', productController.getProductByProductId);
 

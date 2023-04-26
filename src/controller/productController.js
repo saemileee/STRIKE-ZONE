@@ -13,6 +13,19 @@ const productController = {
     }
   },
 
+  // 특정 팀의 모든 상품 조회
+  async getAllProductsByTeamId(req, res, next) {
+    try {
+      const { teamId } = req.params;
+
+      const products = await productService.getAllProductsByTeamId(teamId);
+
+      res.status(200).json(products);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   // 특정 팀의 카테고리의 상품 목록 조회
   async getProductsByCategoryId(req, res, next) {
     try {
