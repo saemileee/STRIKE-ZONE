@@ -177,7 +177,7 @@ const productService = {
   // 할인된 가격을 구하는 함수
   calculateDiscountedPrice(productInfo) {
     const { price, rate } = productInfo;
-    const discountedPrice = rate === 0 ? price : price - (price * (rate / 100));
+    const discountedPrice = rate === 0 ? price : Math.ceil(price - (price * (rate / 100)));
 
     return discountedPrice;
   },
