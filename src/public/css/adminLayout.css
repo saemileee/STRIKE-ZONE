@@ -1,7 +1,18 @@
 body {
+  background-color: #F1F1F1;
+  margin: 0;
 }
 
 .content-container {
+  padding-top: 30px;
+}
+
+header {
+  color: #F1F1F1;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .admin-nav {
@@ -10,8 +21,7 @@ body {
   top: 0;
   width: 200px;
   height: 100vh;
-  background-color: #fff;
-  border-radius: 10px;
+  background-color: #363636;
   padding: 20px;
   box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
@@ -29,14 +39,7 @@ body {
   border-radius: 10px;
   margin-bottom: 20px;
   transition: background-color 0.3s;
-}
-
-.admin-nav .admin-nav-list .nav-list-item:hover {
-  background-color: #F1F1F1;
-}
-
-.admin-nav .admin-nav-list .nav-list-item.selected {
-  background-color: #F1F1F1;
+  overflow: hidden;
 }
 
 .admin-nav .admin-nav-list .nav-list-item a {
@@ -46,6 +49,24 @@ body {
   width: 100%;
   height: 100%;
   font-weight: 600;
+  color: #fff;
+}
+
+.admin-nav .admin-nav-list .nav-list-item:hover {
+  background-color: #EEEEEE;
+  color: #000;
+}
+
+.admin-nav .admin-nav-list .nav-list-item:hover a {
+  color: #000;
+}
+
+.admin-nav .admin-nav-list .nav-list-item.selected {
+  background-color: #EEEEEE;
+}
+
+.admin-nav .admin-nav-list .nav-list-item.selected a {
+  color: #000;
 }
 
 .admin-nav .admin-nav-list .nav-list-item:last-child {
@@ -60,12 +81,13 @@ body {
   -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   padding: 30px;
-  margin: 30px 30px 30px 240px;
+  margin: 0 30px 30px 240px;
 }
 
 .logout {
   position: absolute;
   bottom: 20px;
+  color: #fff;
 }
 
 .logout:hover {
@@ -76,6 +98,7 @@ body {
   position: absolute;
   bottom: 20px;
   right: 20px;
+  color: #fff;
 }
 
 .homepage:hover {

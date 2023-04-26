@@ -1,6 +1,8 @@
 import { $, $createElement, deleteCookie } from '/js/utils.js';
 import { getUserInfo } from '/js/api/authAPI.js';
 
+document.title = '스트라이크 존 관리자 페이지';
+
 async function isAdminAccount() {
   const { isAdmin } = await getUserInfo();
   if (!isAdmin) {
@@ -24,6 +26,9 @@ const CATEGORIES = {
 };
 
 AdminNav.innerHTML = `
+  <header>STRIKE ZONE<br>
+  관리자 페이지
+  </header>
   <ul class="admin-nav-list">
     <li class="nav-list-item" id="user-management">
       <a href="/admin/user-management">${CATEGORIES['user-management']}</a>
