@@ -9,16 +9,6 @@ const render = async () => {
   ).then((res) => res.json());
   console.log(userInfo);
 
-  //   const {
-  //     address: { detailAddress, postCode, roughAddress },
-  //     cheerTeam: { teamId, teamName },
-  //     createdAt,
-  //     email,
-  //     koreanName,
-  //     phoneNumber,
-  //     updatedAt,
-  //   } = userInfo;
-
   const managementContainer = $('.management-container');
   const userUpdateForm = $createElement('form', 'update-form');
   userUpdateForm.innerHTML = `
@@ -36,6 +26,8 @@ const render = async () => {
             class="input user-email"
             type="text"
             placeholder="이메일을 입력해 주세요."
+            readonly
+            onfocus="this.blur()"
             autocomplete="off"
           />
           <p class="email-warning hidden">이메일 형식이 올바르지 않습니다.</p>
@@ -224,24 +216,6 @@ const render = async () => {
     const findAddress = document.querySelectorAll('.address');
     const teams = document.getElementsByName('team');
 
-    function checkValidation() {
-      const regex =
-        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-      if (!newUserEmail.value.match(regex)) return false;
-      return true;
-    }
-
-    function isValid() {
-      const warning = $('.email-warning');
-      if (!checkValidation()) {
-        newUserEmail.classList.add('is-danger');
-        warning.classList.remove('hidden');
-      } else {
-        newUserEmail.classList.remove('is-danger');
-        warning.classList.add('hidden');
-      }
-    }
-
     function checkAddress() {
       if (
         findAddress[0].value &&
@@ -254,10 +228,6 @@ const render = async () => {
     }
 
     function userInfoComplete() {
-      if (!checkValidation(newUserEmail)) {
-        alert('이메일 형식이 올바르지 않습니다.');
-        return false;
-      }
       if (!checkAddress()) {
         alert('주소를 입력해 주세요');
         return false;
@@ -340,8 +310,7 @@ const render = async () => {
           } else newUser[key] = userInfo.value;
         });
         const { token } = JSON.parse(getCookie('userToken'));
-        newUser['password'] = 'qwer123+';
-        console.log(newUser);
+
         fetch(`/api/v1/users/${newUserEmail.value}`, {
           method: 'PUT',
           headers: {
@@ -362,7 +331,6 @@ const render = async () => {
     }
 
     updateForm.addEventListener('submit', onUpdateSubmit);
-    newUserEmail.addEventListener('blur', isValid);
     newUserPhoneNumber.addEventListener('input', autoHyphen);
     for (let i = 0; i < 3; i++) {
       findAddress[i].addEventListener('click', searchZipcode);
