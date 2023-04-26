@@ -98,9 +98,9 @@ const orderController = {
     try {
       const { orderId } = req.params;
 
-      await orderService.deleteOrderByOrderId(orderId);
+      const { deletedCount } = await orderService.deleteOrderByOrderId(orderId);
 
-      res.status(200).json({ result: 'order deleted successfully' });
+      res.status(200).json({ result: `${deletedCount}의 주문이 취소되었습니다.` });
     } catch (error) {
       next(error);
     }
