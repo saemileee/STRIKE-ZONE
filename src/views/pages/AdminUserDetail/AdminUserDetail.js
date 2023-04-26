@@ -1,20 +1,25 @@
 import { $, $createElement, getCookie } from '/js/utils.js';
-import { getUserInfo } from '/js/api/authAPI.js';
-import { isLogin } from '/js/api/authAPI.js';
+import { getAuthOption } from '/js/api/authAPI.js';
 
 const render = async () => {
-  let loginEmail;
-  try {
-    loginEmail = await isLogin();
-    if (!loginEmail) {
-      alert('회원 전용 페이지입니다!');
-      location.href = '/login';
-    }
-  } catch (err) {
-    throw new Error({ messge: err });
-  }
+  const userEmail = location.pathname.split('/')[3];
+  const userInfo = await fetch(
+    `/api/v1/users/${userEmail}`,
+    getAuthOption()
+  ).then((res) => res.json());
+  console.log(userInfo);
 
-  const $userData = $('.user-data');
+  //   const {
+  //     address: { detailAddress, postCode, roughAddress },
+  //     cheerTeam: { teamId, teamName },
+  //     createdAt,
+  //     email,
+  //     koreanName,
+  //     phoneNumber,
+  //     updatedAt,
+  //   } = userInfo;
+
+  const managementContainer = $('.management-container');
   const userUpdateForm = $createElement('form', 'update-form');
   userUpdateForm.innerHTML = `
   <form class="update-form">
@@ -31,50 +36,9 @@ const render = async () => {
             class="input user-email"
             type="text"
             placeholder="이메일을 입력해 주세요."
-            readonly
-            onfocus="this.blur()"
             autocomplete="off"
           />
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">비밀번호</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded">
-          <input
-            id="password"
-            class="input user-password"
-            type="password"
-            placeholder="비밀번호를 입력해 주세요."
-            required
-            autocomplete="off"
-          />
-          <p class="password-warning hidden">영문, 숫자, 특수문자를 포함한 8 ~ 16자의 비밀번호를 입력하세요.</p>
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="field is-horizontal">
-    <div class="field-label is-normal">
-      <label class="label">비밀번호 확인</label>
-    </div>
-    <div class="field-body">
-      <div class="field">
-        <p class="control is-expanded">
-          <input
-            id="passwordVerify"
-            class="input user-password"
-            type="password"
-            placeholder="비밀번호를 확인해 주세요."
-            required
-            autocomplete="off"
-          />
-          <p class="password-verify-warning hidden">비밀번호가 일치하지 않습니다.</p>
+          <p class="email-warning hidden">이메일 형식이 올바르지 않습니다.</p>
         </p>
       </div>
     </div>
@@ -244,76 +208,38 @@ const render = async () => {
     </div>
   </div>
   <div class="buttons">
-    <button type="submit" class="button is-info" id="update">
+    <button type="submit" class="button is-dark" id="update">
       수정하기
     </button>
   </div>
   </form>
 `;
-  const checkPasswordForm = $createElement('form', 'check-login-form');
-  checkPasswordForm.innerHTML = `
-<section class="check-login-wrapper">
-  <h3 class="title is-3">비밀번호 확인</h3>
-  <div class="login-form-wrapper">
-    <div class="login-form">
-      <div class="login-input">
-        <input
-          type="password"
-          placeholder="비밀번호"
-          class="input check-password"
-          id="loginPassword"
-          required
-        />
-      </div>
-      <button type="submit" class="button is-info" id="login">확인</button>
-    </div>    
-  </div>
-</section>
-`;
-  $userData.append(checkPasswordForm);
 
   function showUpdateForm() {
-    checkPasswordForm.remove();
-
-    $userData.append(userUpdateForm);
+    managementContainer.append(userUpdateForm);
 
     const updateForm = $('.update-form');
-    const newUserPassword = $('#password');
-    const newUserPasswordVerify = $('#passwordVerify');
+    const newUserEmail = $('#email');
     const newUserPhoneNumber = $('#phoneNumber');
     const findAddress = document.querySelectorAll('.address');
     const teams = document.getElementsByName('team');
 
     function checkValidation() {
-      const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-      if (!newUserPassword.value.match(regex)) return false;
+      const regex =
+        /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+      if (!newUserEmail.value.match(regex)) return false;
       return true;
     }
 
     function isValid() {
-      const warning = $('.password-warning');
-      if (!checkValidation(newUserPassword)) {
-        newUserPassword.classList.add('is-danger');
+      const warning = $('.email-warning');
+      if (!checkValidation()) {
+        newUserEmail.classList.add('is-danger');
         warning.classList.remove('hidden');
       } else {
-        newUserPassword.classList.remove('is-danger');
+        newUserEmail.classList.remove('is-danger');
         warning.classList.add('hidden');
       }
-    }
-
-    function passwordVerify() {
-      const warning = $('.password-verify-warning');
-      if (
-        newUserPassword.value !== newUserPasswordVerify.value ||
-        newUserPasswordVerify.value === ''
-      ) {
-        newUserPasswordVerify.classList.add('is-danger');
-        warning.classList.remove('hidden');
-        return false;
-      }
-      newUserPasswordVerify.classList.remove('is-danger');
-      warning.classList.add('hidden');
-      return true;
     }
 
     function checkAddress() {
@@ -328,20 +254,12 @@ const render = async () => {
     }
 
     function userInfoComplete() {
-      if (!checkValidation(newUserPassword)) {
-        alert('비밀번호 형식이 올바르지 않습니다.');
-        return false;
-      }
-      if (!passwordVerify()) {
-        alert('비밀번호가 일치하지 않습니다.');
+      if (!checkValidation(newUserEmail)) {
+        alert('이메일 형식이 올바르지 않습니다.');
         return false;
       }
       if (!checkAddress()) {
         alert('주소를 입력해 주세요');
-        return false;
-      }
-      if (!getCheerTeam()) {
-        alert('응원하는 팀을 선택해 주세요.');
         return false;
       }
       return true;
@@ -405,7 +323,6 @@ const render = async () => {
         const newUser = {};
         const userInfoKey = [
           'email',
-          'password',
           'koreanName',
           'phoneNumber',
           'postCode',
@@ -418,12 +335,14 @@ const render = async () => {
           if (key === 'phoneNumber') {
             newUser[key] = getPhoneNumber();
           } else if (key === 'cheerTeam') {
-            newUser[key] = getCheerTeam();
+            const isSelected = getCheerTeam();
+            if (isSelected) newUser[key] = isSelected;
           } else newUser[key] = userInfo.value;
         });
         const { token } = JSON.parse(getCookie('userToken'));
-
-        fetch('/api/v1/users/me', {
+        newUser['password'] = 'qwer123+';
+        console.log(newUser);
+        fetch(`/api/v1/users/${newUserEmail.value}`, {
           method: 'PUT',
           headers: {
             token,
@@ -434,7 +353,7 @@ const render = async () => {
           .then((response) => response.json())
           .then(() => {
             alert('회원정보를 수정하였습니다.');
-            window.location.href = '/user/mypage';
+            window.location.reload();
           })
           .catch(() => {
             alert('입력한 정보를 다시 확인해주세요.');
@@ -443,9 +362,7 @@ const render = async () => {
     }
 
     updateForm.addEventListener('submit', onUpdateSubmit);
-    newUserPassword.addEventListener('blur', isValid);
-    newUserPassword.addEventListener('blur', passwordVerify);
-    newUserPasswordVerify.addEventListener('blur', passwordVerify);
+    newUserEmail.addEventListener('blur', isValid);
     newUserPhoneNumber.addEventListener('input', autoHyphen);
     for (let i = 0; i < 3; i++) {
       findAddress[i].addEventListener('click', searchZipcode);
@@ -454,6 +371,7 @@ const render = async () => {
       node.addEventListener('click', selectTeam);
     });
   }
+  showUpdateForm();
 
   function fillCheerTeam(userData) {
     const teamName = userData.cheerTeam.teamName;
@@ -475,35 +393,7 @@ const render = async () => {
     fillCheerTeam(userData);
   }
 
-  const checkForm = $('.check-login-form');
-  checkForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const checkPassword = $('.check-password').value;
-    const { token } = JSON.parse(getCookie('userToken'));
-
-    fetch('/api/v1/auth/password', {
-      method: 'POST',
-      headers: {
-        token,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ password: checkPassword }),
-    })
-      .then((response) => response.json())
-      .then(async () => {
-        showUpdateForm();
-        const userData = await getUserInfo();
-        fillUserInfo(userData);
-      })
-      .catch(() => {
-        const isloginWarning = $('.login-warning');
-        if (isloginWarning === null) {
-          const loginFormWrapper = $('.login-form-wrapper');
-          const loginWarning = $createElement('div', 'login-warning');
-          loginWarning.innerText = '비밀번호가 올바르지 않습니다.';
-          loginFormWrapper.appendChild(loginWarning);
-        }
-      });
-  });
+  fillUserInfo(userInfo);
 };
+
 render();

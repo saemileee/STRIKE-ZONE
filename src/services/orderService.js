@@ -82,20 +82,35 @@ const orderService = {
 
   // 특정 orderId 에 해당하는 주문 정보 삭제하기
   async deleteOrderByOrderId(orderId) {
-    await orderDAO.deleteOrderByOrderId(orderId);
+    const deletedCount = await orderDAO.deleteOrderByOrderId(orderId);
+
+    let modifiedCount = 0;
+
+    const order = await orderDAO.getOrderByOrderId(orderId);
+    const { products } = order;
+    const promises = products.map(async ({ productId, quantity }) => {
+      const result = productDAO.addInventoryByCanceldOrder(productId, quantity);
+      modifiedCount += result;
+    });
+
+    await Promise.all(promises);
+
+    return { deletedCount, modifiedCount };
   },
 
   // 다수의 orderId 에 해당하는 주문 정보들을 삭제하기
   async deleteOrders(orderIds) {
     let deletedCount = 0;
+    let modifiedCount = 0;
     const promises = orderIds.map(async (orderId) => {
-      const result = await orderDAO.deleteOrderByOrderId(orderId);
-      deletedCount += result;
+      const result = await this.deleteOrderByOrderId(orderId);
+      deletedCount += result.deletedCount;
+      modifiedCount += result.modifiedCount;
     });
 
     await Promise.all(promises);
 
-    return deletedCount;
+    return { deletedCount, modifiedCount };
   },
 
   // 결제 수단에 따라 기본 배송 상태를 정하기 ('결제전' or '상품준비중')
@@ -155,6 +170,7 @@ const orderService = {
       },
     );
   },
+
 };
 
 export { orderService };

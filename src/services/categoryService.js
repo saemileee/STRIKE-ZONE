@@ -16,7 +16,10 @@ const categoryService = {
 
   async getCategoriesByTeamId(teamId) {
     const categories = await categoryDAO.getCategories(teamId);
-    return categories;
+
+    const categoryNames = categories.map(({ categoryName }) => categoryName);
+
+    return categoryNames;
   },
 
   async getCategoryByCategoryId(categoryId) {

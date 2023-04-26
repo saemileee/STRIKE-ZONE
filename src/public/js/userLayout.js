@@ -1,9 +1,21 @@
 // eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
+import { isAdmin } from './api/authAPI.js';
 
 const $UserData = $createElement('section', 'user-data');
 
 const $UserNav = $createElement('nav', 'user-nav');
+
+let isAdminUser = false;
+async function getAdmin() {
+  try {
+    isAdminUser = await isAdmin();
+  } catch (err) {
+    throw new Error({ messge: err });
+  }
+}
+
+await getAdmin();
 
 $UserNav.innerHTML = `
   <ul class="user-nav-list">
@@ -19,6 +31,15 @@ $UserNav.innerHTML = `
     <li class="nav-list-item" id="delete">
       <a href="/user/delete">회원 탈퇴</a>
     </li>
+    ${
+      isAdminUser
+        ? `
+      <li class="nav-list-item" id="admin">
+        <a href="/admin/user-management/?sort=recent">관리자 페이지</a>
+      </li>
+    `
+        : ''
+    }
   </ul>
 `;
 
@@ -26,5 +47,4 @@ const $contentContainer = $('.content-container');
 $contentContainer.append($UserNav, $UserData);
 
 const currentUserCategory = location.pathname.split('/')[2];
-console.log(currentUserCategory);
 document.getElementById(currentUserCategory).classList.add('selected');

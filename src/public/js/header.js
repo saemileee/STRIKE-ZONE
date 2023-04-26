@@ -3,12 +3,12 @@ import { fetchData, postData } from './api/api.js';
 import { isLogin, getAuthOption } from './api/authAPI.js';
 
 const DUMMY_PRODUCT_CATEGORY_DATA = [
-  { name: '유니폼', url: '#' },
-  { name: '모자', url: '#' },
-  { name: '의류', url: '#' },
-  { name: '잡화', url: '#' },
-  { name: '응원용품', url: '#' },
-  { name: '야구용품', url: '#' },
+  { name: '유니폼', url: '/products?team=all&category=uniform&sort=recent' },
+  { name: '모자', url: '/products?team=all&category=cap&sort=recent' },
+  { name: '의류', url: '/products?team=all&category=clothes&sort=recent' },
+  { name: '잡화', url: '/products?team=all&category=acc&sort=recent' },
+  { name: '응원용품', url: '/products?team=all&category=cheer&sort=recent' },
+  { name: '야구용품', url: '/products?team=all&category=equip&sort=recent' },
 ];
 
 const CART_AMOUNT = getAllProduct();
@@ -83,7 +83,7 @@ headerWrapper.append(headerContainer);
 headerContainer.append(categoryUlElement, rightSideElementsContainer);
 document.body.prepend(headerElement);
 
-const createTeamElement = team => {
+const createTeamElement = (team) => {
   const teamLiElement = document.createElement('li');
   teamLiElement.innerHTML = `
     <div>
@@ -97,7 +97,7 @@ const createTeamElement = team => {
   return teamLiElement;
 };
 
-const createProductElement = category => {
+const createProductElement = (category) => {
   const productLiElement = document.createElement('li');
   productLiElement.innerHTML = `
       <p>${category.name}</p>
@@ -117,7 +117,7 @@ const teamsUlElement = document.createElement('ul');
 
 async function renderTeamCategory() {
   const data = await fetchData('/teams');
-  data.forEach(team => {
+  data.forEach((team) => {
     const teamElement = createTeamElement(team);
     teamsUlElement.append(teamElement);
   });
@@ -129,34 +129,36 @@ teamsContainerElement.append(teamsUlElement);
 const productsContainerElement = document.createElement('div');
 productsContainerElement.classList.add('products-container');
 const productsUlElement = document.createElement('ul');
-DUMMY_PRODUCT_CATEGORY_DATA.forEach(category => {
+DUMMY_PRODUCT_CATEGORY_DATA.forEach((category) => {
   const productElement = createProductElement(category);
   productsUlElement.append(productElement);
 });
 productsContainerElement.append(productsUlElement);
 
-categoryContainerElement.append(
-  teamsContainerElement,
-  productsContainerElement
-);
+categoryContainerElement.append(teamsContainerElement, productsContainerElement);
 headerElement.append(categoryContainerElement);
 
 teamsContainerElement.style.display = 'none';
 productsContainerElement.style.display = 'none';
 
 teamCategoryLiElement.addEventListener('mouseover', () => {
+  categoryContainerElement.style.transform = 'translateY(0)';
   productsContainerElement.style.display = 'none';
   teamsContainerElement.style.display = 'block';
 });
 
 productCategoryLiElement.addEventListener('mouseover', () => {
+  categoryContainerElement.style.transform = 'translateY(0)';
   teamsContainerElement.style.display = 'none';
   productsContainerElement.style.display = 'block';
 });
 
 const hideTeamsContainer = () => {
-  teamsContainerElement.style.display = 'none';
-  teamCategoryLiElement.removeAttribute('style');
+  categoryContainerElement.style.transform = 'translateY(-150%)';
+  setTimeout(() => {
+    teamsContainerElement.style.display = 'none';
+    teamCategoryLiElement.removeAttribute('style');
+  }, 300);
 };
 
 teamsContainerElement.addEventListener('mouseover', () => {
@@ -165,16 +167,18 @@ teamsContainerElement.addEventListener('mouseover', () => {
 teamsContainerElement.addEventListener('mouseleave', hideTeamsContainer);
 
 const hideProductsContainer = () => {
-  productsContainerElement.style.display = 'none';
-  productCategoryLiElement.removeAttribute('style');
+  categoryContainerElement.style.transform = 'translateY(-150%)';
+  setTimeout(() => {
+    productsContainerElement.style.display = 'none';
+    productCategoryLiElement.removeAttribute('style');
+  }, 300);
 };
 productsContainerElement.addEventListener('mouseover', () => {
   productCategoryLiElement.style.color = 'rgb(179, 255, 14)';
 });
 productsContainerElement.addEventListener('mouseleave', hideProductsContainer);
 
-//로그아웃 시 userToken 삭제
+// 로그아웃 시 userToken 삭제
 function deleteUserToken() {
-  document.cookie =
-    'userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  document.cookie = 'userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 }
