@@ -55,6 +55,16 @@ const productDAO = {
     const nextProductId = currentDocumentsCount === 0 ? 1 : currentDocumentsCount + 1;
     return nextProductId;
   },
+
+  // 주문 취소 시 상품의 재고를 주문량만큼 다시 추가하기
+  async addInventoryByCanceldOrder(productId, quantity) {
+    const orderedProduct = await Product.findOne({ productId });
+    const { inventory } = orderedProduct;
+
+    const result = await Product.updateOne({ productId }, { inventory: inventory + quantity });
+
+    return result;
+  },
 };
 
 export { productDAO };
