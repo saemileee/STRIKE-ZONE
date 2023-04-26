@@ -31,7 +31,7 @@
                 <div class="field-body">
                   <p class="control">
                     <span class="select team">
-                      <select>
+                      <select disabled>
                         <option>팀을 선택해 주세요.</option>
                       </select>
                     </span>
@@ -45,7 +45,7 @@
                 <div class="field-body">
                   <p class="control">
                     <span class="select category">
-                      <select>
+                      <select disabled>
                         <option>카테고리를 선택해 주세요.</option>
                       </select>
                     </span>
@@ -167,7 +167,7 @@
                   <div class="field-body">
                     <div class="field">
                       <p class="control is-expanded">
-                        <input class="input thumbnail" type="file" required />
+                        <input class="input thumbnail" type="file" disabled />
                       </p>
                     </div>
                   </div>
@@ -183,7 +183,7 @@
                           class="input subThumbnails"
                           type="file"
                           multiple
-                          required
+                          disabled
                         />
                       </p>
                     </div>
@@ -199,7 +199,7 @@
                         <input
                           class="input detailDescription"
                           type="file"
-                          required
+                          disabled
                         />
                       </p>
                     </div>
@@ -207,7 +207,7 @@
                 </div>
               </section>
             </div>
-            <button class="post">상품 수정</button>
+            <button type="submit" class="post">상품 수정</button>
           </form>
         </section>
       </section>

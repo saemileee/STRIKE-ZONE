@@ -30,7 +30,6 @@ const category = categoryId.split('-').pop();
 const teamSelectBox = document.querySelector('.select.team select');
 await updateTeamOptions(teamSelectBox);
 teamSelectBox.value = teamId;
-console.log(teamId);
 
 const categorySelectBox = document.querySelector('.select.category select');
 async function renderCategoryOptions(teamSelectBox, categorySelectBox) {
@@ -80,38 +79,43 @@ rateInput.addEventListener('input', renderDiscountedPrice);
 const shortDescriptionInput = document.querySelector('input.shortDescription');
 shortDescriptionInput.value = shortDescription;
 
-const postButton = document.querySelector('.post');
-postButton.addEventListener('submit', async event => {
+const formElement = document.querySelector('form');
+formElement.addEventListener('submit', async event => {
   event.preventDefault();
-  const team = document.querySelector('.team select').value;
-  const category = document.querySelector('.category select').value;
-  const name = document.querySelector('.name').value;
-  const inventory = document.querySelector('.inventory').value;
-  const price = document.querySelector('.price').value;
-  const rate = document.querySelector('.rate').value;
-  const shortDescription = document.querySelector('.shortDescription').value;
-
-  const detailDescription =
-    document.querySelector('.detailDescription').files[0];
-  const thumbnail = document.querySelector('.thumbnail').files[0];
-  const subThumbnailsInputs = document.querySelector('.subThumbnails');
+  const editedName = document.querySelector('.name').value;
+  const editedInventory = document.querySelector('.inventory').value;
+  const editedPrice = document.querySelector('.price').value;
+  const editedRate = document.querySelector('.rate').value;
+  const editedShortDescription =
+    document.querySelector('.shortDescription').value;
 
   const formData = new FormData();
-  formData.append('name', name);
-  formData.append('inventory', inventory);
-  formData.append('price', price);
-  formData.append('rate', rate);
-  formData.append('shortDescription', shortDescription);
+  formData.append('name', editedName);
+  formData.append('inventory', editedInventory);
+  formData.append('price', editedPrice);
+  formData.append('rate', editedRate);
+  formData.append('shortDescription', editedShortDescription);
   // formData.append('thumbnail', thumbnail);
-  // formData.append('detailDescription', detailDescription);
-  // for (const subThumbnail of subThumbnailsInputs.files) {
-  //   formData.append('subThumbnails', subThumbnail);
-  // }
+  formData.append('img', img);
+  formData.append('detailDescription', detailDescription);
+  const data = {
+    name: editedName,
+    inventory: editedInventory,
+    price: editedPrice,
+    rate: editedRate,
+    shortDescription: editedShortDescription,
+    img,
+    detailDescription,
+  };
 
   try {
     const response = await fetch(
       `//34.64.244.53/api/v1/products/${productId}`,
-      { method: 'PUT', body: formData }
+      {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      }
     );
     alert('상품이 성공적으로 수정되었습니다.');
     window.location.href = '/admin/product-management';
