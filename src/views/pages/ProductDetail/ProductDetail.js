@@ -1,5 +1,6 @@
 import { addItemCart } from '/js/api/cartAPI.js';
 import { fetchData } from '/js/api/api.js';
+import { setDiscount } from '/js/utils.js';
 
 function $createElement(elementType, className) {
   const $element = document.createElement(elementType);
@@ -65,7 +66,10 @@ function readerBasicDescription(
   }
 
   const $productSellingPrice = document.querySelector('.product-selling-price');
-  $productSellingPrice.innerHTML = `${productSellingPrice.toLocaleString()}원`;
+  $productSellingPrice.innerHTML = `${setDiscount(
+    price,
+    rate
+  ).toLocaleString()}원`;
 }
 function renderPrice(inventory, productSellingPrice) {
   let totalAmountValue = productSellingPrice;

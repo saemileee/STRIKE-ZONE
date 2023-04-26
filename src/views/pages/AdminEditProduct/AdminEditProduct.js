@@ -66,9 +66,7 @@ rateInput.value = rate;
 const discountedPriceInput = document.querySelector('.discounted-price');
 
 function renderDiscountedPrice() {
-  const discountedPrice = Math.ceil(
-    setDiscount(priceInput.value, rateInput.value)
-  );
+  const discountedPrice = setDiscount(priceInput.value, rateInput.value);
   discountedPriceInput.value = discountedPrice;
 }
 renderDiscountedPrice();
@@ -89,15 +87,6 @@ formElement.addEventListener('submit', async event => {
   const editedShortDescription =
     document.querySelector('.shortDescription').value;
 
-  const formData = new FormData();
-  formData.append('name', editedName);
-  formData.append('inventory', editedInventory);
-  formData.append('price', editedPrice);
-  formData.append('rate', editedRate);
-  formData.append('shortDescription', editedShortDescription);
-  // formData.append('thumbnail', thumbnail);
-  formData.append('img', img);
-  formData.append('detailDescription', detailDescription);
   const data = {
     name: editedName,
     inventory: editedInventory,

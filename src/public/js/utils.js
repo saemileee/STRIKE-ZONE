@@ -10,8 +10,12 @@ export function $createElement(elementType, className) {
 
 //체크박스 전체선택 기능
 export function selectAllCheckbox(checkboxesClassName, selectAllClassName) {
-  const termCheckboxElements = document.querySelectorAll(`.${checkboxesClassName}`);
-  let selectAllCheckboxElement = document.querySelector(`.${selectAllClassName}`);
+  const termCheckboxElements = document.querySelectorAll(
+    `.${checkboxesClassName}`
+  );
+  let selectAllCheckboxElement = document.querySelector(
+    `.${selectAllClassName}`
+  );
   selectAllCheckboxElement.addEventListener('change', () => {
     if (selectAllCheckboxElement.checked) {
       for (let checkbox of termCheckboxElements) {
@@ -48,7 +52,7 @@ export function autoHyphen(target) {
 }
 
 export function setDiscount(price, rate) {
-  return price * ((100 - rate) * 0.01);
+  return parseInt(Math.ceil(price * ((100 - rate) * 0.01)) / 100) * 100;
 }
 
 export function getCookie(name) {
@@ -58,5 +62,6 @@ export function getCookie(name) {
 
 export function deleteCookie(name) {
   document.cookie =
-    encodeURIComponent(name) + '=; expires=Thu, 01 JAN 1999 00:00:10 GMT; path=/';
+    encodeURIComponent(name) +
+    '=; expires=Thu, 01 JAN 1999 00:00:10 GMT; path=/';
 }
