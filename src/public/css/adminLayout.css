@@ -4,7 +4,7 @@ body {
 }
 
 .content-container {
-  padding-top: 30px;
+  padding: 30px;
 }
 
 header {
@@ -81,7 +81,7 @@ header {
   -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
   padding: 30px;
-  margin: 0 30px 30px 240px;
+  margin-left: 220px;
 }
 
 .logout {
