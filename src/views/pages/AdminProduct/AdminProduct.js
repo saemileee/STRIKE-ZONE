@@ -88,18 +88,18 @@ function renderProductList(products) {
     } = product;
     const trElement = document.createElement('tr');
     trElement.innerHTML = `
-    <th><input type="checkbox" data-product="${productId}" class="product-checkbox"/></th>
-    <th>${new Date(createdAt).toLocaleString()}</th>
-    <td>${new Date(updatedAt).toLocaleString()}</td>
-    <td>${productId}</td>
-    <td>${teamName}</td>
-    <td>${categoryName}</td>
-    <td>${name}</td>
+    <td><input type="checkbox" data-product="${productId}" class="product-checkbox"/></td>
+    <td><span>${new Date(createdAt).toLocaleString()}</span></td>
+    <td><span>${new Date(updatedAt).toLocaleString()}</span></td>
+    <td><span>${productId}</span></td>
+    <td><span>${teamName}</span></td>
+    <td><span>${categoryName}</span></td>
+    <td><span>${name}</span></td>
     <td><img src="${img[0]}"/></td>
-    <td>${price.toLocaleString()}원</td>
-    <td>${rate}%</td>
-    <td>${discountedPrice.toLocaleString()}원</td>
-    <td>${inventory}개</td>
+    <td><span>${price.toLocaleString()}원</span></td>
+    <td><span>${rate}%</span></td>
+    <td><span>${discountedPrice.toLocaleString()}원</span></td>
+    <td><span>${inventory}개</span></td>
     `;
 
     const tdElement = document.createElement('td');

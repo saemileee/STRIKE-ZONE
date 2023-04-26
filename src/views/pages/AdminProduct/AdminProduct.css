@@ -1,48 +1,71 @@
-.user-data {
-  position: relative;
-  overflow: hidden;
+table tr {
+  font-size: 14px;
 }
 
-.user-data .user-data-desc {
-  display: flex;
-  flex-direction: column;
+table tr {
+  transition: background-color 0.3s;
 }
 
-.user-data .user-data-desc .info {
-  display: flex;
-  font-size: 20px;
-  margin-bottom: 20px;
-  z-index: 100;
+table tr:nth-child(2n) {
+  background-color: rgb(249, 249, 249);
 }
 
-.user-data .user-data-desc .info p {
-  display: block;
-  width: 150px;
+table tr.selected {
+  background-color: rgb(235, 248, 255);
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table tr th {
+  font-size: 14px;
   font-weight: 600;
+  text-align: center;
+  color: #fff;
+  background-color: #363636;
+  padding: 20px;
+  text-align: center;
+  vertical-align: middle;
 }
 
-.user-data .user-data-desc .info em {
+.table th:not([align]) {
+  text-align: center;
 }
 
-.user-data .cheer-team {
-  position: absolute;
-  width: 500px;
-  bottom: -150px;
-  right: -100px;
-  z-index: 2;
-  opacity: 0.2;
+.table tr th:nth-child(2) {
+  width: 60px;
 }
 
-.diff-date {
-  font-weight: 400;
+.table tr th:nth-child(3) {
+  width: 60px;
 }
 
-.diff-date strong {
-  font-weight: 700;
+.table tr th:nth-child(4) {
+  width: 15px;
+}
+
+.table tr th:last-child {
+  width: 20px;
+}
+
+thead tr th span {
+  color: #fff;
+  align-self: center;
 }
 
 tbody tr {
   cursor: pointer;
+  height: fit-content;
+  text-align: center;
+}
+
+tbody tr td span {
+  align-self: center;
+}
+
+tbody tr td:nth-child(7) {
+  text-align: left;
 }
 
 tbody tr img {

@@ -13,6 +13,24 @@ h3 {
   padding-top: 2rem;
 }
 
+table {
+  width: 100%;
+}
+
+table th {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+  background-color: #363636;
+  padding: 20px;
+}
+
+table tr {
+  font-size: 20px;
+  text-align: center;
+}
+
 .order-wrapper form {
   display: flex;
 }
