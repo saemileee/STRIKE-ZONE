@@ -28,24 +28,20 @@ const ProductHeader = async (target) => {
   `;
 
   const CATEGORIES = await fetch(`/api/v1/teams/${TEAM}/categories`).then((res) => res.json());
-  CATEGORIES.push({
-    categoryName: 'all',
-  });
+  CATEGORIES.push('all');
 
   const $CategoryList = Header.querySelector('.products-category-list');
 
   if (TEAM !== 'all') {
-    CATEGORIES.filter(({ categoryName }) => categoryName !== CURRENT_CATEGORY).forEach(
-      ({ categoryName }) => {
-        const CategoryItem = $createElement('li', 'products-category-item');
-        CategoryItem.innerHTML = `
-      <a href="/products?team=${TEAM}&category=${categoryName}">
-        ${categoryName.toUpperCase()}
+    CATEGORIES.filter((category) => category !== CURRENT_CATEGORY).forEach((category) => {
+      const CategoryItem = $createElement('li', 'products-category-item');
+      CategoryItem.innerHTML = `
+      <a href="/products?team=${TEAM}&category=${category}">
+        ${category.toUpperCase()}
       </a>
     `;
-        $CategoryList.append(CategoryItem);
-      }
-    );
+      $CategoryList.append(CategoryItem);
+    });
   }
   target.insertAdjacentElement('afterbegin', Header);
 };
