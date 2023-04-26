@@ -11,7 +11,7 @@ export const updateTeamOptions = async teamSelectBox => {
 export const updateCategoryOptions = async (teamId, categorySelectBox) => {
   const categories = await fetchData(`/teams/${teamId}/categories`);
   const options = categories
-    .map(category => `<option>${category.categoryName}</option>`)
+    .map(category => `<option value='${category}'>${category}</option>`)
     .join('');
   categorySelectBox.innerHTML = `<option selected>카테고리를 선택해 주세요.</option>${options}`;
 };

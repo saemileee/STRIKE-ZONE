@@ -30,6 +30,7 @@ const category = categoryId.split('-').pop();
 const teamSelectBox = document.querySelector('.select.team select');
 await updateTeamOptions(teamSelectBox);
 teamSelectBox.value = teamId;
+console.log(teamId);
 
 const categorySelectBox = document.querySelector('.select.category select');
 async function renderCategoryOptions(teamSelectBox, categorySelectBox) {

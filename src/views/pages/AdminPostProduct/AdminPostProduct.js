@@ -36,7 +36,8 @@ priceInput.addEventListener('input', renderDiscountedPrice);
 rateInput.addEventListener('input', renderDiscountedPrice);
 
 const postButton = document.querySelector('.post');
-postButton.addEventListener('submit', async event => {
+const form = document.querySelector('form');
+form.addEventListener('submit', async event => {
   event.preventDefault();
   const team = document.querySelector('.team select').value;
   const category = document.querySelector('.category select').value;
