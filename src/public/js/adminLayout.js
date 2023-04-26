@@ -21,8 +21,6 @@ const CATEGORIES = {
   'user-management': '사용자 관리',
   'product-management': '상품 관리',
   'order-management': '주문 관리',
-  'team-management': '팀 관리',
-  'category-management': '카테고리 관리',
 };
 
 AdminNav.innerHTML = `
@@ -35,12 +33,6 @@ AdminNav.innerHTML = `
     </li>
     <li class="nav-list-item" id="order-management">
       <a href="/admin/order-management">${CATEGORIES['order-management']}</a>
-    </li>
-    <li class="nav-list-item" id="team-management">
-      <a href="/admin/team-management">${CATEGORIES['team-management']}</a>
-    </li>
-    <li class="nav-list-item" id="category-management">
-      <a href="/admin/category-management">${CATEGORIES['category-management']}</a>
     </li>
   </ul>
   <span class="logout">로그아웃</span>

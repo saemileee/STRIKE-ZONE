@@ -13,7 +13,7 @@ a {
 
 .product {
   display: block;
-  aspect-ratio: 1/1.6;
+  height: 400px;
   position: relative;
   border-radius: 10px;
   background-color: #fff;
@@ -119,7 +119,7 @@ a {
 .product-content .product-header .product-header-name {
   font-size: 20px;
   font-weight: 500;
-  margin-bottom: 6px;
+  line-height: 1.3;
 }
 
 .product-content .product-price {
@@ -127,10 +127,11 @@ a {
   flex-direction: column;
   font-size: 20px;
   font-weight: 700;
+  margin: 6px 0;
 }
 
 .product-content .product-price .product-price-rate {
-  color: rebeccapurple; 
+  color: #FF5F03; 
 }
 
 .product-content .product-price .product-price-original {
