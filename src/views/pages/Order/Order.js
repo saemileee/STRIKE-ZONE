@@ -24,7 +24,7 @@ if (!(await isLogin())) {
 //결제 버튼 업데이트
 function updateCheckoutButton(amount) {
   const checkoutButton = document.querySelector('.check-out-button');
-  checkoutButton.innerHTML = `${amount.toLocaleString()}원 결제하기`;
+  checkoutButton.value = `${amount.toLocaleString()}원 결제하기`;
   const formElement = document.querySelector('form');
   formElement.addEventListener('submit', postOrderData);
 }
