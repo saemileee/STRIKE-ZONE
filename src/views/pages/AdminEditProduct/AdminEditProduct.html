@@ -119,6 +119,8 @@
                           min="0"
                           max="99"
                           maxlength="2"
+                          onkeydown="return event.key !== '-'"
+                          onpaste="return !clipboardData.getData('Text').includes('-')"
                           required
                         />
                       </p>
@@ -160,14 +162,27 @@
                 </div>
                 <div class="field is-horizontal">
                   <div class="field-label is-normal">
-                    <label class="label">상세 정보 이미지</label>
+                    <label class="label">상품 썸네일</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field">
+                      <p class="control is-expanded">
+                        <input class="input thumbnail" type="file" required />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">상품 서브 썸네일</label>
                   </div>
                   <div class="field-body">
                     <div class="field">
                       <p class="control is-expanded">
                         <input
-                          class="input shortDescription"
+                          class="input subThumbnails"
                           type="file"
+                          multiple
                           required
                         />
                       </p>
@@ -176,36 +191,23 @@
                 </div>
                 <div class="field is-horizontal">
                   <div class="field-label is-normal">
-                    <label class="label">상품 이미지 썸네일</label>
+                    <label class="label">상품 디테일 정보</label>
                   </div>
                   <div class="field-body">
                     <div class="field">
                       <p class="control is-expanded">
                         <input
-                          class="input productThumbnail"
+                          class="input detailDescription"
                           type="file"
                           required
                         />
                       </p>
                     </div>
-                  </div>
-                </div>
-                <div class="field is-horizontal">
-                  <div class="field-label is-normal">
-                    <label class="label">상품 디테일 이미지</label>
-                  </div>
-                  <div class="field-body">
-                    <div class="field">
-                      <p class="control is-expanded">
-                        <input class="input detailDescription" type="file" />
-                      </p>
-                    </div>
-                    <button>이미지 추가</button>
                   </div>
                 </div>
               </section>
             </div>
-            <button class="post">수정완료</button>
+            <button class="post">상품 수정</button>
           </form>
         </section>
       </section>

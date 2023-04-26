@@ -24,8 +24,9 @@ if (!(await isLogin())) {
 //결제 버튼 업데이트
 function updateCheckoutButton(amount) {
   const checkoutButton = document.querySelector('.check-out-button');
-  checkoutButton.value = `${amount.toLocaleString()}원 결제하기`;
-  checkoutButton.addEventListener('click', postOrderData);
+  checkoutButton.innerHTML = `${amount.toLocaleString()}원 결제하기`;
+  const formElement = document.querySelector('form');
+  formElement.addEventListener('submit', postOrderData);
 }
 
 //결제정보 데이터 가져오기
@@ -162,7 +163,8 @@ displayOrderList(await getOrderProducts());
 //주소찾기 기능 연결
 function findAndFillAddress(target) {
   document.querySelectorAll(`.${target}-address`).forEach(input => {
-    input.addEventListener('click', () => {
+    input.addEventListener('click', event => {
+      event.preventDefault();
       new daum.Postcode({
         oncomplete(data) {
           $(`.${target}-address-zonecode`).value = data.zonecode;
