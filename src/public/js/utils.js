@@ -52,7 +52,7 @@ export function autoHyphen(target) {
 }
 
 export function setDiscount(price, rate) {
-  return parseInt(Math.ceil(price * ((100 - rate) * 0.01)) / 100) * 100;
+  return parseInt(Math.ceil(price * ((100 - rate) * 0.01)) / 10) * 10;
 }
 
 export function getCookie(name) {
