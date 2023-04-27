@@ -1,6 +1,10 @@
 import { getAllProduct } from '/js/api/cartAPI.js';
 import { fetchData } from '/js/api/api.js';
 import { isLogin } from '/js/api/authAPI.js';
+document.head.insertAdjacentHTML(
+  'beforeend',
+  '<link rel="icon" href="/assets/favicon/favicon.png" />'
+);
 
 const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '유니폼', url: '/products?team=all&category=uniform&sort=recent' },
