@@ -1,12 +1,13 @@
-import { $, $createElement, getCookie } from '/js/utils.js';
+import { $, $createElement, getCookie, autoHyphen } from '/js/utils.js';
 import { getAuthOption } from '/js/api/authAPI.js';
 import { teamID } from '/js/constants.js';
 
 const render = async () => {
   const userEmail = location.pathname.split('/')[3];
-  const userInfo = await fetch(`/api/v1/users/${userEmail}`, getAuthOption()).then((res) =>
-    res.json()
-  );
+  const userInfo = await fetch(
+    `/api/v1/users/${userEmail}`,
+    getAuthOption()
+  ).then((res) => res.json());
 
   const managementContainer = $('.management-container');
   const userUpdateForm = $createElement('form', 'update-form');
@@ -216,7 +217,11 @@ const render = async () => {
     const teams = document.getElementsByName('team');
 
     function checkAddress() {
-      if (findAddress[0].value && findAddress[2].value && findAddress[3].value) {
+      if (
+        findAddress[0].value &&
+        findAddress[2].value &&
+        findAddress[3].value
+      ) {
         return true;
       }
       return false;
@@ -230,15 +235,11 @@ const render = async () => {
       return true;
     }
 
-    function autoHyphen() {
-      newUserPhoneNumber.value = newUserPhoneNumber.value
-        .replace(/[^0-9]/g, '')
-        .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
-    }
-
     function getPhoneNumber() {
       const firstNumber = $('#firstPhoneNumber');
-      return `${firstNumber.options[firstNumber.selectedIndex].text}-${newUserPhoneNumber.value}`;
+      return `${firstNumber.options[firstNumber.selectedIndex].text}-${
+        newUserPhoneNumber.value
+      }`;
     }
 
     function searchZipcode() {
@@ -311,8 +312,8 @@ const render = async () => {
       }
     }
 
+    autoHyphen('#phoneNumber');
     updateForm.addEventListener('submit', onUpdateSubmit);
-    newUserPhoneNumber.addEventListener('input', autoHyphen);
     for (let i = 0; i < 3; i++) {
       findAddress[i].addEventListener('click', searchZipcode);
     }
@@ -325,7 +326,9 @@ const render = async () => {
   function fillCheerTeam(userData) {
     const { teamName } = userData.cheerTeam;
     const teams = document.getElementsByName('team');
-    const checkedTeam = Array.from(teams).find((team) => team.value === teamName);
+    const checkedTeam = Array.from(teams).find(
+      (team) => team.value === teamName
+    );
     checkedTeam.checked = 'checked';
     checkedTeam.parentNode.classList.add('is-dark');
   }

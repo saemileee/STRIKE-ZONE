@@ -1,4 +1,4 @@
-import { $ } from '/js/utils.js';
+import { $, autoHyphen } from '/js/utils.js';
 import { regex, teamID } from '/js/constants.js';
 
 const signUpForm = $('.sign-up-form');
@@ -28,7 +28,10 @@ function isValid(event) {
 
 function passwordVerify() {
   const warning = $('.password-verify-warning');
-  if (newUserPassword.value !== newUserPasswordVerify.value || newUserPasswordVerify.value === '') {
+  if (
+    newUserPassword.value !== newUserPasswordVerify.value ||
+    newUserPasswordVerify.value === ''
+  ) {
     newUserPasswordVerify.classList.add('is-danger');
     warning.classList.remove('hidden');
     return false;
@@ -69,15 +72,11 @@ function userInfoComplete() {
   return true;
 }
 
-function autoHyphen() {
-  newUserPhoneNumber.value = newUserPhoneNumber.value
-    .replace(/[^0-9]/g, '')
-    .replace(/^(\d{3,4})(\d{4})$/, '$1-$2');
-}
-
 function getPhoneNumber() {
   const firstNumber = $('#firstPhoneNumber');
-  return `${firstNumber.options[firstNumber.selectedIndex].text}-${newUserPhoneNumber.value}`;
+  return `${firstNumber.options[firstNumber.selectedIndex].text}-${
+    newUserPhoneNumber.value
+  }`;
 }
 
 function searchZipcode() {
@@ -101,7 +100,9 @@ function selectTeam() {
 function getCheerTeam() {
   const checkedTeam = Array.from(teams).find((team) => team.checked);
   let selectedTeam;
-  checkedTeam === undefined ? (selectedTeam = false) : (selectedTeam = teamID[checkedTeam.value]);
+  checkedTeam === undefined
+    ? (selectedTeam = false)
+    : (selectedTeam = teamID[checkedTeam.value]);
   return selectedTeam;
 }
 
@@ -146,13 +147,12 @@ function onSignUpSubmit(e) {
       });
   }
 }
-
+autoHyphen('#phoneNumber');
 signUpForm.addEventListener('submit', onSignUpSubmit);
 newUserEmail.addEventListener('blur', isValid);
 newUserPassword.addEventListener('blur', isValid);
 newUserPassword.addEventListener('blur', passwordVerify);
 newUserPasswordVerify.addEventListener('blur', passwordVerify);
-newUserPhoneNumber.addEventListener('input', autoHyphen);
 for (let i = 0; i < 3; i++) {
   findAddress[i].addEventListener('click', searchZipcode);
 }
