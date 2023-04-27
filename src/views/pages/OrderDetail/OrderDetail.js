@@ -20,7 +20,6 @@ const render = async () => {
 
   try {
     const userEmail = await isLogin();
-    console.log(email, userEmail);
     if (email !== userEmail) {
       alert('본인의 주문 정보만 확인 할 수 있습니다!');
       return (location.href = '/NotFound');

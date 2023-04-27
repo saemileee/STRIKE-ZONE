@@ -108,7 +108,6 @@ formElement.addEventListener('submit', async event => {
     );
     alert('상품이 성공적으로 수정되었습니다.');
     window.location.href = '/admin/product-management';
-    console.log('Uploaded successfully', response);
   } catch (error) {
     console.error('Upload failed', error);
   }
