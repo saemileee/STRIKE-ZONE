@@ -1,12 +1,7 @@
 import { $, $createElement, getCookie } from '/js/utils.js';
 import { getAuthOption } from '/js/api/authAPI.js';
 
-const [RECENT, LONGEST, NAME_ASC, NAME_DES] = [
-  'recent',
-  'longest',
-  'name-asc',
-  'name-des',
-];
+const [RECENT, LONGEST, NAME_ASC, NAME_DES] = ['recent', 'longest', 'name-asc', 'name-des'];
 
 const urlParams = new URL(location.href).searchParams;
 const SORT = urlParams.get('sort');
@@ -19,7 +14,7 @@ const userTable = async () => {
     users = await fetch('/api/v1/users', getAuthOption());
     users = await users.json();
   } catch (err) {
-    throw new Error({ message: err });
+    throw new Error({ message: JSON.parse(err) });
   }
 
   if (SEARCH_TYPE && SEARCH_VALUE) {
@@ -29,7 +24,8 @@ const userTable = async () => {
         user[SEARCH_TYPE].split('-').join('').includes(SEARCH_VALUE)
       ) {
         return true;
-      } else if (user[SEARCH_TYPE].includes(SEARCH_VALUE)) return true;
+      }
+      if (user[SEARCH_TYPE].includes(SEARCH_VALUE)) return true;
       return false;
     });
   }
@@ -59,14 +55,10 @@ const userTable = async () => {
     let result;
     switch (base) {
       case RECENT:
-        result = users.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        );
+        result = users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
         break;
       case LONGEST:
-        result = users.sort(
-          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
-        );
+        result = users.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
         break;
       case NAME_ASC:
         result = users.sort((a, b) => a.koreanName.localeCompare(b.koreanName));
@@ -107,7 +99,8 @@ const userTable = async () => {
       <button class="search-start-button button is-dark">검색</button>
   `;
 
-  let searchType, searchTypeName;
+  let searchType;
+  let searchTypeName;
 
   SearchBox.addEventListener('click', (event) => {
     if (event.target.closest('.dropdown')) {
@@ -118,8 +111,7 @@ const userTable = async () => {
     if (event.target.closest('.dropdown-item')) {
       searchType = event.target.id;
       searchTypeName = event.target.name;
-      SearchBox.querySelector('.current-search-type').innerText =
-        searchTypeName;
+      SearchBox.querySelector('.current-search-type').innerText = searchTypeName;
     }
 
     if (event.target.closest('.search-start-button')) {
@@ -237,8 +229,7 @@ async function render() {
   };
   if (SEARCH_TYPE && SEARCH_VALUE) {
     const searchBox = $('.search-box');
-    searchBox.querySelector('.current-search-type').innerText =
-      searchOption[SEARCH_TYPE];
+    searchBox.querySelector('.current-search-type').innerText = searchOption[SEARCH_TYPE];
     searchBox.querySelector('.search-content').value = SEARCH_VALUE;
   }
 }

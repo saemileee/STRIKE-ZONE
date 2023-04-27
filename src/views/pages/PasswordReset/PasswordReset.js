@@ -1,4 +1,5 @@
 import { $ } from '/js/utils.js';
+import { regex } from '/js/constants.js';
 
 const userEmail = opener.document.querySelector('#loginId').value;
 const resetForm = $('.password-reset-form');
@@ -6,8 +7,9 @@ const newPasswordInput = $('#newPassword');
 const newPasswordVerifyInput = $('#newPasswordVerify');
 
 function checkValidation() {
-  const regex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/;
-  if (!newPasswordInput.value.match(regex)) return false;
+  const { password: passwordRegex } = regex;
+
+  if (!newPasswordInput.value.match(passwordRegex)) return false;
   return true;
 }
 

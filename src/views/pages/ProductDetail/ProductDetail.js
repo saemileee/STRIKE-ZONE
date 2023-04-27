@@ -15,16 +15,14 @@ function $createImage(src) {
 }
 
 function renderProductImages(productImages) {
-  const $productImageViewContainer = document.querySelector(
-    '.product-image-view'
-  );
+  const $productImageViewContainer = document.querySelector('.product-image-view');
 
   const $productImageBigBox = document.querySelector('.product-image-big');
   $productImageBigBox.innerHTML = `<img src = ${productImages[0]}>`;
 
   const $productImageSlider = document.querySelector('.product-image-slider');
   $productImageViewContainer.append($productImageSlider);
-  productImages.forEach(image => {
+  productImages.forEach((image) => {
     const $productImageSmallBox = $createElement('div', 'product-image-small');
     const $productImageSmall = $createImage(image);
     $productImageSmallBox.append($productImageSmall);
@@ -36,23 +34,14 @@ function renderProductImages(productImages) {
 
   $productImageViewContainer.append($productImageBigBox);
 }
-function readerBasicDescription(
-  team,
-  name,
-  shortDescription,
-  price,
-  rate,
-  productSellingPrice
-) {
+function readerBasicDescription(team, name, shortDescription, price, rate) {
   const $productTeam = document.querySelector('.product-team');
   $productTeam.innerHTML = team;
 
   const $productTitle = document.querySelector('.product-title');
   $productTitle.innerHTML = name;
 
-  const $productShortDescription = document.querySelector(
-    '.product-short-description'
-  );
+  const $productShortDescription = document.querySelector('.product-short-description');
   $productShortDescription.innerHTML = shortDescription;
   const $productDiscountRate = document.querySelector('.product-discount-rate');
   const $productPrice = document.querySelector('.product-price');
@@ -66,10 +55,7 @@ function readerBasicDescription(
   }
 
   const $productSellingPrice = document.querySelector('.product-selling-price');
-  $productSellingPrice.innerHTML = `${setDiscount(
-    price,
-    rate
-  ).toLocaleString()}원`;
+  $productSellingPrice.innerHTML = `${setDiscount(price, rate).toLocaleString()}원`;
 }
 function renderPrice(inventory, productSellingPrice) {
   let totalAmountValue = productSellingPrice;
@@ -90,15 +76,13 @@ function renderBuyButtons(productId, inventory) {
     if (quantity < inventory && quantity > 0) {
       addItemCart(productId, quantity);
       if (
-        confirm(
-          '해당 상품이 장바구니에 추가되었습니다. 바로 장바구니를 확인하시겠습니까?'
-        ) === true
+        confirm('해당 상품이 장바구니에 추가되었습니다. 바로 장바구니를 확인하시겠습니까?') === true
       ) {
         window.location.href = '/cart';
       }
     } else {
       quantity > inventory && quantity > 0
-        ? alert('주문 가능한 최소 수량을 초과하였습니다.')
+        ? alert('주문 가능한 최대 수량을 초과하였습니다.')
         : alert('최소 1개 이상의 수량을 선택해 주세요.');
     }
   });
@@ -110,15 +94,13 @@ function renderBuyButtons(productId, inventory) {
       window.location.href = `/order?cart=false&id=${productId}&quantity=${quantity}`;
     } else {
       quantity > inventory && quantity > 0
-        ? alert('주문 가능한 최소 수량을 초과하였습니다.')
+        ? alert('주문 가능한 최대 수량을 초과하였습니다.')
         : alert('최소 1개 이상의 수량을 선택해 주세요.');
     }
   });
 }
 function renderProductDetailDescription(productDetailDescription) {
-  const $detailDescription = document.querySelector(
-    '.product-detail-description'
-  );
+  const $detailDescription = document.querySelector('.product-detail-description');
   $detailDescription.innerHTML = `<img src='${productDetailDescription}'/>`;
 }
 
@@ -142,14 +124,7 @@ async function getProductData() {
   } = productData;
   const productSellingPrice = price * ((100 - rate) * 0.01);
   renderProductImages(img);
-  readerBasicDescription(
-    teamName,
-    name,
-    shortDescription,
-    price,
-    rate,
-    productSellingPrice
-  );
+  readerBasicDescription(teamName, name, shortDescription, price, rate, productSellingPrice);
   renderPrice(inventory, productSellingPrice);
 
   if (inventory > 0) {

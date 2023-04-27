@@ -1,9 +1,5 @@
-import { fetchData, postData } from '/js/api/api.js';
 import { setDiscount } from '/js/utils.js';
-import {
-  updateTeamOptions,
-  updateCategoryOptions,
-} from '/components/Product/CategorySelectbox.js';
+import { updateTeamOptions, updateCategoryOptions } from '/components/Product/CategorySelectbox.js';
 
 //카테고리 선택 렌더링
 const teamSelectBox = document.querySelector('.select.team select');
@@ -26,9 +22,7 @@ rateInput.addEventListener('input', function () {
 });
 
 function renderDiscountedPrice() {
-  const discountedPrice = Math.ceil(
-    setDiscount(priceInput.value, rateInput.value)
-  );
+  const discountedPrice = Math.ceil(setDiscount(priceInput.value, rateInput.value));
   discountedPriceInput.value = discountedPrice;
 }
 
@@ -37,7 +31,7 @@ rateInput.addEventListener('input', renderDiscountedPrice);
 
 const postButton = document.querySelector('.post');
 const form = document.querySelector('form');
-form.addEventListener('submit', async event => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
   const team = document.querySelector('.team select').value;
   const category = document.querySelector('.category select').value;
@@ -47,8 +41,7 @@ form.addEventListener('submit', async event => {
   const rate = document.querySelector('.rate').value;
   const shortDescription = document.querySelector('.shortDescription').value;
 
-  const detailDescription =
-    document.querySelector('.detailDescription').files[0];
+  const detailDescription = document.querySelector('.detailDescription').files[0];
   const thumbnail = document.querySelector('.thumbnail').files[0];
   const subThumbnailsInputs = document.querySelector('.subThumbnails');
 

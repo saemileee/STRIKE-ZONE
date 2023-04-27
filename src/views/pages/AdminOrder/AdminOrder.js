@@ -16,14 +16,14 @@ const [BEFOREPAYMENT, PREPARING, SHIPPING, COMPLETE] = [
   '배송완료',
 ];
 
-const urlParams = new URL(location.href).searchParams;
+const urlParams = new URL(window.location.href).searchParams;
 const SORT = urlParams.get('sort');
 const SEARCH_TYPE = urlParams.get('search-type');
 const SEARCH_VALUE = urlParams.get('search-value');
 let SHIPPING_OPTIONS = urlParams.get('shipping-options');
 if (SHIPPING_OPTIONS) SHIPPING_OPTIONS = SHIPPING_OPTIONS.split('-');
 
-if (!SORT) location.href = `/admin/order-management/?sort=${RECENT}`;
+if (!SORT) window.location.href = `/admin/order-management/?sort=${RECENT}`;
 
 const selectedIds = [];
 
@@ -60,20 +60,11 @@ function OrderTable(orders) {
             ({
               orderId,
               createdAt,
-              orderer: { email: ordererEmail, name: ordererName, phoneNumber: ordererPhoneNumber },
-              recipient: {
-                address1,
-                address2,
-                name: recipientName,
-                phoneNumber: recipientPhoneNumber,
-                zipCode,
-              },
-              requirement,
+              orderer: { email: ordererEmail, name: ordererName },
               productsPayment,
               products,
               deliveryCharge,
               totalPayment,
-              paymentMethod,
               status,
             }) => `
             <tr id=${orderId}>
@@ -185,7 +176,7 @@ function OrderTable(orders) {
 
     if (event.target.closest('.orderer-email')) {
       const email = event.target.textContent;
-      location.href = `/admin/order-management/?sort=recent&search-type=email&search-value=${email}`;
+      window.location.href = `/admin/order-management/?sort=recent&search-type=email&search-value=${email}`;
     }
 
     if (event.target.closest('.delete-one')) {
@@ -193,7 +184,7 @@ function OrderTable(orders) {
       if (!confirm('해당 항목을 삭제하시겠습니까?')) return;
       try {
         await fetch(`/api/v1/orders/${currentOrderId}`, { method: 'DELETE' });
-        location.reload();
+        window.location.reload();
       } catch (err) {
         throw new Error({ message: err });
       }
@@ -224,7 +215,7 @@ function OrderTable(orders) {
           }),
         });
         alert('배송상태가 변경되었습니다!');
-        location.reload();
+        window.location.reload();
       } catch (err) {
         throw new Error({ message: err });
       }
@@ -462,7 +453,7 @@ function SortList() {
       if (event.target.id === SORT) return;
       urlParams.set('sort', event.target.id);
       const url = urlParams.toString();
-      location.href = `?${url}`;
+      window.location.href = `?${url}`;
     }
   });
   return List;
@@ -513,7 +504,7 @@ function EditButtons() {
             orderIds: selectedIds,
           }),
         });
-        location.reload();
+        window.location.reload();
       } catch (err) {
         throw new Error({ message: err });
       }
@@ -543,7 +534,7 @@ function EditButtons() {
             status,
           }),
         });
-        location.reload();
+        window.location.reload();
       } catch (err) {
         throw new Error({ message: err });
       }
@@ -626,7 +617,7 @@ function SerchBox() {
 
     if (event.target.closest('.serch-start-button')) {
       const inputValue = TableSerchBox.querySelector('.serch-content').value;
-      location.href = `/admin/order-management/?sort=recent&search-type=${searchType}&search-value=${inputValue}&shipping-options=${shippingTypes.join(
+      window.location.href = `/admin/order-management/?sort=recent&search-type=${searchType}&search-value=${inputValue}&shipping-options=${shippingTypes.join(
         '-'
       )}`;
     }

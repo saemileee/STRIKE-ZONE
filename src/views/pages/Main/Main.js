@@ -6,7 +6,7 @@ const mainBannerElement = document.querySelector('.main-banner');
 const bannerContentElement = document.querySelector('.banner-content');
 const productsContainer = document.querySelector('.product-contents-container');
 
-const DUMMY_DATA = [
+const BANNER_DATA = [
   {
     mainText: 'NO LIMITS<br/>AMAZING LANDERS',
     subText: 'SSG 랜더스',
@@ -55,7 +55,7 @@ function renderSlideBanner() {
     clearInterval(slideAutoPlayTimer);
     slideAutoPlayTimer = setInterval(() => nextArrowButtonClickHandler(), SLIDE_AUTO_PLAY_TIME);
     const { mainText, subText, teamPageURL, mainImage, backgroundText } =
-      DUMMY_DATA[currentBannerIndex];
+      BANNER_DATA[currentBannerIndex];
 
     const bannerContentLeftElement = document.createElement('div');
     bannerContentLeftElement.className = 'banner-content-left';
@@ -103,7 +103,7 @@ function renderSlideBanner() {
 
   function prevArrowButtonClickHandler() {
     if (currentBannerIndex === 0) {
-      currentBannerIndex = DUMMY_DATA.length - 1;
+      currentBannerIndex = BANNER_DATA.length - 1;
     } else {
       currentBannerIndex -= 1;
     }
@@ -111,7 +111,7 @@ function renderSlideBanner() {
   }
 
   function nextArrowButtonClickHandler() {
-    if (currentBannerIndex === DUMMY_DATA.length - 1) {
+    if (currentBannerIndex === BANNER_DATA.length - 1) {
       currentBannerIndex = 0;
     } else {
       currentBannerIndex += 1;

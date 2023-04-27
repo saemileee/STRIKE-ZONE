@@ -1,14 +1,11 @@
-import { $, $createElement } from '/js/utils.js';
-import { isLogin, getAuthOption } from '/js/api/authAPI.js';
+import { $ } from '/js/utils.js';
 
 const render = async () => {
   const [, , , orderIdByPath] = location.pathname.split('/');
   const orderData = await fetch(`/api/v1/orders/${orderIdByPath}`).then((res) => res.json());
-  console.log(orderData);
   const {
     orderId,
     createdAt,
-    orderer: { email: ordererEmail, name: ordererName, phoneNumber: ordererPhoneNumber },
     recipient: {
       address1,
       address2,
@@ -16,7 +13,6 @@ const render = async () => {
       phoneNumber: recipientPhoneNumber,
       zipCode,
     },
-    requirement,
     productsPayment,
     products,
     deliveryCharge,

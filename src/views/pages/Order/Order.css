@@ -148,8 +148,8 @@ select {
 }
 
 .receipt-information-container {
-  /* position: sticky;
-  top: 120px; */
+  position: sticky;
+  top: 120px;
 }
 
 .receipt-information-container .payment-information {

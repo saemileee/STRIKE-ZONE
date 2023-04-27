@@ -1,4 +1,5 @@
 import { $ } from '/js/utils.js';
+import { regex, teamID } from '/js/constants.js';
 
 const signUpForm = $('.sign-up-form');
 const newUserEmail = $('#email');
@@ -9,11 +10,6 @@ const findAddress = document.querySelectorAll('.address');
 const teams = document.getElementsByName('team');
 
 function checkValidation(target) {
-  const regex = {
-    email:
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i,
-    password: /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
-  };
   if (!target.value.match(regex[target.id])) return false;
   return true;
 }
@@ -32,10 +28,7 @@ function isValid(event) {
 
 function passwordVerify() {
   const warning = $('.password-verify-warning');
-  if (
-    newUserPassword.value !== newUserPasswordVerify.value ||
-    newUserPasswordVerify.value === ''
-  ) {
+  if (newUserPassword.value !== newUserPasswordVerify.value || newUserPasswordVerify.value === '') {
     newUserPasswordVerify.classList.add('is-danger');
     warning.classList.remove('hidden');
     return false;
@@ -84,14 +77,12 @@ function autoHyphen() {
 
 function getPhoneNumber() {
   const firstNumber = $('#firstPhoneNumber');
-  return `${firstNumber.options[firstNumber.selectedIndex].text}-${
-    newUserPhoneNumber.value
-  }`;
+  return `${firstNumber.options[firstNumber.selectedIndex].text}-${newUserPhoneNumber.value}`;
 }
 
 function searchZipcode() {
   new daum.Postcode({
-    oncomplete: function (data) {
+    oncomplete(data) {
       const roadAddr = data.roadAddress;
       document.getElementById('postCode').value = data.zonecode;
       document.getElementById('roughAddress').value = roadAddr;
@@ -108,23 +99,9 @@ function selectTeam() {
 }
 
 function getCheerTeam() {
-  const teamID = {
-    '롯데 자이언츠': '644221ccead2ae1ca8f0c9d0',
-    'KIA 타이거즈': '644221deead2ae1ca8f0c9d2',
-    '삼성 라이온즈': '644221e4ead2ae1ca8f0c9d4',
-    'LG 트윈스': '644221ecead2ae1ca8f0c9d6',
-    '두산 베어스': '644221f4ead2ae1ca8f0c9d8',
-    '키움 히어로즈': '644221fcead2ae1ca8f0c9da',
-    'SSG 랜더스': '64422203ead2ae1ca8f0c9dc',
-    'KT 위즈': '64422209ead2ae1ca8f0c9de',
-    '한화 이글스': '64422210ead2ae1ca8f0c9e0',
-    'NC 다이노스': '64422215ead2ae1ca8f0c9e2',
-  };
   const checkedTeam = Array.from(teams).find((team) => team.checked);
   let selectedTeam;
-  checkedTeam === undefined
-    ? (selectedTeam = false)
-    : (selectedTeam = teamID[checkedTeam.value]);
+  checkedTeam === undefined ? (selectedTeam = false) : (selectedTeam = teamID[checkedTeam.value]);
   return selectedTeam;
 }
 

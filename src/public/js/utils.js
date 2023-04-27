@@ -8,30 +8,26 @@ export function $createElement(elementType, className) {
   return $element;
 }
 
-//체크박스 전체선택 기능
+// 체크박스 전체선택 기능
 export function selectAllCheckbox(checkboxesClassName, selectAllClassName) {
-  const termCheckboxElements = document.querySelectorAll(
-    `.${checkboxesClassName}`
-  );
-  let selectAllCheckboxElement = document.querySelector(
-    `.${selectAllClassName}`
-  );
+  const termCheckboxElements = document.querySelectorAll(`.${checkboxesClassName}`);
+  const selectAllCheckboxElement = document.querySelector(`.${selectAllClassName}`);
   selectAllCheckboxElement.addEventListener('change', () => {
     if (selectAllCheckboxElement.checked) {
-      for (let checkbox of termCheckboxElements) {
+      for (const checkbox of termCheckboxElements) {
         checkbox.checked = true;
       }
     } else {
-      for (let checkbox of termCheckboxElements) {
+      for (const checkbox of termCheckboxElements) {
         checkbox.checked = false;
       }
     }
   });
 
-  for (let checkbox of termCheckboxElements) {
+  for (const checkbox of termCheckboxElements) {
     checkbox.addEventListener('change', () => {
       let checkedCount = 0;
-      for (let _checkbox of termCheckboxElements) {
+      for (const _checkbox of termCheckboxElements) {
         _checkbox.checked === true ? checkedCount++ : null;
       }
       checkedCount === termCheckboxElements.length
@@ -41,7 +37,7 @@ export function selectAllCheckbox(checkboxesClassName, selectAllClassName) {
   }
 }
 
-//전화번호 하이픈 추가
+// 전화번호 하이픈 추가
 export function autoHyphen(target) {
   const targetElement = document.querySelector(target);
   targetElement.addEventListener('input', () => {
@@ -56,12 +52,10 @@ export function setDiscount(price, rate) {
 }
 
 export function getCookie(name) {
-  let matches = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+  const matches = document.cookie.match(`(^|;) ?${name}=([^;]*)(;|$)`);
   return matches ? decodeURIComponent(matches[2]) : undefined;
 }
 
 export function deleteCookie(name) {
-  document.cookie =
-    encodeURIComponent(name) +
-    '=; expires=Thu, 01 JAN 1999 00:00:10 GMT; path=/';
+  document.cookie = `${encodeURIComponent(name)}=; expires=Thu, 01 JAN 1999 00:00:10 GMT; path=/`;
 }
