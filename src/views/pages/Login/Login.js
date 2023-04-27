@@ -5,6 +5,23 @@ const loginFormWrapper = $('.login-form-wrapper');
 const loginForm = $('.login-form');
 const loginId = $('#loginId');
 const loginPassword = $('#loginPassword');
+const loginInfoSave = $('.login-info-save-check');
+
+function fillUserInfo() {
+  const savedEmail = localStorage.getItem('strike_zone_user');
+  if (savedEmail) {
+    loginId.value = savedEmail;
+    loginInfoSave.checked = true;
+  }
+}
+
+function checkEmailSave(userId) {
+  if (loginInfoSave.checked) {
+    localStorage.setItem('strike_zone_user', userId);
+  } else {
+    localStorage.removeItem('strike_zone_user');
+  }
+}
 
 function authEmailPopUp() {
   const userEmail = document.querySelector('#loginId').value;
@@ -39,6 +56,8 @@ const onLoginSubmit = (e) => {
   const userPassword = loginPassword.value;
   const userInfo = { email: userId, password: userPassword };
 
+  checkEmailSave(userId);
+
   fetch('/api/v1/auth/login', {
     method: 'POST',
     headers: {
@@ -69,4 +88,5 @@ const onLoginSubmit = (e) => {
     });
 };
 
+fillUserInfo();
 loginForm.addEventListener('submit', onLoginSubmit);

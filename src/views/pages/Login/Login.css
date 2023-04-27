@@ -12,6 +12,9 @@ body {
   -webkit-box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
   -moz-box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
 }
+.login-form-wrapper {
+  margin-bottom: 10px;
+}
 .login-form {
   display: flex;
   align-items: center;
@@ -44,4 +47,8 @@ body {
 }
 #auth {
   width: 150px;
+}
+.login-info-save {
+  font-size: 19px;
+  font-weight: bold;
 }
