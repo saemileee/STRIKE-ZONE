@@ -16,7 +16,7 @@ function searchByTerm(event) {
 
       let recentSearches =
         JSON.parse(localStorage.getItem('recentSearches')) || [];
-      recentSearches.unshift(inputValue); // 최신 검색어를 배열 앞에 추가
+      recentSearches.unshift(inputValue);
       recentSearches = Array.from(new Set(recentSearches));
       localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
     }
@@ -106,7 +106,7 @@ export function SearchBox(target) {
   SearchForm.innerHTML = `
         <form class="search-form">
           <input class="search-content input" type="text" placeholder="검색어를 입력해 주세요.">
-          <button class="search-button button is-dark">검색</button>
+          <button class="search-button button"><i class="fa fa-search" style="font-size:24px"></i></button>
         </form>
     `;
 
