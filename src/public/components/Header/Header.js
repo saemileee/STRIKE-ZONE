@@ -1,6 +1,9 @@
 import { getAllProduct } from '/js/api/cartAPI.js';
 import { fetchData } from '/js/api/api.js';
 import { isLogin } from '/js/api/authAPI.js';
+import { SearchBox } from './Search.js';
+
+//파비콘
 document.head.insertAdjacentHTML(
   'beforeend',
   '<link rel="icon" href="/assets/favicon/favicon.png" />'
@@ -75,6 +78,8 @@ logoutElement.addEventListener('click', () => {
 const rightSideElementsContainer = document.createElement('div');
 rightSideElementsContainer.className = 'right-side-container';
 rightSideElementsContainer.prepend(cartElement);
+
+SearchBox(rightSideElementsContainer);
 
 if (!(await isLogin())) {
   rightSideElementsContainer.append(loginElement, signUpElement);
