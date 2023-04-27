@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 import { $, $createElement } from '/js/utils.js';
-import { isAdmin } from './api/authAPI.js';
+import { isAdmin } from '/js/api/authAPI.js';
 
 const $UserData = $createElement('section', 'user-data');
 
