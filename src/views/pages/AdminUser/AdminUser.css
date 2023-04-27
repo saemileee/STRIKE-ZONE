@@ -125,3 +125,8 @@ table input:hover {
 .order-edit .edit-one {
   margin-bottom: 20px;
 }
+.dropdown-box {
+  display: flex;
+  justify-content: space-between;
+  width: 140px;
+}

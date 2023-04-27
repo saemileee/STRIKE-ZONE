@@ -8,7 +8,12 @@ const [RECENT, LONGEST, NAME_ASC, NAME_DES] = [
   'name-des',
 ];
 
-const render = async () => {
+const urlParams = new URL(location.href).searchParams;
+const SORT = urlParams.get('sort');
+const SEARCH_TYPE = urlParams.get('search-type');
+const SEARCH_VALUE = urlParams.get('search-value');
+
+const userTable = async () => {
   let users;
   try {
     users = await fetch('/api/v1/users', getAuthOption());
@@ -17,8 +22,17 @@ const render = async () => {
     throw new Error({ message: err });
   }
 
-  const urlParams = new URL(location.href).searchParams;
-  const SORT = urlParams.get('sort');
+  if (SEARCH_TYPE && SEARCH_VALUE) {
+    users = users.filter((user) => {
+      if (
+        SEARCH_TYPE === 'phoneNumber' &&
+        user[SEARCH_TYPE].split('-').join('').includes(SEARCH_VALUE)
+      ) {
+        return true;
+      } else if (user[SEARCH_TYPE].includes(SEARCH_VALUE)) return true;
+      return false;
+    });
+  }
 
   if (!SORT) location.href = `/admin/user-management/?sort=${RECENT}`;
 
@@ -67,44 +81,51 @@ const render = async () => {
   }
   users = sortOrders(SORT);
 
-  const EditButtons = $createElement('div', 'edit-buttons');
-  EditButtons.innerHTML = `
-    <button class="delete-selected button is-dark">선택 사용자 삭제</button>
-    <button class="delete-selected button is-dark">선택 사용자 정보 수정</button>
-  `;
-
-  const SerchBox = $createElement('div', 'search-box');
-  SerchBox.innerHTML = `
+  const SearchBox = $createElement('div', 'search-box');
+  SearchBox.innerHTML = `
       <div class="dropdown">
-        <div class="dropdown-trigger">
-          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-            <span>검색 타입</span>
-            <span class="icon is-small">
-              <i class="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
+        <div class="dropdown-trigger select">
+          <button class="button dropdown-box" aria-haspopup="true" aria-controls="dropdown-menu">
+            <span class="current-search-type">검색</span>
           </button>
         </div>
         <div class="dropdown-menu" id="dropdown-menu" role="menu">
           <div class="dropdown-content">
-            <a class="dropdown-item">
+            <a href="#" class="dropdown-item" id="koreanName" name="이름">
               이름
             </a>
-            <a href="#" class="dropdown-item is-active">
+            <a class="dropdown-item" id="email" name="이메일">
               이메일
             </a>
-            <a class="dropdown-item">
+            <a class="dropdown-item" id="phoneNumber" name="휴대폰 번호">
               휴대폰 번호
             </a>
           </div>
         </div>
       </div>
-      <input class="serch-content input" type="text">
-      <button class="button is-dark">검색</button>
+      <input class="search-content input" type="text" autocomplete="off">
+      <button class="search-start-button button is-dark">검색</button>
   `;
-  SerchBox.addEventListener('click', (event) => {
+
+  let searchType, searchTypeName;
+
+  SearchBox.addEventListener('click', (event) => {
     if (event.target.closest('.dropdown')) {
       const dropbox = event.target.closest('.dropdown');
       dropbox.classList.toggle('is-active');
+    }
+
+    if (event.target.closest('.dropdown-item')) {
+      searchType = event.target.id;
+      searchTypeName = event.target.name;
+      SearchBox.querySelector('.current-search-type').innerText =
+        searchTypeName;
+    }
+
+    if (event.target.closest('.search-start-button')) {
+      const inputValue = SearchBox.querySelector('.search-content').value;
+      if (!searchType) searchType = SEARCH_TYPE;
+      location.href = `/admin/user-management/?sort=recent&search-type=${searchType}&search-value=${inputValue}`;
     }
   });
 
@@ -114,11 +135,7 @@ const render = async () => {
     <table>
       <thead>
         <tr>
-          <th>
-            <label>
-              <input class="select-all-checkbox" type="checkbox"></input>
-            </label>
-          </th>
+          <th>No.</th>
           <th>이름</th>
           <th>이메일</th>
           <th>주소</th>
@@ -138,10 +155,7 @@ const render = async () => {
               phoneNumber,
             }) => `
             <tr id=${email}>
-              <td>
-                <label>
-                  <input class="checkbox" type="checkbox"></input>
-                </label>
+              <td class="user-number">
               </td>
               <td class="user-name-square">
                 <div class="user-name">
@@ -166,8 +180,8 @@ const render = async () => {
               </td>
               <td>
                 <div class="order-edit">
-                  <span class="edit-one">수정</span>
-                  <span class="delete-one">삭제</span>
+                  <span class="edit-one button is-small is-dark">수정</span>
+                  <span class="delete-one button is-small is-dark">삭제</span>
                 </div>
               </td>
             </tr>
@@ -178,42 +192,17 @@ const render = async () => {
     </table>
   `;
 
-  const selectedIds = [];
-
-  const selectAllCheckbox = Table.querySelector('.select-all-checkbox');
-
-  selectAllCheckbox.addEventListener('click', (event) => {
-    const currentCheck = event.target.checked;
-    Table.querySelectorAll('.checkbox').forEach((checkbox) => {
-      checkbox.checked = currentCheck;
-      const tr = checkbox.closest('tr');
-      tr.className = currentCheck ? 'selected' : '';
-    });
-  });
-
   Table.addEventListener('click', async (event) => {
-    if (event.target.closest('.checkbox')) {
-      const checkboxes = Table.querySelectorAll('.checkbox');
-      const isNotAllChecked = Array.prototype.some.call(
-        checkboxes,
-        ({ checked }) => checked === false
-      );
-      selectAllCheckbox.checked = !isNotAllChecked;
-
-      const selectedRow = event.target.closest('tr');
-      selectedRow.classList.toggle('selected');
-
-      const { id } = selectedRow;
-      if (selectedRow.classList.contains('selected'))
-        selectedIds.push(Number(id));
-      else selectedIds.console.log(selectedIds);
+    if (event.target.closest('.edit-one')) {
+      const currentUserEmail = event.target.closest('tr').id;
+      if (!confirm('사용자 정보를 수정하시겠습니까?')) return;
+      window.location.href = `/admin/user-management/${currentUserEmail}`;
     }
     if (event.target.closest('.delete-one')) {
       const currentUserEmail = event.target.closest('tr').id;
       const { token } = JSON.parse(getCookie('userToken'));
       if (!confirm('사용자 정보를 삭제하시겠습니까?')) return;
       try {
-        console.log(currentUserEmail);
         await fetch(`/api/v1/users/${currentUserEmail}`, {
           method: 'DELETE',
           headers: { token },
@@ -225,7 +214,33 @@ const render = async () => {
     }
   });
 
-  $managementContainer.append(SortList, SerchBox, EditButtons, Table);
+  $managementContainer.append(SortList, SearchBox, Table);
 };
+
+async function render() {
+  await userTable();
+  const userNumbers = document.querySelectorAll('.user-number');
+  if (SORT === 'longest' || SORT === 'name-asc') {
+    userNumbers.forEach((node, index) => {
+      node.innerHTML = `${index + 1}`;
+    });
+  } else {
+    userNumbers.forEach((node, index) => {
+      node.innerHTML = `${userNumbers.length - index}`;
+    });
+  }
+
+  const searchOption = {
+    koreanName: '이름',
+    email: '이메일',
+    phoneNumber: '휴대폰 번호',
+  };
+  if (SEARCH_TYPE && SEARCH_VALUE) {
+    const searchBox = $('.search-box');
+    searchBox.querySelector('.current-search-type').innerText =
+      searchOption[SEARCH_TYPE];
+    searchBox.querySelector('.search-content').value = SEARCH_VALUE;
+  }
+}
 
 render();
