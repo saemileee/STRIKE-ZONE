@@ -5,7 +5,7 @@ import { isLogin, getUserInfo } from '/js/api/authAPI.js';
 
 const params = new URLSearchParams(window.location.search);
 
-//전체선택 버튼 기능
+// 전체선택 버튼 기능
 selectAllCheckbox('term-checkbox', 'select-all');
 
 const {
@@ -21,7 +21,7 @@ if (!(await isLogin())) {
   window.location.href = '/login';
 }
 
-//결제 버튼 업데이트
+// 결제 버튼 업데이트
 function updateCheckoutButton(amount) {
   const checkoutButton = document.querySelector('.check-out-button');
   checkoutButton.value = `${amount.toLocaleString()}원 결제하기`;
@@ -29,13 +29,11 @@ function updateCheckoutButton(amount) {
   formElement.addEventListener('submit', postOrderData);
 }
 
-//결제정보 데이터 가져오기
+// 결제정보 데이터 가져오기
 async function getReceiptData() {
   const { deliveryCharge } = await fetchData('/shippings/default');
   const productsData = await getOrderProducts();
-  const totalAmount = productsData.reduce((acc, product) => {
-    return acc + product.totalProductAmount;
-  }, 0);
+  const totalAmount = productsData.reduce((acc, product) => acc + product.totalProductAmount, 0);
 
   const deliveryChargeAmount = await deliveryCharge;
   const totalPaymentAmount = totalAmount + deliveryChargeAmount;
@@ -48,11 +46,9 @@ async function getReceiptData() {
 
 await getReceiptData();
 
-//결제정보 렌더링
+// 결제정보 렌더링
 function renderReceipt(totalProductAmount, deliveryCharge, totalPaymentAmount) {
-  const totalProductAmountElement = document.querySelector(
-    '.total-product-amount'
-  );
+  const totalProductAmountElement = document.querySelector('.total-product-amount');
   totalProductAmountElement.innerHTML = `${totalProductAmount.toLocaleString()}원`;
 
   const shippingChargeElement = document.querySelector('.shipping-charge');
@@ -62,23 +58,22 @@ function renderReceipt(totalProductAmount, deliveryCharge, totalPaymentAmount) {
   totalPaymentAmountElement.innerHTML = `${totalPaymentAmount.toLocaleString()}원`;
 }
 
-//주문 리스트 가져오기
+// 주문 리스트 가져오기
 async function getOrderProducts() {
-  //바로구매 || 장바구니 구매 확인하여 프로덕트 디비 가져오기
+  // 바로구매 || 장바구니 구매 확인하여 프로덕트 디비 가져오기
   const cartMode = params.get('cart');
   const products =
     cartMode === 'false'
       ? [{ productId: params.get('id'), quantity: params.get('quantity') }]
-      : cartListSelected.map(product => {
-          return {
-            productId: product.id,
-            quantity: product.amount,
-          };
-        });
+      : cartListSelected.map((product) => ({
+          productId: product.id,
+          quantity: product.amount,
+        }));
 
-  const productsData = products.map(async product => {
-    const { discountedPrice, name, teamName, price, rate, img } =
-      await fetchData(`/products/${product.productId}`);
+  const productsData = products.map(async (product) => {
+    const { discountedPrice, name, teamName, price, rate, img } = await fetchData(
+      `/products/${product.productId}`
+    );
     const totalProductAmount = discountedPrice * product.quantity;
 
     return {
@@ -97,7 +92,7 @@ async function getOrderProducts() {
   return Promise.all(productsData);
 }
 
-//주문 리스트 렌더링
+// 주문 리스트 렌더링
 function renderOrderList(
   team,
   name,
@@ -135,7 +130,7 @@ function renderOrderList(
 }
 
 function displayOrderList(products) {
-  products.forEach(product => {
+  products.forEach((product) => {
     const {
       team,
       productName: name,
@@ -146,24 +141,15 @@ function displayOrderList(products) {
       totalProductAmount,
       img,
     } = product;
-    renderOrderList(
-      team,
-      name,
-      quantity,
-      rate,
-      price,
-      discountedPrice,
-      totalProductAmount,
-      img
-    );
+    renderOrderList(team, name, quantity, rate, price, discountedPrice, totalProductAmount, img);
   });
 }
 displayOrderList(await getOrderProducts());
 
-//주소찾기 기능 연결
+// 주소찾기 기능 연결
 function findAndFillAddress(target) {
-  document.querySelectorAll(`.${target}-address`).forEach(input => {
-    input.addEventListener('click', event => {
+  document.querySelectorAll(`.${target}-address`).forEach((input) => {
+    input.addEventListener('click', (event) => {
       event.preventDefault();
       new daum.Postcode({
         oncomplete(data) {
@@ -178,7 +164,7 @@ function findAndFillAddress(target) {
 findAndFillAddress('user');
 findAndFillAddress('receiver');
 
-//유효성 검사
+// 유효성 검사
 // function checkValidation(target) {
 //   const regex = {
 //     'user-email':
@@ -200,19 +186,19 @@ findAndFillAddress('receiver');
 // }
 // $('.user-email').addEventListener('blur', isValid);
 
-//폰 번호 오토하이픈
+// 폰 번호 오토하이픈
 autoHyphen('.user-phone-number-back');
 autoHyphen('.receiver-phone-number-back');
 
 // 로그인한 유저 정보 기반으로 주문자 폼 채우기
 
 function fillOrdererInformation() {
-  let ordererInput = $('.user-name');
-  let ordererPhoneNumberProInput = $('.user-phone-number-pro');
-  let ordererPhoneNumberBackInput = $('.user-phone-number-back');
-  let ordererAddressZonecode = $('.user-address-zonecode');
-  let ordererAddressBase = $('.user-address-base');
-  let ordererAddressDetail = $('.user-address-detail');
+  const ordererInput = $('.user-name');
+  const ordererPhoneNumberProInput = $('.user-phone-number-pro');
+  const ordererPhoneNumberBackInput = $('.user-phone-number-back');
+  const ordererAddressZonecode = $('.user-address-zonecode');
+  const ordererAddressBase = $('.user-address-base');
+  const ordererAddressDetail = $('.user-address-detail');
 
   ordererInput.value = ordererName;
   ordererPhoneNumberProInput.value = ordererPhoneNumber.split('-')[0];
@@ -227,7 +213,7 @@ fillOrdererInformation();
 
 // 함수로 주문자와 동일한 정보 채우기 구현
 const $fillDeliveryInformationButton = $('.fill-delivery-information');
-$fillDeliveryInformationButton.addEventListener('click', event => {
+$fillDeliveryInformationButton.addEventListener('click', (event) => {
   event.preventDefault();
   const userName = $('.user-name').value;
   const userPhoneNumberPro = $('.user-phone-number-pro').value;
@@ -255,9 +241,7 @@ $fillDeliveryInformationButton.addEventListener('click', event => {
 function getOrdererData() {
   const email = userEmail;
   const name = $('.user-name').value;
-  const phoneNumber = `${$('.user-phone-number-pro').value}-${
-    $('.user-phone-number-back').value
-  }`;
+  const phoneNumber = `${$('.user-phone-number-pro').value}-${$('.user-phone-number-back').value}`;
   return { email, name, phoneNumber };
 }
 
@@ -271,14 +255,18 @@ function getRecipientData() {
     $('.receiver-phone-number-back').value
   }`;
 
-  return { name, address1, address2, zipCode, phoneNumber };
+  return {
+    name,
+    address1,
+    address2,
+    zipCode,
+    phoneNumber,
+  };
 }
 
 // 결제수단 정보 가져오기
 function getPaymentMethodData() {
-  const paymentMethods = document.querySelectorAll(
-    '.payment-method input[type="radio"]'
-  );
+  const paymentMethods = document.querySelectorAll('.payment-method input[type="radio"]');
 
   for (const paymentMethod of paymentMethods) {
     if (paymentMethod.checked) return paymentMethod.value;
@@ -292,7 +280,12 @@ async function postOrderData(event) {
   const orderer = getOrdererData();
   const recipient = getRecipientData();
   const paymentMethod = getPaymentMethodData();
-  const data = { products, orderer, recipient, paymentMethod };
+  const data = {
+    products,
+    orderer,
+    recipient,
+    paymentMethod,
+  };
   const postedData = await postData('/orders', data);
   window.location.href = `/order/complete?id=${postedData.createdOrder.orderId}`;
 }
