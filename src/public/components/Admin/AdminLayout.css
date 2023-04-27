@@ -15,7 +15,7 @@ header {
   margin-bottom: 20px;
 }
 
-.admin-nav {
+.admin-aside {
   position: fixed;
   left: 0;
   top: 0;
@@ -28,11 +28,11 @@ header {
   -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
 }
 
-.admin-nav .admin-nav-list {
+.admin-aside .admin-nav-list {
   width: 100%;  
 }
 
-.admin-nav .admin-nav-list .nav-list-item {
+.admin-aside .admin-nav-list .nav-list-item {
   width: 100%;
   height: 50px;
   font-size: 24px;
@@ -42,7 +42,7 @@ header {
   overflow: hidden;
 }
 
-.admin-nav .admin-nav-list .nav-list-item a {
+.admin-aside .admin-nav-list .nav-list-item a {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,24 +52,24 @@ header {
   color: #fff;
 }
 
-.admin-nav .admin-nav-list .nav-list-item:hover {
+.admin-aside .admin-nav-list .nav-list-item:hover {
   background-color: #EEEEEE;
   color: #000;
 }
 
-.admin-nav .admin-nav-list .nav-list-item:hover a {
+.admin-aside .admin-nav-list .nav-list-item:hover a {
   color: #000;
 }
 
-.admin-nav .admin-nav-list .nav-list-item.selected {
+.admin-aside .admin-nav-list .nav-list-item.selected {
   background-color: #EEEEEE;
 }
 
-.admin-nav .admin-nav-list .nav-list-item.selected a {
+.admin-aside .admin-nav-list .nav-list-item.selected a {
   color: #000;
 }
 
-.admin-nav .admin-nav-list .nav-list-item:last-child {
+.admin-aside .admin-nav-list .nav-list-item:last-child {
   margin-bottom: 0;
 }
 

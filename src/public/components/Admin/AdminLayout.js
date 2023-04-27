@@ -17,7 +17,7 @@ window.onload = function () {
 
 const AdminData = $createElement('section', 'admin-data');
 
-const AdminNav = $createElement('nav', 'admin-nav');
+const AdminNav = $createElement('aside', 'admin-aside');
 
 const CATEGORIES = {
   'user-management': '사용자 관리',
@@ -29,17 +29,19 @@ AdminNav.innerHTML = `
   <header>STRIKE ZONE<br>
   관리자 페이지
   </header>
-  <ul class="admin-nav-list">
-    <li class="nav-list-item" id="user-management">
-      <a href="/admin/user-management">${CATEGORIES['user-management']}</a>
-    </li>
-    <li class="nav-list-item" id="product-management">
-      <a href="/admin/product-management">${CATEGORIES['product-management']}</a>
-    </li>
-    <li class="nav-list-item" id="order-management">
-      <a href="/admin/order-management">${CATEGORIES['order-management']}</a>
-    </li>
-  </ul>
+    <nav>
+      <ul class="admin-nav-list">
+        <li class="nav-list-item" id="user-management">
+          <a href="/admin/user-management">${CATEGORIES['user-management']}</a>
+        </li>
+        <li class="nav-list-item" id="product-management">
+          <a href="/admin/product-management">${CATEGORIES['product-management']}</a>
+        </li>
+        <li class="nav-list-item" id="order-management">
+          <a href="/admin/order-management">${CATEGORIES['order-management']}</a>
+        </li>
+      </ul>
+    </nav>
   <span class="logout">로그아웃</span>
   <span class="homepage">홈페이지로</span>
 `;
