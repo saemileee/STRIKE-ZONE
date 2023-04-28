@@ -26,8 +26,11 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
+	min-height: 100vh;
 	line-height: 1;
 	font-family: sans-serif;
+	position: relative;
+	padding-bottom: 210px;
 }
 ol, ul {
 	list-style: none;

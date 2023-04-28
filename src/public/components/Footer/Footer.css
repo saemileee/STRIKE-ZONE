@@ -1,12 +1,20 @@
+.main-wrapper, .products-wrapper, .order-wrapper, .order-complete .content-container {
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 210px
+}
+
 footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 210px;
   background-color: rgb(26, 26, 26);
 }
 
 footer .footer-wrapper {
-  bottom: 0;
-  left: 0;
   margin: 0 auto;
-  padding: 60px 0 60px 0;
+  padding-top: 40px;
   max-width: 1136px;
   color: rgb(170, 170, 170);
   font-size: 14px;

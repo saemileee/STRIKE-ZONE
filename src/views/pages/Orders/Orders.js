@@ -4,14 +4,7 @@ import { isLogin } from '/js/api/authAPI.js';
 
 const OrderItem = (
   target,
-  {
-    orderId,
-    productsPayment,
-    deliveryCharge,
-    totalPayment,
-    products,
-    createdAt,
-  }
+  { orderId, productsPayment, deliveryCharge, totalPayment, products, createdAt }
 ) => {
   const $item = $createElement('li', 'order-item');
   const convertedDate = new Date(createdAt);
@@ -77,9 +70,7 @@ const render = async () => {
     location.href = '/NotFound';
   }
 
-  const orders = await fetch(`/api/v1/users/${email}/orders`).then((res) =>
-    res.json()
-  );
+  const orders = await fetch(`/api/v1/users/${email}/orders`).then((res) => res.json());
 
   const $userData = $('.user-data');
   $userData.innerHTML = `
@@ -90,9 +81,11 @@ const render = async () => {
   `;
 
   const $orderList = $('.order-list');
-  orders.forEach((order) => {
-    OrderItem($orderList, order);
-  });
+  orders
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .forEach((order) => {
+      OrderItem($orderList, order);
+    });
 };
 
 render();
