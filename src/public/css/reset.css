@@ -31,6 +31,7 @@ body {
 	font-family: sans-serif;
 	position: relative;
 	padding-bottom: 210px;
+  background-color: #f1f1f1;
 }
 ol, ul {
 	list-style: none;
