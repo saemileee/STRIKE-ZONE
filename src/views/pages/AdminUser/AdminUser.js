@@ -1,7 +1,12 @@
 import { $, $createElement, getCookie } from '/js/utils.js';
 import { getAuthOption } from '/js/api/authAPI.js';
 
-const [RECENT, LONGEST, NAME_ASC, NAME_DES] = ['recent', 'longest', 'name-asc', 'name-des'];
+const [RECENT, LONGEST, NAME_ASC, NAME_DES] = [
+  'recent',
+  'longest',
+  'name-asc',
+  'name-des',
+];
 
 const urlParams = new URL(location.href).searchParams;
 const SORT = urlParams.get('sort');
@@ -51,14 +56,18 @@ const userTable = async () => {
     }
   });
 
-  function sortOrders(base) {
+  function sortUsers(base) {
     let result;
     switch (base) {
       case RECENT:
-        result = users.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        result = users.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
         break;
       case LONGEST:
-        result = users.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        result = users.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
         break;
       case NAME_ASC:
         result = users.sort((a, b) => a.koreanName.localeCompare(b.koreanName));
@@ -71,7 +80,7 @@ const userTable = async () => {
     }
     return result;
   }
-  users = sortOrders(SORT);
+  users = sortUsers(SORT);
 
   const SearchBox = $createElement('div', 'search-box');
   SearchBox.innerHTML = `
@@ -111,7 +120,8 @@ const userTable = async () => {
     if (event.target.closest('.dropdown-item')) {
       searchType = event.target.id;
       searchTypeName = event.target.name;
-      SearchBox.querySelector('.current-search-type').innerText = searchTypeName;
+      SearchBox.querySelector('.current-search-type').innerText =
+        searchTypeName;
     }
 
     if (event.target.closest('.search-start-button')) {
@@ -122,7 +132,7 @@ const userTable = async () => {
   });
 
   const $managementContainer = $('.management-container');
-  const Table = $createElement('div', 'order-table');
+  const Table = $createElement('div', 'user-table');
   Table.innerHTML = `
     <table>
       <thead>
@@ -133,7 +143,7 @@ const userTable = async () => {
           <th>주소</th>
           <th>휴대폰 번호</th>
           <th>가입 일자</th>
-          <th></th>
+          <th>수정/삭제</th>
         </tr>
       </thead>
       <tbody>
@@ -160,20 +170,20 @@ const userTable = async () => {
                 [${postCode}] ${roughAddress} ${detailAddress}
                 </span>
               </td>
-              <td class="order-price-square">
-                <div class="order-price">
+              <td class="user-price-square">
+                <div class="user-price">
                   <span>${phoneNumber}</span>
                 </div>
               </td>
-              <td class="order-price-square">
-                <div class="order-date">
+              <td class="user-price-square">
+                <div class="user-date">
                     <span>${createdAt.split('T')[0]}</span>
                 </div>
               </td>
               <td>
-                <div class="order-edit">
-                  <span class="edit-one button is-small is-dark">수정</span>
-                  <span class="delete-one button is-small is-dark">삭제</span>
+                <div class="user-edit">
+                  <span class="edit-one button is-dark">수정</span>
+                  <span class="delete-one button is-danger">삭제</span>
                 </div>
               </td>
             </tr>
@@ -229,7 +239,8 @@ async function render() {
   };
   if (SEARCH_TYPE && SEARCH_VALUE) {
     const searchBox = $('.search-box');
-    searchBox.querySelector('.current-search-type').innerText = searchOption[SEARCH_TYPE];
+    searchBox.querySelector('.current-search-type').innerText =
+      searchOption[SEARCH_TYPE];
     searchBox.querySelector('.search-content').value = SEARCH_VALUE;
   }
 }
