@@ -42,11 +42,7 @@ const userController = {
 
       const userInfo = { address, ...restUserInfo };
 
-      const newUser = await userService.addUser(userInfo);
-
-      if (!newUser) {
-        throw new Error('유저 등록에 실패하였습니다.');
-      }
+      await userService.addUser(userInfo);
 
       res.json({ result: 'success' });
     } catch (err) {
@@ -75,11 +71,7 @@ const userController = {
 
       const toUpdate = { address, ...restUpdateInfo };
 
-      const updatedUser = await userService.setUser(email, toUpdate);
-
-      if (!updatedUser) {
-        throw new Error('유저 수정에 실패하였습니다.');
-      }
+      await userService.setUser(email, toUpdate);
 
       res.json({ result: 'success' });
     } catch (err) {
@@ -91,11 +83,7 @@ const userController = {
     try {
       const { email, password } = req.body;
 
-      const isPasswordSet = await userService.setUserPassword(email, password);
-
-      if (!isPasswordSet) {
-        throw new Error('비밀번호 변경에 실패하였습니다.');
-      }
+      await userService.setUserPassword(email, password);
 
       res.json({ result: 'success' });
     } catch (err) {
@@ -113,11 +101,7 @@ const userController = {
         email = req.params.email;
       }
 
-      const { deletedCount } = await userService.deleteUser(email);
-
-      if (deletedCount === 0) {
-        throw new Error('유저 삭제에 실패하였습니다.');
-      }
+      await userService.deleteUser(email);
 
       res.json({ result: 'success' });
     } catch (err) {
