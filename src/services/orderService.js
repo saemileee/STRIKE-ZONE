@@ -1,4 +1,4 @@
-import { orderDAO, productDAO, shippingDAO } from '../data-access';
+import { orderDAO, productDAO, shippingDAO } from '../data-access/model';
 
 const DEFAULT_PAYMENT_METHOD = '무통장 입금';
 const STATUS_BY_DEFAULT_PAYMENT_METHOD = '결제 전';

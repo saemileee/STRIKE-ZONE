@@ -25,7 +25,6 @@ const userService = {
 
     if (user) {
       throw new Error('이미 존재하는 email입니다.');
-      
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

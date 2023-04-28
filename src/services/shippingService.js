@@ -1,4 +1,4 @@
-import { shippingDAO } from '../data-access';
+import { shippingDAO } from '../data-access/model';
 
 const shippingService = {
 

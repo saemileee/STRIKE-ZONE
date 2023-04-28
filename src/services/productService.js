@@ -1,4 +1,4 @@
-import { productDAO, categoryDAO } from '../data-access';
+import { productDAO, categoryDAO } from '../data-access/model';
 
 import {
   NEW_PRODUCT_STANDARD_DAY,

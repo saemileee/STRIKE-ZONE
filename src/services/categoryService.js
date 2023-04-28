@@ -1,4 +1,4 @@
-import { categoryDAO, teamDAO } from '../data-access';
+import { categoryDAO, teamDAO } from '../data-access/model';
 
 const categoryService = {
 

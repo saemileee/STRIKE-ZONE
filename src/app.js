@@ -25,7 +25,6 @@ app.use(express.urlencoded({ extended: false }));
 
 mongoose.set('strictQuery', false);
 
-app.use('/', express.static('public'));
 app.use('/', express.static(path.join(__dirname, 'public')));
 app.use('/', viewsRouter);
 app.use('/api/v1', v1Router);
@@ -38,5 +37,4 @@ mongoose.connection.on('connected', () => {
   console.log('MongoDB Connected');
 });
 
-
-export default app;
+export { app };
