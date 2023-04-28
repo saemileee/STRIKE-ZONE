@@ -43,25 +43,35 @@ const authService = {
 
     const isPasswordCorrect = await bcrypt.compare(password, correctPassword);
 
+    if (!isPasswordCorrect) {
+      throw new Error('비밀번호가 일치하지 않습니다.');
+    }
+
     const { isAdmin } = user;
 
     return { isPasswordCorrect, isAdmin };
   },
 
-  async checkEmailValid(email) {
+  async checkEmailValidCodeCorrect(email, inputCode) {
     const user = await userDAO.findByEmail(email);
 
     const isEmailValid = user.isValid;
 
-    if (isEmailValid !== EMAIL_VALID) {
-      return isEmailValid;
+    if (isEmailValid === EMAIL_VALID) {
+      return true;
+    }
+
+    if (isEmailValid !== inputCode) {
+      throw new Error('인증 코드가 일치하지 않습니다.');
     }
 
     return true;
   },
 
   async sendValidEmail(email) {
-    const validCode = await this.checkEmailValid(email);
+    const user = await userDAO.findByEmail(email);
+
+    const validCode = user.isValid;
 
     await sendValidEmail(email, validCode);
 
@@ -71,17 +81,27 @@ const authService = {
   async makeEmailValid(email) {
     const { isValid } = await userDAO.update(email, { isValid: EMAIL_VALID });
 
-    return isValid;
+    if (isValid !== EMAIL_VALID) {
+      throw new Error('이메일 인증 정보 업데이트에 실패하였습니다.');
+    }
+
+    return true;
   },
 
-  async checkPasswordReset(email) {
+  async checkEmailValidAndPasswordReset(email) {
     const user = await userDAO.findByEmail(email);
 
     if (!user) {
       throw new Error('해당 유저가 존재하지 않습니다.');
     }
 
-    return user.isPasswordReset;
+    const { isValid, isPasswordReset } = user;
+
+    if (isValid !== EMAIL_VALID) {
+      return { isEmailValid: false, isPasswordReset };
+    }
+
+    return { isEmailValid: true, isPasswordReset };
   },
 
   async resetUserPassword(email, koreanName) {
@@ -98,8 +118,6 @@ const authService = {
     const randomPassword = Math.floor(Math.random() * 1000000)
       .toString()
       .padStart(6, '0');
-
-    console.log(randomPassword);
 
     const hashRandomPassword = await bcrypt.hash(randomPassword, 10);
 

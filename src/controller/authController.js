@@ -1,5 +1,4 @@
 import { authService } from '../services';
-import { EMAIL_VALID } from '../constants';
 
 const authController = {
   async getEmailByToken(req, res, next) {
@@ -16,15 +15,8 @@ const authController = {
 
       const userToken = await authService.getUserToken(email, password);
 
-      const isEmailValid = await authService.checkEmailValid(email);
-
-      const isPasswordReset = await authService.checkPasswordReset(email);
-
-      if (isEmailValid !== true) {
-        res.json({ token: userToken, isEmailValid: false, isPasswordReset });
-
-        return;
-      }
+      const { isEmailValid, isPasswordReset } =
+        await authService.checkEmailValidAndPasswordReset(email);
 
       res.json({ token: userToken, isEmailValid, isPasswordReset });
     } catch (err) {
@@ -48,17 +40,9 @@ const authController = {
     try {
       const { email, inputCode } = req.body;
 
-      const validCode = await authService.checkEmailValid(email);
+      await authService.checkEmailValidCodeCorrect(email, inputCode);
 
-      if (inputCode !== validCode) {
-        throw new Error('인증 코드가 일치하지 않습니다.');
-      }
-
-      const result = await authService.makeEmailValid(email);
-
-      if (result !== EMAIL_VALID) {
-        throw new Error('이메일 인증에 실패하였습니다.');
-      }
+      await authService.makeEmailValid(email);
 
       res.json({ result: 'success' });
     } catch (err) {
@@ -70,11 +54,7 @@ const authController = {
     try {
       const { email, koreanName } = req.body;
 
-      const isPasswordReset = await authService.resetUserPassword(email, koreanName);
-
-      if (!isPasswordReset) {
-        throw new Error('비밀번호 초기화에 실패하였습니다.');
-      }
+      await authService.resetUserPassword(email, koreanName);
 
       res.json({ result: 'sucess' });
     } catch (err) {
@@ -88,14 +68,7 @@ const authController = {
 
       const { password } = req.body;
 
-      const { isPasswordCorrect } = await authService.checkPasswordAndAdmin(
-        email,
-        password
-      );
-
-      if (!isPasswordCorrect) {
-        throw new Error('비밀번호가 일치하지 않습니다.');
-      }
+      await authService.checkPasswordAndAdmin(email, password);
 
       res.json({ result: 'success' });
     } catch (err) {

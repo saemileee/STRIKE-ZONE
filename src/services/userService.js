@@ -5,6 +5,10 @@ const userService = {
   async getAllUsers() {
     const allUsers = await userDAO.findAll();
 
+    if (!allUsers) {
+      throw new Error('유저 정보 조회에 실패하였습니다.');
+    }
+
     return allUsers;
   },
 
@@ -42,7 +46,11 @@ const userService = {
 
     const createdUser = await userDAO.create(newUser);
 
-    return createdUser;
+    if (!createdUser) {
+      throw new Error('유저 등록에 실패하였습니다.');
+    }
+
+    return true;
   },
 
   async setUser(email, toUpdate) {
@@ -64,7 +72,11 @@ const userService = {
 
     const updatedUser = await userDAO.update(email, toUpdate);
 
-    return updatedUser;
+    if (!updatedUser) {
+      throw new Error('유저 수정에 실패하였습니다.');
+    }
+
+    return true;
   },
 
   async setUserPassword(email, password) {
@@ -87,7 +99,11 @@ const userService = {
       isPasswordReset: false,
     });
 
-    return updatedUser;
+    if (!updatedUser) {
+      throw new Error('비밀번호 변경에 실패하였습니다.');
+    }
+
+    return true;
   },
 
   async deleteUser(email) {
@@ -97,9 +113,13 @@ const userService = {
       throw new Error('해당 유저가 존재하지 않습니다.');
     }
 
-    const deletedResult = await userDAO.deleteByEmail(email);
+    const { deletedCount } = await userDAO.deleteByEmail(email);
 
-    return deletedResult;
+    if (deletedCount === 0) {
+      throw new Error('유저 삭제에 실패하였습니다.');
+    }
+
+    return true;
   },
 };
 
