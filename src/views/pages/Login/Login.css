@@ -42,13 +42,12 @@ body {
 #findPassword {
   width: 135px;
 }
-.email-auth-form {
-  margin-bottom: 5px;
-}
-#auth {
-  width: 150px;
-}
 .login-info-save {
+  margin-left: 5px;
   font-size: 19px;
   font-weight: bold;
+}
+.login-info-save input {
+  margin-right: 5px;
+  transform: scale(1.5);
 }
