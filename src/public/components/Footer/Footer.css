@@ -1,3 +1,4 @@
+
 .main-wrapper, .products-wrapper, .order-wrapper, .order-complete, .content-container, .sign-wrapper {
   height: fit-content;
   min-height: 100%;
@@ -46,4 +47,38 @@ footer .footer-wrapper ul li a {
 footer .footer-wrapper p {
   font-weight: 500;
   color: rgb(124, 124, 124);
+}
+
+.scroll-box {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+}
+
+.scroll-box button {
+  width: fit-content;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  opacity: 0.1;
+  font-size: 50px;
+  font-weight: 700;
+  transition: transform 0.5s;
+}
+
+.scroll-box button:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.scroll-box button:hover {
+  transform: scale(1.2);
+}
+
+.scroll-box .scroll-top-button {
+  margin-bottom: 20px;
 }
