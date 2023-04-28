@@ -49,7 +49,7 @@
   content: '';
 }
 
-.order-table {
+.user-table {
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
@@ -112,19 +112,23 @@ table input:hover {
   cursor: pointer;
 }
 
-.order-edit {
+.user-edit {
   display: flex;
+  width: min-content;
   flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
 }
 
-.order-edit span:hover {
+.user-edit span:hover {
   cursor: pointer;
   font-weight: 600;
 }
 
-.order-edit .edit-one {
+.user-edit .edit-one {
   margin-bottom: 20px;
 }
+
 .dropdown-box {
   display: flex;
   justify-content: space-between;

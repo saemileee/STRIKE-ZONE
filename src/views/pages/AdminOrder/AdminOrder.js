@@ -51,7 +51,7 @@ function OrderTable(orders) {
           <th>주문상품</th>
           <th>결제정보</th>
           <th>배송상태</th>
-          <th></th>
+          <th>수정/삭제</th>
         </tr>
       </thead>
       <tbody>
@@ -93,7 +93,9 @@ function OrderTable(orders) {
                   <div class="order-product-desc">
                     <span class="name">
                       ${products[0].productName}
-                      ${products.length > 1 ? `외 ${products.length - 1}개` : ''}
+                      ${
+                        products.length > 1 ? `외 ${products.length - 1}개` : ''
+                      }
                     </span>
                   </div>
                 </div>
@@ -112,12 +114,9 @@ function OrderTable(orders) {
               <td>
                 <div class="order-status-square">
                   <div class="dropdown">
-                  <div class="dropdown-trigger">
-                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                  <div class="dropdown-trigger select">
+                    <button class="button shipping-status" aria-haspopup="true" aria-controls="dropdown-menu">
                       <span class="current-shipping-type">${status}</span>
-                      <span class="icon is-small">
-                        <i class="fas fa-angle-down" aria-hidden="true"></i>
-                      </span>
                     </button>
                   </div>
                   <div class="dropdown-menu" id="dropdown-menu" role="menu">
@@ -143,7 +142,7 @@ function OrderTable(orders) {
               <td class="order-edit-square">
                 <div class="order-edit">
                   <button class="edit-one button is-dark">수정</button>
-                  <button class="delete-one button is-dark">삭제</button>
+                  <button class="delete-one button is-danger">삭제</button>
                 </div>
               </td>
             </tr>
@@ -167,7 +166,8 @@ function OrderTable(orders) {
       selectedRow.classList.toggle('selected');
 
       const id = event.target.value;
-      if (selectedRow.classList.contains('selected')) selectedIds.push(Number(id));
+      if (selectedRow.classList.contains('selected'))
+        selectedIds.push(Number(id));
       else {
         const idx = selectedIds.indexOf(Number(id));
         selectedIds.splice(idx, 1);
@@ -198,12 +198,15 @@ function OrderTable(orders) {
     if (event.target.closest('.dropdown-item')) {
       const shippingType = event.target.closest('.dropdown-item').id;
       const dropbox = event.target.closest('.dropdown');
-      dropbox.querySelector('.current-shipping-type').textContent = shippingType;
+      dropbox.querySelector('.current-shipping-type').textContent =
+        shippingType;
     }
 
     if (event.target.closest('.edit-status-one')) {
       const { id } = event.target.closest('tr');
-      const status = event.target.closest('td').querySelector('.current-shipping-type').textContent;
+      const status = event.target
+        .closest('td')
+        .querySelector('.current-shipping-type').textContent;
       try {
         await fetch(`/api/v1/orders/${id}/status`, {
           method: 'PUT',
@@ -344,7 +347,9 @@ function OrderTable(orders) {
       autoHyphen('.receiver-phone-number-back');
 
       const { id } = event.target.closest('tr');
-      const { recipient } = await fetch(`/api/v1/orders/${id}`).then((res) => res.json());
+      const { recipient } = await fetch(`/api/v1/orders/${id}`).then((res) =>
+        res.json()
+      );
       const [, phoneNumber] = recipient.phoneNumber.split('-');
 
       $('.input.receiver').value = recipient.name;
@@ -465,12 +470,9 @@ function EditButtons() {
     <button class="delete-selected button is-dark">선택 항목 삭제</button>
     <button class="edit-selected button is-dark">선택 항목 배송 상태 수정</button>
     <div class="dropdown">
-    <div class="dropdown-trigger">
-      <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+    <div class="dropdown-trigger select">
+      <button class="button shipping-status" aria-haspopup="true" aria-controls="dropdown-menu">
         <span class="current-shipping-type">${BEFOREPAYMENT}</span>
-        <span class="icon is-small">
-          <i class="fas fa-angle-down" aria-hidden="true"></i>
-        </span>
       </button>
     </div>
     <div class="dropdown-menu" id="dropdown-menu" role="menu">
@@ -517,13 +519,21 @@ function EditButtons() {
     if (event.target.closest('.dropdown-item')) {
       const shippingType = event.target.closest('.dropdown-item').id;
       const dropbox = event.target.closest('.dropdown');
-      dropbox.querySelector('.current-shipping-type').textContent = shippingType;
+      dropbox.querySelector('.current-shipping-type').textContent =
+        shippingType;
     }
 
     if (event.target.closest('.edit-selected')) {
-      const status = TableEditButtons.querySelector('.current-shipping-type').textContent;
+      const status = TableEditButtons.querySelector(
+        '.current-shipping-type'
+      ).textContent;
       try {
-        if (!confirm(`정말로 해당 주문 내역들의 배송상태를 ${status}로 변경 하시겠습니까?`)) return;
+        if (
+          !confirm(
+            `정말로 해당 주문 내역들의 배송상태를 ${status}로 변경 하시겠습니까?`
+          )
+        )
+          return;
         const result = await fetch('/api/v1/orders/status', {
           method: 'PUT',
           headers: {
@@ -566,23 +576,20 @@ function SerchBox() {
       </div>
       <div class="search-form">
         <div class="dropdown">
-          <div class="dropdown-trigger">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-              <span class="current-search-type">검색 타입</span>
-              <span class="icon is-small">
-                <i class="fas fa-angle-down" aria-hidden="true"></i>
-              </span>
+          <div class="dropdown-trigger select">
+            <button class="button dropdown-box" aria-haspopup="true" aria-controls="dropdown-menu">
+              <span class="current-search-type">검색</span>
             </button>
           </div>
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a class="dropdown-item" id="all">
+              <a class="dropdown-item" id="all" name="전체">
                 전체
               </a>
-              <a class="dropdown-item" id="email">
+              <a class="dropdown-item" id="email" name="이메일">
                 이메일
               </a>
-              <a href="#" class="dropdown-item" id="order-id">
+              <a href="#" class="dropdown-item" id="order-id" name="주문 번호">
                 주문 번호
               </a>
             </div>
@@ -593,6 +600,7 @@ function SerchBox() {
       </div>
   `;
   let searchType;
+  let searchTypeName;
   let shippingTypes = [];
 
   TableSerchBox.addEventListener('click', (event) => {
@@ -603,12 +611,16 @@ function SerchBox() {
 
     if (event.target.closest('.dropdown-item')) {
       searchType = event.target.closest('.dropdown-item').id;
-      TableSerchBox.querySelector('.current-search-type').textContent = searchType;
+      searchTypeName = event.target.name;
+      TableSerchBox.querySelector('.current-search-type').textContent =
+        searchTypeName;
     }
 
     if (event.target.closest('.checkbox')) {
       const selectedOptions = [];
-      const shippingOptions = TableSerchBox.querySelectorAll('.shipping-options input');
+      const shippingOptions = TableSerchBox.querySelectorAll(
+        '.shipping-options input'
+      );
       shippingOptions.forEach((checkbox) => {
         if (checkbox.checked) selectedOptions.push(checkbox.value);
       });
@@ -656,22 +668,34 @@ const render = async () => {
     let result;
     switch (base) {
       case RECENT:
-        result = orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        result = orders.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
         break;
       case LONGEST:
-        result = orders.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        result = orders.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
         break;
       case ID_ASC:
-        result = orders.sort((a, b) => new Date(a.orderId) - new Date(b.orderId));
+        result = orders.sort(
+          (a, b) => new Date(a.orderId) - new Date(b.orderId)
+        );
         break;
       case ID_DES:
-        result = orders.sort((a, b) => new Date(b.orderId) - new Date(a.orderId));
+        result = orders.sort(
+          (a, b) => new Date(b.orderId) - new Date(a.orderId)
+        );
         break;
       case PRICE_ASC:
-        result = orders.sort((a, b) => new Date(a.totalPayment) - new Date(b.totalPayment));
+        result = orders.sort(
+          (a, b) => new Date(a.totalPayment) - new Date(b.totalPayment)
+        );
         break;
       case PRICE_DES:
-        result = orders.sort((a, b) => new Date(b.totalPayment) - new Date(a.totalPayment));
+        result = orders.sort(
+          (a, b) => new Date(b.totalPayment) - new Date(a.totalPayment)
+        );
         break;
       default:
         result = false;
@@ -688,6 +712,23 @@ const render = async () => {
 
   const $managementContainer = $('.management-container');
 
-  $managementContainer.append(TableSortList, TableSerchBox, TableEditButtons, Table);
+  $managementContainer.append(
+    TableSortList,
+    TableSerchBox,
+    TableEditButtons,
+    Table
+  );
+
+  const searchOption = {
+    all: '전체',
+    email: '이메일',
+    'order-id': '주문 번호',
+  };
+  if (SEARCH_TYPE && SEARCH_VALUE) {
+    const searchBox = $('.search-box');
+    searchBox.querySelector('.current-search-type').innerText =
+      searchOption[SEARCH_TYPE];
+    searchBox.querySelector('.serch-content').value = SEARCH_VALUE;
+  }
 };
 render();

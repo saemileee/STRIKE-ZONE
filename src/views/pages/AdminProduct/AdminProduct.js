@@ -15,17 +15,17 @@ const teamSelectBox = document.querySelector('.select.team select');
 const updateTeamOptions = async () => {
   const teams = await fetchData('/teams');
   const options = teams
-    .map(team => `<option value=${team.teamId}>${team.teamName}</option>`)
+    .map((team) => `<option value=${team.teamId}>${team.teamName}</option>`)
     .join('');
   teamSelectBox.innerHTML = `<option selected>팀 전체</option>${options}`;
 };
 await updateTeamOptions();
 
 const categorySelectBox = document.querySelector('.select.category select');
-const updateCategoryOptions = async teamId => {
+const updateCategoryOptions = async (teamId) => {
   const categories = await fetchData(`/teams/${teamId}/categories`);
   const options = categories
-    .map(category => `<option value="${category}">${category}</option>`)
+    .map((category) => `<option value="${category}">${category}</option>`)
     .join('');
   categorySelectBox.innerHTML = `<option selected>카테고리 전체</option>${options}`;
 };
@@ -34,18 +34,18 @@ const filterProducts = (teamId, category) => {
   let filteredProducts = products;
   if (teamId !== '팀 전체') {
     filteredProducts = filteredProducts.filter(
-      product => product.teamId === teamId
+      (product) => product.teamId === teamId
     );
   }
   if (category !== '카테고리 전체') {
     filteredProducts = filteredProducts.filter(
-      product => product.categoryName === category
+      (product) => product.categoryName === category
     );
   }
   return filteredProducts;
 };
 
-const renderProducts = filteredProducts => {
+const renderProducts = (filteredProducts) => {
   renderTotalProducts(filteredProducts);
   renderProductList(filteredProducts);
 };
@@ -72,7 +72,7 @@ function renderTotalProducts(products) {
 
 function renderProductList(products) {
   tbodyElement.innerHTML = '';
-  products.forEach(product => {
+  products.forEach((product) => {
     const {
       productId,
       teamName,
@@ -104,15 +104,19 @@ function renderProductList(products) {
 
     const tdElement = document.createElement('td');
 
+    const editDiv = document.createElement('div');
+    editDiv.className = 'product-edit';
+
     const editButton = document.createElement('button');
-    editButton.className = 'edit-product button is-small';
+    editButton.className = 'edit-product button is-dark';
     editButton.innerHTML = '수정';
 
     const deleteButton = document.createElement('button');
-    deleteButton.className = 'delete-product button is-danger is-small';
+    deleteButton.className = 'delete-product button is-danger';
     deleteButton.innerHTML = '삭제';
 
-    tdElement.append(editButton, deleteButton);
+    editDiv.append(editButton, deleteButton);
+    tdElement.append(editDiv);
     trElement.append(tdElement);
 
     tbodyElement.append(trElement);
@@ -137,9 +141,9 @@ const checkedDeleteButton = document.querySelector('.checked-delete-button');
 checkedDeleteButton.addEventListener('click', async () => {
   const checkboxes = document.querySelectorAll('.product-checkbox');
   const checkedBoxes = Array.from(checkboxes).filter(
-    checkbox => checkbox.checked
+    (checkbox) => checkbox.checked
   );
-  const checkedProducts = checkedBoxes.map(checkbox => {
+  const checkedProducts = checkedBoxes.map((checkbox) => {
     const productId = checkbox.dataset.product;
     return productId;
   });
