@@ -87,7 +87,7 @@ const userTable = async () => {
       <div class="dropdown">
         <div class="dropdown-trigger select">
           <button class="button dropdown-box" aria-haspopup="true" aria-controls="dropdown-menu">
-            <span class="current-search-type">검색</span>
+            <span class="current-search-type">이름</span>
           </button>
         </div>
         <div class="dropdown-menu" id="dropdown-menu" role="menu">
@@ -126,7 +126,13 @@ const userTable = async () => {
 
     if (event.target.closest('.search-start-button')) {
       const inputValue = SearchBox.querySelector('.search-content').value;
-      if (!searchType) searchType = SEARCH_TYPE;
+      if (!searchType) {
+        if (SEARCH_TYPE) {
+          searchType = SEARCH_TYPE;
+        } else {
+          searchType = 'koreanName';
+        }
+      }
       location.href = `/admin/user-management/?sort=recent&search-type=${searchType}&search-value=${inputValue}`;
     }
   });
