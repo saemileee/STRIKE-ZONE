@@ -8,7 +8,9 @@
 
 ## 0. 데모 링크
 
-<http://kdt-sw-4-team16.elicecoding.com/>
+- URL : <http://kdt-sw-4-team16.elicecoding.com/>
+- 테스트 계정 : qwe@qwe.com
+- 비밀번호 : qwer123+
 <br/>
 <br/>
 <br/>
