@@ -1,12 +1,17 @@
-
-.main-wrapper, .products-wrapper, .order-wrapper, .order-complete, .content-container, .sign-wrapper {
+.main-wrapper,
+.products-wrapper,
+.order-wrapper,
+.order-complete,
+.content-container,
+.sign-wrapper,
+.find-password-wrapper {
   height: fit-content;
   min-height: 100%;
-  padding-bottom: 210px;
+  /* padding-bottom: 210px; */
 }
 
 footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100vw;
   height: 210px;
