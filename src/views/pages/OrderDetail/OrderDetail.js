@@ -32,7 +32,7 @@ const render = async () => {
   const convertedDate = new Date(createdAt);
   const orderDateObj = {
     year: `${convertedDate.getFullYear()}`,
-    month: `${convertedDate.getMonth()}${1}`,
+    month: `${convertedDate.getMonth() + 1}`,
     date: `${convertedDate.getDate()}`,
   };
   const orderDate = `${orderDateObj.year}-${orderDateObj.month}-${orderDateObj.date}`;
