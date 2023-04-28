@@ -41,9 +41,11 @@ const arrowButtonsElement = document.createElement('div');
 arrowButtonsElement.className = 'arrow-buttons';
 const prevArrowButtonElement = document.createElement('button');
 prevArrowButtonElement.className = 'prev-button';
-prevArrowButtonElement.innerHTML = '<i class="fa fa-chevron-left" style="font-size: 36px"></i>';
+prevArrowButtonElement.innerHTML =
+  '<i class="fa fa-chevron-left" style="font-size: 36px"></i>';
 const nextArrowButtonElement = document.createElement('button');
-nextArrowButtonElement.innerHTML = '<i class="fa fa-chevron-right" style="font-size: 36px"></i>';
+nextArrowButtonElement.innerHTML =
+  '<i class="fa fa-chevron-right" style="font-size: 36px"></i>';
 nextArrowButtonElement.className = 'next-button';
 
 function renderSlideBanner() {
@@ -53,7 +55,10 @@ function renderSlideBanner() {
 
   function renderBannerContents() {
     clearInterval(slideAutoPlayTimer);
-    slideAutoPlayTimer = setInterval(() => nextArrowButtonClickHandler(), SLIDE_AUTO_PLAY_TIME);
+    slideAutoPlayTimer = setInterval(
+      () => nextArrowButtonClickHandler(),
+      SLIDE_AUTO_PLAY_TIME
+    );
     const { mainText, subText, teamPageURL, mainImage, backgroundText } =
       BANNER_DATA[currentBannerIndex];
 
@@ -72,7 +77,7 @@ function renderSlideBanner() {
 
     const bannerImageElement = document.createElement('div');
     bannerImageElement.className = 'main-image';
-    bannerImageElement.innerHTML = `<div class="main-image"><img src=${mainImage} /></div>`;
+    bannerImageElement.innerHTML = `<div class="main-image"><img src=${mainImage} alt="${backgroundText}" /></div>`;
 
     const backgroundTextElement = document.createElement('div');
     backgroundTextElement.className = 'background-text';
@@ -88,9 +93,9 @@ function renderSlideBanner() {
         .join('');
     }
 
-    backgroundTextElement.innerHTML = `${backgroundTextElements(0)}<br /> ${backgroundTextElements(
-      1
-    )}`;
+    backgroundTextElement.innerHTML = `${backgroundTextElements(
+      0
+    )}<br /> ${backgroundTextElements(1)}`;
 
     bannerContentElement.innerHTML = '';
     bannerContentElement.append(
@@ -153,7 +158,7 @@ function renderRelatedProducts() {
   const { koreanName, cheerTeam } = userData;
 
   const filteringRelatedProducts = products.filter(
-    (product) => product.teamId === cheerTeam.teamId
+    product => product.teamId === cheerTeam.teamId
   );
   filteringRelatedProducts.length > 3 ? paintDocuments() : null;
 
@@ -170,7 +175,10 @@ function renderRelatedProducts() {
       );
 
       for (let i = 0; i < 4; i++) {
-        Product(document.querySelector('.related .products'), filteringNewProductsSorting[i]);
+        Product(
+          document.querySelector('.related .products'),
+          filteringNewProductsSorting[i]
+        );
       }
     }
     ProductBySort();
@@ -197,7 +205,9 @@ productsContainer.insertAdjacentHTML(
 
 // 신상품 렌더링
 function renderNewProducts() {
-  const newProductsSorting = products.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  const newProductsSorting = products.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   for (let i = 0; i < 4; i++) {
     Product(document.querySelector('.new .products'), newProductsSorting[i]);
@@ -210,7 +220,10 @@ function renderDiscountProducts() {
   const newProductsSorting = products.sort((a, b) => b.rate - a.rate);
 
   for (let i = 0; i < 4; i++) {
-    Product(document.querySelector('.discounted .products'), newProductsSorting[i]);
+    Product(
+      document.querySelector('.discounted .products'),
+      newProductsSorting[i]
+    );
   }
 }
 renderDiscountProducts();
