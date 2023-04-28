@@ -15,54 +15,56 @@
     <title>STRIKE ZONE</title>
   </head>
   <body>
-    <section class="login-wrapper">
-      <h3 class="title is-3">로그인</h3>
-      <div class="login-form-wrapper">
-        <form class="login-form">
-          <div class="login-input">
-            <div class="field-body">
-              <div class="field">
-                <input
-                  type="text"
-                  placeholder="이메일"
-                  class="input user-email"
-                  id="loginId"
-                  required
-                />
+    <div class="blank-space">
+      <section class="login-wrapper">
+        <h3 class="title is-3">로그인</h3>
+        <div class="login-form-wrapper">
+          <form class="login-form">
+            <div class="login-input">
+              <div class="field-body">
+                <div class="field">
+                  <input
+                    type="text"
+                    placeholder="이메일"
+                    class="input user-email"
+                    id="loginId"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <input
+                    type="password"
+                    placeholder="비밀번호"
+                    class="input user-password"
+                    id="loginPassword"
+                    required
+                  />
+                </div>
               </div>
             </div>
-            <div class="field-body">
-              <div class="field">
-                <input
-                  type="password"
-                  placeholder="비밀번호"
-                  class="input user-password"
-                  id="loginPassword"
-                  required
-                />
-              </div>
-            </div>
-          </div>
-          <button type="submit" class="button is-dark" id="login">
-            로그인
-          </button>
-        </form>
-        <label class="checkbox login-info-save">
-          <input type="checkbox" class="login-info-save-check"/>
-          로그인 정보 저장
-        </label>
-      </div>
-      <div class="sign-up">
-        <a href="/SignUp">
-          <button class="button is-dark" id="signUp">회원가입</button>
-        </a>
-        <a href="/find-password">
-          <button class="button is-dark" id="findPassword">
-            비밀번호 찾기
-          </button>
-        </a>
-      </div>
-    </section>
+            <button type="submit" class="button is-dark" id="login">
+              로그인
+            </button>
+          </form>
+          <label class="checkbox login-info-save">
+            <input type="checkbox" class="login-info-save-check" />
+            로그인 정보 저장
+          </label>
+        </div>
+        <div class="sign-up">
+          <a href="/SignUp">
+            <button class="button is-dark" id="signUp">회원가입</button>
+          </a>
+          <a href="/find-password">
+            <button class="button is-dark" id="findPassword">
+              비밀번호 찾기
+            </button>
+          </a>
+        </div>
+      </section>
+    </div>
     <script type="module" src="Login.js"></script>
     <script type="module" src="/components/Header/Header.js"></script>
     <script type="module" src="/components/Footer/Footer.js"></script>

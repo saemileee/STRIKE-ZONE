@@ -47,3 +47,6 @@ label {
 .hidden {
   display: none;
 }
+.blank-space {
+  min-height: 70vh;
+}
