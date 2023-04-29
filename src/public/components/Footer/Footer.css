@@ -1,13 +1,15 @@
 .main-wrapper,
 .products-wrapper,
+.product-detail-wrapper,
 .order-wrapper,
-.order-complete,
 .content-container,
 .sign-wrapper,
+.login-wrapper,
+.complete-wrapper,
 .find-password-wrapper {
   height: fit-content;
-  min-height: 100%;
-  /* padding-bottom: 210px; */
+  min-height: calc(100vh - 210px - 80px);
+  padding-bottom: 210px;
 }
 
 footer {

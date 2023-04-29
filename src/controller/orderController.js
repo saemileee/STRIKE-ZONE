@@ -1,7 +1,6 @@
 import { orderService } from '../services';
 
 const orderController = {
-
   // 주문 저장하기
   async createOrder(req, res, next) {
     try {
@@ -87,7 +86,9 @@ const orderController = {
 
       const updatedCount = await orderService.updateStatus(orderIds, status);
 
-      res.status(200).json({ result: `${updatedCount}개 주문의 배송 상태가 '${status}'로 변경되었습니다.` });
+      res
+        .status(200)
+        .json({ result: `${updatedCount}개 주문의 배송 상태가 '${status}'로 변경되었습니다.` });
     } catch (error) {
       next(error);
     }
@@ -118,7 +119,6 @@ const orderController = {
       next(error);
     }
   },
-
 };
 
 export { orderController };

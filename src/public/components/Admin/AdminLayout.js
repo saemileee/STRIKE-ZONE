@@ -80,7 +80,7 @@ ScrollBox.innerHTML = `
   </button>
 `;
 
-const BOTTOM_COORDINATE = document.body.scrollHeight + 600;
+const BOTTOM_COORDINATE = Number.MAX_SAFE_INTEGER;
 
 ScrollBox.addEventListener('click', (event) => {
   if (event.target.closest('.scroll-top-button')) {

@@ -1,9 +1,9 @@
-import { getAllProduct } from '/js/api/cartAPI.js';
+import { getCartList } from '/js/api/cartAPI.js';
 import { fetchData } from '/js/api/api.js';
 import { isLogin } from '/js/api/authAPI.js';
 import { SearchBox } from './Search.js';
 
-//파비콘
+// 파비콘
 document.head.insertAdjacentHTML(
   'beforeend',
   '<link rel="icon" href="/assets/favicon/favicon.png" />'
@@ -18,7 +18,7 @@ const DUMMY_PRODUCT_CATEGORY_DATA = [
   { name: '야구용품', url: '/products?team=all&category=equip&sort=recent' },
 ];
 
-const CART_AMOUNT = getAllProduct();
+const CART_AMOUNT = getCartList().length;
 
 const headerElement = document.createElement('header');
 const headerWrapper = document.createElement('div');
@@ -92,7 +92,7 @@ headerWrapper.append(headerContainer);
 headerContainer.append(categoryUlElement, rightSideElementsContainer);
 document.body.prepend(headerElement);
 
-const createTeamElement = team => {
+const createTeamElement = (team) => {
   const teamLiElement = document.createElement('li');
   teamLiElement.innerHTML = `
     <div>
@@ -106,7 +106,7 @@ const createTeamElement = team => {
   return teamLiElement;
 };
 
-const createProductElement = category => {
+const createProductElement = (category) => {
   const productLiElement = document.createElement('li');
   productLiElement.innerHTML = `
       <p>${category.name}</p>
@@ -126,7 +126,7 @@ const teamsUlElement = document.createElement('ul');
 
 async function renderTeamCategory() {
   const data = await fetchData('/teams');
-  data.forEach(team => {
+  data.forEach((team) => {
     const teamElement = createTeamElement(team);
     teamsUlElement.append(teamElement);
   });
@@ -138,16 +138,13 @@ teamsContainerElement.append(teamsUlElement);
 const productsContainerElement = document.createElement('div');
 productsContainerElement.classList.add('products-container');
 const productsUlElement = document.createElement('ul');
-DUMMY_PRODUCT_CATEGORY_DATA.forEach(category => {
+DUMMY_PRODUCT_CATEGORY_DATA.forEach((category) => {
   const productElement = createProductElement(category);
   productsUlElement.append(productElement);
 });
 productsContainerElement.append(productsUlElement);
 
-categoryContainerElement.append(
-  teamsContainerElement,
-  productsContainerElement
-);
+categoryContainerElement.append(teamsContainerElement, productsContainerElement);
 headerElement.append(categoryContainerElement);
 
 teamsContainerElement.style.display = 'none';
@@ -192,6 +189,5 @@ productsContainerElement.addEventListener('mouseleave', hideProductsContainer);
 
 // 로그아웃 시 userToken 삭제
 function deleteUserToken() {
-  document.cookie =
-    'userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  document.cookie = 'userToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 }

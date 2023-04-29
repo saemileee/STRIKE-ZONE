@@ -1,9 +1,11 @@
 import { $, selectAllCheckbox, autoHyphen } from '/js/utils.js';
-import { getCartListSelected } from '/js/api/cartAPI.js';
+import { getCartListSelected, deleteItemOfCart } from '/js/api/cartAPI.js';
 import { fetchData, postData } from '/js/api/api.js';
 import { isLogin, getUserInfo } from '/js/api/authAPI.js';
 
 const params = new URLSearchParams(window.location.search);
+
+const IS_CART = params.get('cart') !== 'false';
 
 // 전체선택 버튼 기능
 selectAllCheckbox('term-checkbox', 'select-all');
@@ -33,10 +35,7 @@ function updateCheckoutButton(amount) {
 async function getReceiptData() {
   const { deliveryCharge } = await fetchData('/shippings/default');
   const productsData = await getOrderProducts();
-  const totalAmount = productsData.reduce(
-    (acc, product) => acc + product.totalProductAmount,
-    0
-  );
+  const totalAmount = productsData.reduce((acc, product) => acc + product.totalProductAmount, 0);
 
   const deliveryChargeAmount = await deliveryCharge;
   const totalPaymentAmount = totalAmount + deliveryChargeAmount;
@@ -51,9 +50,7 @@ await getReceiptData();
 
 // 결제정보 렌더링
 function renderReceipt(totalProductAmount, deliveryCharge, totalPaymentAmount) {
-  const totalProductAmountElement = document.querySelector(
-    '.total-product-amount'
-  );
+  const totalProductAmountElement = document.querySelector('.total-product-amount');
   totalProductAmountElement.innerHTML = `${totalProductAmount.toLocaleString()}원`;
 
   const shippingChargeElement = document.querySelector('.shipping-charge');
@@ -76,8 +73,9 @@ async function getOrderProducts() {
         }));
 
   const productsData = products.map(async (product) => {
-    const { discountedPrice, name, teamName, price, rate, img } =
-      await fetchData(`/products/${product.productId}`);
+    const { discountedPrice, name, teamName, price, rate, img } = await fetchData(
+      `/products/${product.productId}`
+    );
     const totalProductAmount = discountedPrice * product.quantity;
 
     return {
@@ -145,16 +143,7 @@ function displayOrderList(products) {
       totalProductAmount,
       img,
     } = product;
-    renderOrderList(
-      team,
-      name,
-      quantity,
-      rate,
-      price,
-      discountedPrice,
-      totalProductAmount,
-      img
-    );
+    renderOrderList(team, name, quantity, rate, price, discountedPrice, totalProductAmount, img);
   });
 }
 displayOrderList(await getOrderProducts());
@@ -254,9 +243,7 @@ $fillDeliveryInformationButton.addEventListener('click', (event) => {
 function getOrdererData() {
   const email = userEmail;
   const name = $('.user-name').value;
-  const phoneNumber = `${$('.user-phone-number-pro').value}-${
-    $('.user-phone-number-back').value
-  }`;
+  const phoneNumber = `${$('.user-phone-number-pro').value}-${$('.user-phone-number-back').value}`;
   return { email, name, phoneNumber };
 }
 
@@ -281,9 +268,7 @@ function getRecipientData() {
 
 // 결제수단 정보 가져오기
 function getPaymentMethodData() {
-  const paymentMethods = document.querySelectorAll(
-    '.payment-method input[type="radio"]'
-  );
+  const paymentMethods = document.querySelectorAll('.payment-method input[type="radio"]');
 
   for (const paymentMethod of paymentMethods) {
     if (paymentMethod.checked) return paymentMethod.value;
@@ -304,5 +289,11 @@ async function postOrderData(event) {
     paymentMethod,
   };
   const postedData = await postData('/orders', data);
+  if (IS_CART) {
+    products.forEach(({ productId }) => {
+      console.log(productId);
+      deleteItemOfCart(productId);
+    });
+  }
   window.location.href = `/order/complete?id=${postedData.createdOrder.orderId}`;
 }

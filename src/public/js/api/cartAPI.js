@@ -1,7 +1,7 @@
 import { setDiscount } from '../utils.js';
 
 function changeCartAmount() {
-  document.querySelector('.cart-amount').innerHTML = getAllProduct();
+  document.querySelector('.cart-amount').innerHTML = getCartList().length;
 }
 
 function getCartFromLocal() {
@@ -71,7 +71,7 @@ export async function addItemCart(id, requestAmount = 1) {
       rate,
       price,
       amount: amount + Number(requestAmount),
-      total: discountedPrice * (amount + 1),
+      total: discountedPrice * (amount + Number(requestAmount)),
     };
   } else {
     cartList[id] = {
@@ -82,7 +82,7 @@ export async function addItemCart(id, requestAmount = 1) {
       price,
       discountedPrice,
       amount: Number(requestAmount),
-      total: discountedPrice,
+      total: discountedPrice * Number(requestAmount),
       selected: true,
     };
   }
