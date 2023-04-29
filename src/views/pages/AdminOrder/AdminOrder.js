@@ -343,10 +343,10 @@ function OrderTable(orders) {
 
       const { id } = event.target.closest('tr');
       const { recipient } = await fetch(`/api/v1/orders/${id}`).then((res) => res.json());
-      const [, phoneNumber] = recipient.phoneNumber.split('-');
+      const [, firstPhoneNumber, LastPhoneNumber] = recipient.phoneNumber.split('-');
 
       $('.input.receiver').value = recipient.name;
-      $('.input.receiver-phone-number-back').value = phoneNumber;
+      $('.input.receiver-phone-number-back').value = firstPhoneNumber + LastPhoneNumber;
       $('.input.receiver').value = recipient.name;
       $('.receiver-address-zonecode').value = recipient.zipCode;
       $('.receiver-address-base').value = recipient.address1;
