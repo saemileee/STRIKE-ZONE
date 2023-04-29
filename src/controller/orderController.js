@@ -112,9 +112,9 @@ const orderController = {
     try {
       const { orderIds } = req.body;
 
-      const deleteCount = await orderService.deleteOrders(orderIds);
+      const deletedCount = await orderService.deleteOrders(orderIds);
 
-      res.status(200).json({ result: `${deleteCount}개의 주문이 삭제되었습니다.` });
+      res.status(200).json({ result: `${deletedCount}개의 주문이 삭제되었습니다.` });
     } catch (error) {
       next(error);
     }
