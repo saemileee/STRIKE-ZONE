@@ -1,12 +1,12 @@
-@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+@import 'https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css';
 
 body {
   width: 100vw;
   min-height: 100vh;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
-.order-wrapper { 
+.order-wrapper {
   max-width: 1136px;
   padding: 20px;
   margin: auto;
@@ -20,7 +20,6 @@ body {
   height: 50px;
   z-index: 0;
 }
-
 
 .cart-select-all {
   transform-origin: left;
@@ -41,18 +40,18 @@ body {
 
 .delete-all:hover {
   cursor: pointer;
-  color: #797979
+  color: #797979;
 }
 
 .cart-group {
   display: flex;
   align-items: center;
-  position: relative; 
+  position: relative;
   height: 150px;
-  background-color: #FFF;
-  box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
-  -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
-  -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  background-color: #fff;
+  box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
   border-radius: 10px;
   padding: 20px;
   margin-bottom: 20px;
@@ -147,7 +146,8 @@ body {
   background-color: transparent;
 }
 
-.amount-minus, .amount-plus:hover{
+.amount-minus,
+.amount-plus:hover {
   cursor: pointer;
 }
 
@@ -160,16 +160,15 @@ body {
 .cart-product-price-box .cart-product-price {
 }
 
-
 .cart-product-price-box .cart-product-price.has-rate {
-  color:#cdcdcd;
+  color: #cdcdcd;
   margin-bottom: 3px;
 }
 
 .cart-product-price-box .cart-product-price.has-rate::before {
   position: relative;
   top: 0.6rem;
-  content: "";
+  content: '';
   display: block;
   width: 100%;
   height: 2px;
@@ -180,7 +179,7 @@ body {
   position: absolute;
   top: 2px;
   left: -2.7rem;
-  color: #ad0000;
+  color: #ff5f03;
 }
 
 .cart-price {
@@ -188,12 +187,12 @@ body {
   flex-direction: column;
   align-items: flex-end;
   width: auto;
-  background-color: #FFF;
+  background-color: #fff;
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
-  -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
-  -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0, 0, 0, 0.11);
 }
 
 .cart-price div {
@@ -214,4 +213,8 @@ body {
 .order-button {
   font-weight: 700;
   margin-top: 20px;
+}
+
+.blank-space {
+  min-height: 70vh;
 }

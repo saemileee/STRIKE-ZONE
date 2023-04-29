@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/components/Admin/AdminLayout.css" />
+    <link rel="stylesheet" href="./AdminProduct.css" />
+
+    <title>STRIKE ZONE 관리자 페이지</title>
+  </head>
+  <body>
+    <div class="content-container">
+      <section class="admin-data">
+        <h1 class="title is-2">상품 리스트</h1>
+        <div class="top-container">
+          <div class="category-select-box-container">
+            <div class="select team">
+              <select>
+                <option selected>팀 전체</option>
+              </select>
+            </div>
+            <div class="select category">
+              <select>
+                <option selected>카테고리 전체</option>
+              </select>
+            </div>
+            <span class="total-products"></span>
+          </div>
+          <button class="add-product button is-dark">상품 추가</button>
+        </div>
+        <table class="table is-bordered is-narrow is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th>
+                <span title="createdAt"
+                  ><input type="checkbox" class="product-checkbox-all"
+                /></span>
+              </th>
+              <th><span title="createdAt">생성일</span></th>
+              <th><span title="updatedAt">수정일</span></th>
+              <th><span title="productId">상품ID</span></th>
+              <th><span title="team">소속팀</span></th>
+              <th><span title="category">카테고리</span></th>
+              <th><span title="name">상품명</span></th>
+              <th><span title="image">상품 이미지</span></th>
+              <th><span title="original-price">원가</span></th>
+              <th><span title="rate">할인률</span></th>
+              <th><span title="discounted-price">판매가</span></th>
+              <th><span title="inventory">남은 수량</span></th>
+              <th>
+                <span title="createdAt">수정/삭제</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <button class="button is-danger checked-delete-button">
+          선택 상품 삭제
+        </button>
+      </section>
+    </div>
+    <script src="/components/Admin/AdminLayout.js" type="module"></script>
+    <script src="./AdminProduct.js" type="module"></script>
+  </body>
+</html>

@@ -15,23 +15,60 @@ const authController = {
 
       const userToken = await authService.getUserToken(email, password);
 
-      res.json({ token: userToken });
+      const { isEmailValid, isPasswordReset } =
+        await authService.checkEmailValidAndPasswordReset(email);
+
+      res.json({ token: userToken, isEmailValid, isPasswordReset });
     } catch (err) {
       next(err);
     }
   },
 
-  async passwordCheck(req, res, next) {
+  async sendValidationEmail(req, res, next) {
+    const { email } = req.headers;
+
+    try {
+      await authService.sendValidEmail(email);
+
+      res.json({ result: 'success' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async validateEmail(req, res, next) {
+    try {
+      const { email, inputCode } = req.body;
+
+      await authService.checkEmailValidCodeCorrect(email, inputCode);
+
+      await authService.makeEmailValid(email);
+
+      res.json({ result: 'success' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async resetPassword(req, res, next) {
+    try {
+      const { email, koreanName } = req.body;
+
+      await authService.resetUserPassword(email, koreanName);
+
+      res.json({ result: 'sucess' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async checkPassword(req, res, next) {
     try {
       const { email } = req;
 
       const { password } = req.body;
 
-      const { isPasswordCorrect } = await authService.checkPasswordAndAdmin(email, password);
-
-      if (!isPasswordCorrect) {
-        throw new Error('비밀번호가 일치하지 않습니다.');
-      }
+      await authService.checkPasswordAndAdmin(email, password);
 
       res.json({ result: 'success' });
     } catch (err) {

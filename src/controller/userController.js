@@ -15,7 +15,11 @@ const userController = {
     try {
       const { isAdmin } = req;
 
-      const { email } = isAdmin ? req.params : req;
+      let { email } = req;
+
+      if (isAdmin && req.params.email) {
+        email = req.params.email;
+      }
 
       const user = await userService.getUser(email);
 
@@ -38,11 +42,7 @@ const userController = {
 
       const userInfo = { address, ...restUserInfo };
 
-      const newUser = await userService.addUser(userInfo);
-
-      if (!newUser) {
-        throw new Error('유저 등록에 실패하였습니다.');
-      }
+      await userService.addUser(userInfo);
 
       res.json({ result: 'success' });
     } catch (err) {
@@ -54,7 +54,11 @@ const userController = {
     try {
       const { isAdmin } = req;
 
-      const { email } = isAdmin ? req.params : req;
+      let { email } = req;
+
+      if (isAdmin && req.params.email) {
+        email = req.params.email;
+      }
 
       const { postCode, roughAddress, detailAddress, ...restUpdateInfo } =
         req.body;
@@ -67,11 +71,19 @@ const userController = {
 
       const toUpdate = { address, ...restUpdateInfo };
 
-      const updatedUser = await userService.setUser(email, toUpdate);
+      await userService.setUser(email, toUpdate);
 
-      if (!updatedUser) {
-        throw new Error('유저 수정에 실패하였습니다.');
-      }
+      res.json({ result: 'success' });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async setUserPassword(req, res, next) {
+    try {
+      const { email, password } = req.body;
+
+      await userService.setUserPassword(email, password);
 
       res.json({ result: 'success' });
     } catch (err) {
@@ -83,13 +95,13 @@ const userController = {
     try {
       const { isAdmin } = req;
 
-      const { email } = isAdmin ? req.params : req;
+      let { email } = req;
 
-      const { deletedCount } = await userService.deleteUser(email);
-
-      if (deletedCount === 0) {
-        throw new Error('유저 삭제에 실패하였습니다.');
+      if (isAdmin && req.params.email) {
+        email = req.params.email;
       }
+
+      await userService.deleteUser(email);
 
       res.json({ result: 'success' });
     } catch (err) {

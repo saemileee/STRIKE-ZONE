@@ -1,0 +1,91 @@
+.main-wrapper,
+.products-wrapper,
+.product-detail-wrapper,
+.order-wrapper,
+.content-container,
+.sign-wrapper,
+.login-wrapper,
+.complete-wrapper,
+.find-password-wrapper {
+  height: fit-content;
+  min-height: calc(100vh - 210px - 80px);
+  padding-bottom: 210px;
+}
+
+footer {
+  position: relative;
+  bottom: 0;
+  width: 100vw;
+  height: 210px;
+  background-color: rgb(26, 26, 26);
+}
+
+footer .footer-wrapper {
+  margin: 0 auto;
+  padding-top: 40px;
+  max-width: 1136px;
+  color: rgb(170, 170, 170);
+  font-size: 14px;
+}
+
+footer .footer-wrapper div h2 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+footer .footer-wrapper ul {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+footer .footer-wrapper ul div {
+  margin-right: 20px;
+}
+
+footer .footer-wrapper ul li {
+  margin-right: 14px;
+}
+
+footer .footer-wrapper ul li a {
+  color: rgb(170, 170, 170);
+}
+
+footer .footer-wrapper p {
+  font-weight: 500;
+  color: rgb(124, 124, 124);
+}
+
+.scroll-box {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+}
+
+.scroll-box button {
+  width: fit-content;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  opacity: 0.1;
+  font-size: 50px;
+  font-weight: 700;
+  transition: transform 0.5s;
+}
+
+.scroll-box button:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.scroll-box button:hover {
+  transform: scale(1.2);
+}
+
+.scroll-box .scroll-top-button {
+  margin-bottom: 20px;
+}

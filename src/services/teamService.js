@@ -1,4 +1,4 @@
-import { teamDAO } from '../data-access';
+import { teamDAO } from '../data-access/model';
 
 const teamService = {
 

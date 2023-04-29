@@ -1,5 +1,9 @@
 import { setDiscount } from '../utils.js';
 
+function changeCartAmount() {
+  document.querySelector('.cart-amount').innerHTML = getCartList().length;
+}
+
 function getCartFromLocal() {
   const existsCart = localStorage.getItem('cart');
   const cartList = JSON.parse(existsCart) || {};
@@ -8,6 +12,7 @@ function getCartFromLocal() {
 
 function setCartToLocal(cart) {
   localStorage.setItem('cart', JSON.stringify(cart));
+  changeCartAmount();
 }
 
 async function getItemById(id) {
@@ -66,7 +71,7 @@ export async function addItemCart(id, requestAmount = 1) {
       rate,
       price,
       amount: amount + Number(requestAmount),
-      total: discountedPrice * (amount + 1),
+      total: discountedPrice * (amount + Number(requestAmount)),
     };
   } else {
     cartList[id] = {
@@ -75,9 +80,9 @@ export async function addItemCart(id, requestAmount = 1) {
       rate,
       img: img[0],
       price,
-      discountedPrice: discountedPrice,
+      discountedPrice,
       amount: Number(requestAmount),
-      total: discountedPrice,
+      total: discountedPrice * Number(requestAmount),
       selected: true,
     };
   }

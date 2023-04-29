@@ -1,0 +1,116 @@
+.top-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-container span {
+  vertical-align: bottom;
+}
+
+table {
+  margin-top: 22px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table tr {
+  font-size: 15px;
+}
+
+table tr {
+  transition: background-color 0.3s;
+}
+
+table tr:nth-child(2n) {
+  background-color: rgb(249, 249, 249);
+}
+
+table tr.selected {
+  background-color: rgb(235, 248, 255);
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.table thead {
+  height: 58px;
+}
+
+.table thead tr th {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+  background-color: #363636;
+  padding: 20px;
+  vertical-align: middle;
+  border: #363636;
+}
+
+.table th:not([align]) {
+  text-align: center;
+}
+
+.table tr th:first-child {
+  width: 60px;
+}
+
+.table tr th:nth-child(2) {
+  width: 110px;
+}
+
+.table tr th:nth-child(3) {
+  width: 110px;
+}
+
+.table tr th:nth-child(4) {
+  width: 80px;
+}
+
+.table tr th:last-child {
+  width: 100px;
+}
+
+thead tr th span {
+  color: #fff;
+  align-self: center;
+}
+
+tbody tr {
+  height: fit-content;
+  text-align: center;
+}
+
+tbody tr td span {
+  align-self: center;
+}
+
+tbody tr td:nth-child(7) {
+  text-align: left;
+}
+
+tbody tr img {
+  width: 80px;
+  height: 80px;
+}
+
+table input {
+  transform: scale(1.5);
+}
+
+.product-edit {
+  display: flex;
+  width: min-content;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.edit-product {
+  margin: 10px;
+}
+
+.delete-product {
+  margin: 10px;
+}

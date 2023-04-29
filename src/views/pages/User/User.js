@@ -7,7 +7,7 @@ const render = async () => {
     loginEmail = await isLogin();
     if (!loginEmail) {
       alert('회원 전용 페이지입니다!');
-      location.href = '/NotFound';
+      location.href = '/login';
     }
   } catch (err) {
     throw new Error({ messge: err });
@@ -42,7 +42,9 @@ const render = async () => {
     day: convertedDate.getDate(),
   };
 
-  const { emblemPath } = await fetch(`/api/v1/teams/${teamId}`).then((res) => res.json());
+  const { emblemPath } = await fetch(`/api/v1/teams/${teamId}`).then((res) =>
+    res.json()
+  );
 
   const $userData = $('.user-data');
   $userData.innerHTML = `

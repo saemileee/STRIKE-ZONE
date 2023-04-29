@@ -9,20 +9,16 @@
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
     <link rel="stylesheet" href="/css/reset.css" />
-    <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/components/Header/Header.css" />
     <link rel="stylesheet" href="./Order.css" />
-    <link rel="stylesheet" href="/css/footer.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-    />
+    <link rel="stylesheet" href="/components/Footer/Footer.css" />
 
-    <title>홈런볼 마켓</title>
+    <title>STRIKE ZONE</title>
   </head>
   <body>
     <section class="order-wrapper">
       <h3 class="title is-3">주문/결제</h3>
-      <form>
+      <form class="order-form">
         <div class="left-side-container">
           <section class="order-list-container">
             <h4 class="title is-4">주문상품</h4>
@@ -159,7 +155,10 @@
           </section>
           <section class="delivery-information-container">
             <h4 class="title is-4">배송지</h4>
-            <button class="button is-small fill-delivery-information">
+            <button
+              type="button"
+              class="button is-small fill-delivery-information"
+            >
               위와 동일하게 채우기
             </button>
             <div class="field is-horizontal">
@@ -280,8 +279,9 @@
                   name="payment-method"
                   checked
                   class="account-transfer"
+                  value="무통장 입금"
                 />
-                무통장입금
+                무통장 입금
               </label>
             </div>
           </section>
@@ -342,8 +342,8 @@
       </form>
     </section>
   </body>
-  <script src="/js/header.js" type="module"></script>
+  <script src="/components/Header/Header.js" type="module"></script>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   <script src="./Order.js" type="module"></script>
-  <script src="/js/footer.js" type="module"></script>
+  <script src="/components/Footer/Footer.js" type="module"></script>
 </html>

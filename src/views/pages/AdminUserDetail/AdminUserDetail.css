@@ -1,0 +1,30 @@
+.content-container {
+  width: 60%;
+}
+label {
+  text-align: left;
+}
+#cheerTeam {
+  display: flex;
+  flex-flow: wrap;
+}
+#cheerTeam > label {
+  width: 25%;
+}
+.teams {
+  border: solid 1px #b4b4b4;
+}
+.teams > input[type='radio'] {
+  display: none;
+}
+.email-warning,
+.password-warning,
+.password-verify-warning {
+  margin-top: 10px;
+}
+.phone-number {
+  margin-left: 10px;
+}
+.hidden {
+  display: none;
+}

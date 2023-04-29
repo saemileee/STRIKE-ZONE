@@ -1,0 +1,141 @@
+body {
+  background-color: #F1F1F1;
+  margin: 0;
+}
+
+.content-container {
+  padding: 30px;
+}
+
+header {
+  color: #F1F1F1;
+  font-weight: 700;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-aside {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 100vh;
+  background-color: #363636;
+  padding: 20px;
+  box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+}
+
+.admin-aside .admin-nav-list {
+  width: 100%;  
+}
+
+.admin-aside .admin-nav-list .nav-list-item {
+  width: 100%;
+  height: 50px;
+  font-size: 24px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+  overflow: hidden;
+}
+
+.admin-aside .admin-nav-list .nav-list-item a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-weight: 600;
+  color: #fff;
+}
+
+.admin-aside .admin-nav-list .nav-list-item:hover {
+  background-color: #EEEEEE;
+  color: #000;
+}
+
+.admin-aside .admin-nav-list .nav-list-item:hover a {
+  color: #000;
+}
+
+.admin-aside .admin-nav-list .nav-list-item.selected {
+  background-color: #EEEEEE;
+}
+
+.admin-aside .admin-nav-list .nav-list-item.selected a {
+  color: #000;
+}
+
+.admin-aside .admin-nav-list .nav-list-item:last-child {
+  margin-bottom: 0;
+}
+
+.admin-data {
+  width: auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -webkit-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  -moz-box-shadow: 1px 1px 32px -5px rgba(0,0,0,0.11);
+  padding: 30px;
+  margin-left: 220px;
+}
+
+.logout {
+  position: absolute;
+  bottom: 20px;
+  color: #fff;
+}
+
+.logout:hover {
+  cursor: pointer;
+}
+
+.homepage {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: #fff;
+}
+
+.homepage:hover {
+  cursor: pointer;
+}
+
+
+.scroll-box {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+}
+
+.scroll-box button {
+  width: fit-content;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  opacity: 0.1;
+  font-size: 50px;
+  font-weight: 700;
+  transition: transform 0.5s;
+}
+
+.scroll-box button:hover {
+  cursor: pointer;
+  opacity: 0.3;
+}
+
+.scroll-box button:hover {
+  transform: scale(1.2);
+}
+
+.scroll-box .scroll-top-button {
+  margin-bottom: 20px;
+}

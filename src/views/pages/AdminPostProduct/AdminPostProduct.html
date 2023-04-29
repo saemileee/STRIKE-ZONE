@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/components/Admin/AdminLayout.css" />
+    <link rel="stylesheet" href="./AdminEditProduct.css" />
+    <title>STRIKE ZONE 관리자 페이지</title>
+  </head>
+  <body>
+    <div class="content-container">
+      <section class="admin-data">
+        <h1 class="title is-2">상품 추가</h1>
+        <form>
+          <div class="left-side-container">
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">팀 카테고리</label>
+              </div>
+              <div class="field-body">
+                <p class="control">
+                  <span class="select team">
+                    <select required>
+                      <option value="">팀을 선택해 주세요.</option>
+                    </select>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                <label class="label">하위 카테고리</label>
+              </div>
+              <div class="field-body">
+                <p class="control">
+                  <span class="select category">
+                    <select required>
+                      <option value="">카테고리를 선택해 주세요.</option>
+                    </select>
+                  </span>
+                </p>
+              </div>
+            </div>
+            <section class="user-information-container">
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">상품명</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input
+                        class="input name"
+                        type="text"
+                        placeholder="상품명을 입력해 주세요."
+                        required
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">재고</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input
+                        class="input inventory"
+                        type="number"
+                        placeholder="수량을 입력해 주세요."
+                        required
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">상품 원가</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input
+                        class="input price"
+                        type="number"
+                        placeholder="상품의 원가를 입력해 주세요."
+                        min="1"
+                        required
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">상품 할인률</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input
+                        class="input rate"
+                        type="number"
+                        placeholder="상품의 할인률을 입력해 주세요."
+                        min="0"
+                        max="99"
+                        maxlength="2"
+                        onkeydown="return event.key !== '-'"
+                        onpaste="return !clipboardData.getData('Text').includes('-')"
+                        required
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">상품 판매가</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input
+                        class="input discounted-price"
+                        type="number"
+                        readonly
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">짧은 설명</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input
+                        class="input shortDescription"
+                        type="text"
+                        placeholder="간단한 설명을 입력해 주세요."
+                        required
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">상품 썸네일</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input class="input thumbnail" type="file" required />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">상품 서브 썸네일</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input
+                        class="input subThumbnails"
+                        type="file"
+                        multiple
+                        required
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                  <label class="label">상품 디테일 정보</label>
+                </div>
+                <div class="field-body">
+                  <div class="field">
+                    <p class="control is-expanded">
+                      <input
+                        class="input detailDescription"
+                        type="file"
+                        required
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+          <button type="submit" class="post button is-dark">상품 추가</button>
+        </form>
+      </section>
+    </div>
+    <script src="/components/Admin/AdminLayout.js" type="module"></script>
+    <script src="./AdminPostProduct.js" type="module"></script>
+  </body>
+</html>

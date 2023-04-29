@@ -31,3 +31,6 @@
   margin-bottom: 20px;
   font-weight: bold;
 }
+.blank-space {
+  min-height: 70vh;
+}

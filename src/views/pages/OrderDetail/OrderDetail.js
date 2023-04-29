@@ -14,6 +14,8 @@ const render = async () => {
     totalPayment,
     recipient,
     orderer: { email },
+    status,
+    paymentMethod,
   } = orderData;
 
   try {
@@ -30,7 +32,7 @@ const render = async () => {
   const convertedDate = new Date(createdAt);
   const orderDateObj = {
     year: `${convertedDate.getFullYear()}`,
-    month: `${convertedDate.getMonth()}${1}`,
+    month: `${convertedDate.getMonth() + 1}`,
     date: `${convertedDate.getDate()}`,
   };
   const orderDate = `${orderDateObj.year}-${orderDateObj.month}-${orderDateObj.date}`;
@@ -110,6 +112,16 @@ const render = async () => {
           <em>${recipient.phoneNumber}</em>
         </div>
       </div>
+    </div>
+    <hr>
+    <div class="status">
+      <h4 h4 class="title is-3">배송 상태</h4>
+      <em>${status}</em>
+    </div>
+    <hr>
+    <div class="payment">
+      <h4 h4 class="title is-3">결제 수단</h4>
+      <em>${paymentMethod}</em>
     </div>
   </section>
   `;

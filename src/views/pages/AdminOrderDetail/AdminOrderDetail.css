@@ -1,0 +1,113 @@
+.content-container {
+  width: 60%;
+}
+
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css";
+
+.order-list-wrapper {
+  padding: 24px 36px 24px 36px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 12px;
+  margin: 0 auto 12px auto;
+}
+
+.order-list-container .order-list {
+  margin-top: 20px;
+}
+
+.order-list-container .order-data {
+  margin-bottom: 10px;
+}
+
+.order-list-container .order-data p {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.order-list-container .order-data p {
+  font-weight: 500;
+}
+
+.order-list-container .order-data em {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.order-item {
+  display: flex;
+  padding: 12px;
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.order-item .image-container {
+  width: 100px;
+  height: 100px;
+  margin-right: 18px;
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.order-item .product-information {
+  display: flex;
+  flex-direction: column;
+}
+
+.order-list-container .price-box {
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.order-list-container .price-box p {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.order-list-container .price-box em {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.order-list-container .price-box.total-price {
+  margin-bottom: 30px;
+}
+
+.user-data-box div {
+  display: flex;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.user-data-box div p {
+  width: 100px;
+  margin-right: 20px;
+}
+
+.order-item-product {
+  display: flex;
+  padding: 10px;
+}
+
+.order-item-product .product-img {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.order-item-product-desc {
+  display: flex;
+  flex-direction: column;
+  padding: 14px 0;
+}
+
+.order-item-product-desc .product-name {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.order-item-product-desc .product-price {
+  font-size: 18px;
+  margin-bottom: 6px;
+}

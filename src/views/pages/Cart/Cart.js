@@ -142,8 +142,6 @@ async function render() {
 
   const currentCart = getCartList();
 
-  console.log(currentCart);
-
   currentCart.forEach(({ amount, id, img, name, price, total, selected, rate }) => {
     CartItem($cartList, {
       productID: id,

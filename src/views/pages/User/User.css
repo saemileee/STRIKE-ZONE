@@ -40,3 +40,7 @@
 .diff-date strong {
   font-weight: 700;
 }
+
+.blank-space {
+  min-height: 70vh;
+}

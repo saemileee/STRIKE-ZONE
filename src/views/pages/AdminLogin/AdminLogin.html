@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="AdminLogin.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <title>STRIKE ZONE 관리자 페이지</title>
+  </head>
+  <body>
+    <section class="login-wrapper">
+      <h3 class="title is-3">스트라이크존 관리자 로그인</h3>
+      <div class="login-form-wrapper">
+        <form class="login-form">
+          <div class="login-input">
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    type="text"
+                    placeholder="이메일"
+                    class="input admin-email"
+                    id="loginId"
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+            <input
+              type="password"
+              placeholder="비밀번호"
+              class="input admin-password"
+              id="loginPassword"
+              required
+            />
+          </div>
+          <button type="submit" class="button is-black" id="login">
+            로그인
+          </button>
+          <button class="button is-black" id="home">홈으로</button>
+        </form>
+      </div>
+    </section>
+    <script type="module" src="AdminLogin.js"></script>
+  </body>
+</html>

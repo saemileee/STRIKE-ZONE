@@ -52,6 +52,8 @@
 
 .product-image-big {
   min-width: 80%;
+  height: 510px;
+  width: 510px;
   border: 1px solid rgb(212, 212, 212);
   border-radius: 10px;
   background-color: rgb(255, 255, 255);
@@ -101,7 +103,7 @@
   display: inline-block;
   font-size: 32px;
   font-weight: 800;
-  color: dodgerblue;
+  color: rgb(255, 95, 3);
   margin-right: 8px;
 }
 
@@ -159,4 +161,16 @@
 }
 .buttons-container > .order-button {
   flex-grow: 2;
+  background-color: rgb(255, 95, 3);
+  color: #fff;
+  border: none;
+}
+
+.buttons-container > .soldout-button {
+  flex-grow: 1;
+}
+
+.tabs li.is-active a {
+  border-bottom-color: rgb(255, 95, 3);
+  color: rgb(255, 95, 3);
 }

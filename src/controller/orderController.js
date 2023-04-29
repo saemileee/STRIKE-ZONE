@@ -1,7 +1,6 @@
 import { orderService } from '../services';
 
 const orderController = {
-
   // 주문 저장하기
   async createOrder(req, res, next) {
     try {
@@ -80,19 +79,46 @@ const orderController = {
     }
   },
 
-  // 특정 orderId 에 해당하는 주문 정보 삭제하기
-  async deleteOrderByOrderId(req, res, next) {
+  // 다수의 orderId 에 해당하는 배송 상태 수정하기
+  async updateStatus(req, res, next) {
     try {
-      const { orderId } = req.params;
+      const { orderIds, status } = req.body;
 
-      await orderService.deleteOrderByOrderId(orderId);
+      const updatedCount = await orderService.updateStatus(orderIds, status);
 
-      res.status(200).json({ result: 'order deleted successfully' });
+      res
+        .status(200)
+        .json({ result: `${updatedCount}개 주문의 배송 상태가 '${status}'로 변경되었습니다.` });
     } catch (error) {
       next(error);
     }
   },
 
+  // 특정 orderId 에 해당하는 주문 정보 삭제하기
+  async deleteOrderByOrderId(req, res, next) {
+    try {
+      const { orderId } = req.params;
+
+      const { deletedCount } = await orderService.deleteOrderByOrderId(orderId);
+
+      res.status(200).json({ result: `${deletedCount}의 주문이 취소되었습니다.` });
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // 다수의 orderId 들에 해당하는 주문 정보들을 삭제하기
+  async deleteOrders(req, res, next) {
+    try {
+      const { orderIds } = req.body;
+
+      const deletedCount = await orderService.deleteOrders(orderIds);
+
+      res.status(200).json({ result: `${deletedCount}개의 주문이 삭제되었습니다.` });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export { orderController };

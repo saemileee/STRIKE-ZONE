@@ -1,12 +1,12 @@
-@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css";
+@import 'https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma-rtl.min.css';
 
 .order-item {
   width: 100%;
   min-height: 100px;
   border-radius: 10px;
   background: #ffffff;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px, 
-              rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px 0px,
+    rgba(0, 0, 0, 0.16) 0px 0px 1px 0px;
   margin-bottom: 20px;
   padding: 20px;
   transition: background-color 0.5s;
@@ -64,4 +64,8 @@
 
 .order-item .price .total-price {
   font-weight: 600;
+}
+
+.blank-space {
+  min-height: 70vh;
 }

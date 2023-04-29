@@ -1,15 +1,15 @@
-import { User } from './User';
-import { Product } from './Product';
-import { Team } from './Team';
-import { Category } from './Category';
-import { Order } from './Order';
-import { Shipping } from './Shipping';
+import { userDAO } from './User';
+import { productDAO } from './Product';
+import { teamDAO } from './Team';
+import { categoryDAO } from './Category';
+import { orderDAO } from './Order';
+import { shippingDAO } from './Shipping';
 
 export {
-  User,
-  Product,
-  Team,
-  Category,
-  Order,
-  Shipping,
+  userDAO,
+  productDAO,
+  teamDAO,
+  categoryDAO,
+  orderDAO,
+  shippingDAO,
 };

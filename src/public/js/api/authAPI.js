@@ -33,3 +33,13 @@ export async function getUserInfo() {
     return false;
   }
 }
+
+export async function isAdmin() {
+  try {
+    const result = await fetch('/api/v1/auth', getAuthOption());
+    const { isAdmin } = await result.json();
+    return isAdmin;
+  } catch (err) {
+    return false;
+  }
+}

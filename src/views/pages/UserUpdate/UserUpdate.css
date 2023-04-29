@@ -41,3 +41,12 @@ label {
   color: red;
   font-weight: bold;
 }
+.phone-number {
+  margin-left: 10px;
+}
+.hidden {
+  display: none;
+}
+.blank-space {
+  min-height: 70vh;
+}

@@ -62,8 +62,8 @@ const render = async () => {
   try {
     email = await isLogin();
     if (!email) {
-      location.href = '/NotFound';
       alert('회원 전용 페이지 입니다!');
+      location.href = '/login';
     }
   } catch (err) {
     alert(err);
@@ -81,9 +81,11 @@ const render = async () => {
   `;
 
   const $orderList = $('.order-list');
-  orders.forEach((order) => {
-    OrderItem($orderList, order);
-  });
+  orders
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .forEach((order) => {
+      OrderItem($orderList, order);
+    });
 };
 
 render();

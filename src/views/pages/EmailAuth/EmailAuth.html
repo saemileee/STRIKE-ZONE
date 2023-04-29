@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="EmailAuth.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <title>STRIKE ZONE</title>
+  </head>
+  <body>
+    <section class="auth-wrapper">
+      <h3 class="title is-3">인증번호 입력</h3>
+      <div class="auth-notice">
+        첫 로그인 시 이메일 인증이 필요합니다.<br />이메일로 전송된 인증번호를
+        입력해주세요.
+      </div>
+      <div class="auth-form-wrapper">
+        <form class="auth-form">
+          <div class="auth-input">
+            <div class="field-body">
+              <div class="field">
+                <p class="control is-expanded">
+                  <input
+                    type="text"
+                    placeholder="인증번호"
+                    class="input admin-email"
+                    id="emailAuth"
+                    required
+                    autocomplete="off"
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="button is-dark" id="auth">확인</button>
+        </form>
+      </div>
+    </section>
+    <script type="module" src="EmailAuth.js"></script>
+  </body>
+</html>
