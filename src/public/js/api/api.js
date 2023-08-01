@@ -1,4 +1,4 @@
-const BASE_URL = '/api/v1';
+const BASE_URL = "http://localhost:3000/api/v1";
 
 export async function fetchData(url) {
   try {
@@ -13,8 +13,8 @@ export async function fetchData(url) {
 export async function postData(url, body) {
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
     const data = await response.json();
@@ -27,8 +27,8 @@ export async function postData(url, body) {
 export async function patchData(url, body) {
   try {
     const response = await fetch(`${BASE_URL}${url}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
     const data = await response.json();
@@ -40,7 +40,7 @@ export async function patchData(url, body) {
 
 export async function deleteData(url) {
   try {
-    const response = await fetch(`${BASE_URL}${url}`, { method: 'DELETE' });
+    const response = await fetch(`${BASE_URL}${url}`, { method: "DELETE" });
     const data = await response.json();
     return data;
   } catch (error) {
